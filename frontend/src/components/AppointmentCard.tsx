@@ -1,6 +1,13 @@
 import React from 'react'; 
 import { Button } from 'primereact/button';
 
+interface Appointment {
+    id: number;
+    date: string;
+    time: string;
+    clientName: string;
+}
+
 export default function AppointmentCard() {
     return (
        <div className="card flex flex-wrap justify-content-center gap-3">

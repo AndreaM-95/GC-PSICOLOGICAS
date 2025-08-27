@@ -21,7 +21,7 @@ export default function Login() {
     return (
         <div className="min-h-screen flex">
             <div className="w-1/2 flex items-center justify-center">
-                <img src="../../public/login.png" width="450" height="450" alt="Login" />
+                <img src="/login.png" width="450" height="450" alt="Login" />
             </div>
 
             <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">

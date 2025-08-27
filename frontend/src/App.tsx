@@ -1,10 +1,16 @@
+//import AppointmentCard from './components/AppointmentCard'
 import Footer from './components/Footer'
-import Login from './pages/Login'
+import Menu from './pages/Menu'
+//import Register from './pages/Register'
+//import Login from './pages/Login'
 
 function App() {
   return (
     <>
-      <Login />
+      {/* <Login /> 
+      <Register />
+      <AppointmentCard/>*/}
+      <Menu/>
       <Footer />
     </>
   )
