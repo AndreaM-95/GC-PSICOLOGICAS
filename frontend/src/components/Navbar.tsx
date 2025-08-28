@@ -3,6 +3,7 @@ import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
 import type { MenuItem } from 'primereact/menuitem';
 import { Toast } from 'primereact/toast';
+import 'primeicons/primeicons.css';
 
 export default function Navbar() {
     const menuLeft = useRef<Menu>(null);

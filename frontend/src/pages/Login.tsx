@@ -1,9 +1,8 @@
-//import React, { useState } from 'react';
-import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { Avatar } from 'primereact/avatar';
 import { InputText } from 'primereact/inputtext';
 import 'primeicons/primeicons.css';
+import NavButton from '../components/NavButton';
 
 export default function Login() {
     //const [value, setValue] = useState<string>('');
@@ -59,7 +58,8 @@ export default function Login() {
                     ¿No tienes cuenta?, regístrate aquí
                     </a>
                 </div>
-                <Button label="Ingresar" className='w-32 shadow-md'/>
+
+                <NavButton label="Ingresar" btnFunction={registerUser} />
             </div>
         </div>
     );

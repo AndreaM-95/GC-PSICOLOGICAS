@@ -1,16 +1,20 @@
-/*import Menu from './pages/Menu'
 import Register from './pages/Register'
-import Login from './pages/Login'*/
+import Menu from './pages/Menu'
+import Login from './pages/Login'
 import ListDoctorAppointments from './pages/Admin/ListDoctorAppointments'
 import Footer from './components/Footer'
+import SummaryHistory from './pages/Medico/SummaryHistory'
 
 function App() {
   return (
     <>
-      {/*<Register />
+      {/*
       <Login /> 
-      <Menu/>*/}
+      <Register />
+      <Menu/>
       <ListDoctorAppointments />
+      */}
+      <SummaryHistory />
       <Footer />
     </>
   )
