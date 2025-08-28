@@ -3,3 +3,16 @@
 html{
   padding: 0;
 }
+
+/*BARRA DEL SCROLLPANEL */
+.p-scrollpanel-content {
+    padding-right: 0px; /* Espacio entre barra y borde */
+}
+
+.p-scrollpanel .p-scrollpanel-bar{
+  background-color: var(--color-cyan-500) ;
+}
+
+.p-card-content{
+  padding: 0px;
+}

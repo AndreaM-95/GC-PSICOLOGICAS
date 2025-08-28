@@ -6,6 +6,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
 import { InputMask } from "primereact/inputmask";
 import { Calendar } from 'primereact/calendar';
+import { ScrollPanel } from 'primereact/scrollpanel';
+import '../App.css'
 
 // interface NewUser {
 //     nameUser: string,
@@ -66,58 +68,62 @@ export default function Register() {
             </div>
 
             <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
-                <h1 className="text-cyan-700 font-bold w-1/2 text-3xl text-center mx-auto mb-2 mt-4">
-                    Inicia tu registro
+                <h1 className="text-cyan-700 font-bold w-3/4 text-3xl text-center mx-auto mb-2 mt-4">
+                    Regístrate como paciente activo
                 </h1>
 
-                <h3 className="text-cyan-700 font-bold w-1/2 text-xl text-center mb-4 mx-auto">
+                <h3 className="text-cyan-700 w-1/2 text-lg italic text-center mb-4 mx-auto">
                     Todos los datos son obligatorios
                 </h3>
 
-                <div className="grid grid-cols-[40%_60%] gap-2 w-4/5 bg-cyan-100 mx-auto rounded-lg mb-4 p-4">
+                <ScrollPanel style={{ width: '85%', height: '400px' }} className=''>
+                    <div className="grid grid-cols-[40%_60%] gap-2 bg-cyan-100 mx-auto rounded-lg px-8 py-4">
 
-                    <label htmlFor="usernames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Nombres</label> 
-                    <InputText id="usernames" placeholder='Digite aquí..' className=' h-11 w-full'/> 
-                    
-                    <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Apellidos</label> 
-                    <InputText id="lastNames" placeholder='Digite aquí..' className=' h-11 w-full'/> 
+                        <label htmlFor="usernames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Nombres</label> 
+                        <InputText id="usernames" placeholder='Digite aquí..' className='w-full'/> 
+                        
+                        <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Apellidos</label> 
+                        <InputText id="lastNames" placeholder='Digite aquí..' className='w-full'/> 
 
-                    <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Tipo de documento</label>
-                    <Dropdown value={selectedTypeDoc} onChange={(e) => setSelectedTypeDoc(e.value)} options={typeDoc} optionLabel="name" placeholder="Selecciona aquí.." className="w-full md:w-14rem" />
+                        <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Tipo de documento</label>
+                        <Dropdown value={selectedTypeDoc} onChange={(e) => setSelectedTypeDoc(e.value)} options={typeDoc} optionLabel="name" placeholder="Selecciona aquí.." className="w-full md:w-14rem" />
 
-                    <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número de documento</label>
-                    <InputText id="documentNumber" placeholder='Digite aquí..' keyfilter="num" className=' h-11 w-full' />
+                        <label htmlFor="lastNames" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número de documento</label>
+                        <InputText id="documentNumber" placeholder='Digite aquí..' keyfilter="num" className='w-full' />
 
-                    <label htmlFor="dateOfBirth" className='text-cyan-700 w-full font-bold mb-2 content-center'>Fecha de nacimiento</label>
-                    <Calendar id="buttondisplay" placeholder='Selecciona aquí..' value={date} showIcon />
+                        <label htmlFor="dateOfBirth" className='text-cyan-700 w-full font-bold mb-2 content-center'>Fecha de nacimiento</label>
+                        <Calendar id="buttondisplay" placeholder='Selecciona aquí..' value={date} showIcon />
 
-                    <label htmlFor="gender" className='text-cyan-700 w-full font-bold mb-2 content-center'>Género</label>
-                    <Dropdown value={selectedGenre} onChange={(e) => setSelectedGenre(e.value)} options={genres} optionLabel="name" placeholder="Selecciona aquí.." className="w-full md:w-14rem" />
+                        <label htmlFor="gender" className='text-cyan-700 w-full font-bold mb-2 content-center'>Género</label>
+                        <Dropdown value={selectedGenre} onChange={(e) => setSelectedGenre(e.value)} options={genres} optionLabel="name" placeholder="Selecciona aquí.." className="w-full md:w-14rem" />
 
-                    <label htmlFor="cityResidence" className='text-cyan-700 w-full font-bold mb-2 content-center'>Ciudad de residencia</label> 
-                    <InputText id="cityResidence" placeholder='Digite aquí..' className=' h-11 w-full'/> 
+                        <label htmlFor="cityResidence" className='text-cyan-700 w-full font-bold mb-2 content-center'>Ciudad de residencia</label> 
+                        <InputText id="cityResidence" placeholder='Digite aquí..' className='w-full'/> 
 
-                    <label htmlFor="cellPhone" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número de celular</label>
-                    <InputMask mask="99-9999999999" placeholder="57-333333333" />
+                        <label htmlFor="address" className='text-cyan-700 w-full font-bold mb-2 content-center'>Dirección de residencia</label> 
+                        <InputText id="address" placeholder='Digite aquí..' className='w-full'/> 
 
-                    <label htmlFor="email" className='text-cyan-700 w-full font-bold mb-2 content-center'>Correo electrónico</label> 
-                    <InputText id="email" placeholder='Digite aquí..' className=' h-11 w-full'/>
+                        <label htmlFor="cellPhone" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número de celular</label>
+                        <InputMask mask="99-9999999999" placeholder="57-333333333" />
 
-                    <label htmlFor="eps" className='text-cyan-700 w-full font-bold mb-2 content-center'>EPS</label> 
-                    <InputText id="eps" placeholder='Digite aquí..' className=' h-11 w-full'/> 
+                        <label htmlFor="email" className='text-cyan-700 w-full font-bold mb-2 content-center'>Correo electrónico</label> 
+                        <InputText id="email" placeholder='Digite aquí..' className='w-full'/>
 
-                    <label htmlFor="emergencyContact" className='text-cyan-700 w-full font-bold mb-2 content-center'>Contacto de emergencia</label> 
-                    <InputText id="emergencyContact" placeholder='Digite aquí..' className=' h-11 w-full'/> 
+                        <label htmlFor="eps" className='text-cyan-700 w-full font-bold mb-2 content-center'>EPS</label> 
+                        <InputText id="eps" placeholder='Digite aquí..' className='w-full'/> 
 
-                    <label htmlFor="cellPhone" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número contacto de emergencia</label>
-                    <InputMask mask="99-9999999999" placeholder="57-333333333" />
+                        <label htmlFor="emergencyContact" className='text-cyan-700 w-full font-bold mb-2 content-center'>Contacto de emergencia</label> 
+                        <InputText id="emergencyContact" placeholder='Digite aquí..' className='w-full'/> 
 
-                    <label htmlFor="password" className='text-cyan-700 font-bold w-full mb-2 content-center'>Cree una ontraseña</label> 
-                    <Password className='h-11 w-full' id='password' toggleMask placeholder='Ingrese su contraseña..' />
+                        <label htmlFor="cellPhone" className='text-cyan-700 w-full font-bold mb-2 content-center'>Número contacto de emergencia</label>
+                        <InputMask mask="99-9999999999" placeholder="57-333333333" />
 
-                </div>
+                        <label htmlFor="password" className='text-cyan-700 font-bold w-full mb-2 content-center'>Cree una ontraseña</label> 
+                        <Password className='w-full' id='password' toggleMask placeholder='Ingrese su contraseña..' />
+                    </div>
+                </ScrollPanel>
 
-                <div className='flex gap-8 mb-4 mt-2 pb-8'>
+                <div className='flex gap-8 mb-4 mt-4 pb-4'>
                     <Button label="Volver" className='w-32 shadow-md' onClick={returnToLogin}/>
                     <Button label="Registrarse" className='w-32 shadow-md' onClick={registerUser}/>   
                 </div>

@@ -25,7 +25,7 @@ export default function Login() {
             </div>
 
             <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
-                <h1 className="text-cyan-700 font-bold w-1/2 text-3xl text-center mx-auto mb-16">
+                <h1 className="text-cyan-700 font-bold w-3/4 text-3xl text-center mx-auto mb-16">
                     ¡Bienvenidos al sistema de gestión de citas!
                 </h1>
 
