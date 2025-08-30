@@ -27,7 +27,7 @@ export default function PatientDataSummary() {
     };
 
     return (
-        <div className="m-auto grid grid-cols-4 w-3/4 bg-[#f1faee] p-6">
+        <section className="m-auto grid grid-cols-4 w-3/4 bg-[#f1faee] p-6">
             <p className="font-bold text-cyan-700">Nombres:</p>
             <p className="text-cyan-700">{patient.name}</p>
 
@@ -51,6 +51,6 @@ export default function PatientDataSummary() {
 
             <p className="font-bold text-cyan-700">Diagnóstico:</p>
             <p className="text-cyan-700">{patient.diagnostic}</p>
-        </div>
+        </section>
     );
 }

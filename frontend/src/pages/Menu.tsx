@@ -40,26 +40,27 @@ export default function Menu() {
 
 
     return (
-        <div>
+        <main>
             <Navbar/>
-            <div className="m-auto w-3/4">
+            <header className="m-auto w-3/4">
                 <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">¡Hola Camilo!</h1>
-                <h3 className="text-cyan-700 font-bold text-lg mx-auto">¿Qué necesitas hacer hoy?</h3>
-            </div>
+                <h2 className="text-cyan-700 font-bold text-lg mx-auto">¿Qué necesitas hacer hoy?</h2>
+            </header>
 
-            <map name="DataMenu">
-                <div className="w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mx-auto my-8">
+            <section className="w-3/4 mx-auto my-8">
+                <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                     {DataMenu.map((item, index) => (
-                        <MenuCard
-                            key={index}
-                            icon={item.icon}
-                            title={item.title}
-                            subtitle={item.subtitle}
-                            url={item.url}
-                        />
+                        <li key={index}>
+                            <MenuCard
+                                icon={item.icon}
+                                title={item.title}
+                                subtitle={item.subtitle}
+                                url={item.url}
+                            />
+                        </li>
                     ))}
-                </div>
-            </map>
-        </div>
+                </ul>
+            </section>
+        </main>
     );
 }

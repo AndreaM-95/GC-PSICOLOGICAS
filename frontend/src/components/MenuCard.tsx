@@ -1,4 +1,3 @@
-import { Card } from "primereact/card";
 import { Avatar } from 'primereact/avatar';
 
 interface MenuCardProps {
@@ -9,15 +8,12 @@ interface MenuCardProps {
 }
 
 export default function MenuCard({ icon, title, subtitle, url }: MenuCardProps) {
-    const PersonnelManagement = () => {
-        // Logic to remember the password
-        window.open(`${url}`, '_blank')
-    }
-    
     return (
-        <Card
-            onClick={PersonnelManagement}
-            style={{ background: '#f1faee', cursor: "pointer", padding: '0px' }}
+        <a
+            href={url}
+            className="block no-underline"
+            style={{ background: '#f1faee', display: 'block', padding: '1rem', borderRadius: '8px' }}
+            aria-label={`Ir a ${title}`}
         >
             <div className="flex flex-wrap p-0">
                 <Avatar
@@ -29,6 +25,6 @@ export default function MenuCard({ icon, title, subtitle, url }: MenuCardProps) 
                 <h3 className="text-cyan-700 font-bold text-lg content-center w-[70%]">{title}</h3>
                 <p className="text-cyan-700 w-full pt-2">{subtitle}</p>
             </div>
-        </Card>
+        </a>
     )
 }

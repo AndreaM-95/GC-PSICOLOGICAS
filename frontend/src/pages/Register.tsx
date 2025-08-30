@@ -55,44 +55,59 @@ export default function Register() {
     ];
 
     const returnToLogin = () => {
-        window.open('https://react.dev', '_blank');
+        //window.open('https://react.dev', '_blank');
     };
 
     const registerUser = () => {
-        window.open('https://react.dev', '_blank');
+        //window.open('https://react.dev', '_blank');
     };
 
     return (
-        <div className="flex">
-            <div className="w-1/2 flex items-center justify-center">
-                <img src="/reg.png" width="450" height="450" alt="Registro" />
-            </div>
-
-            <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
-                <h1 className="text-cyan-700 font-bold w-3/4 text-3xl text-center mx-auto mb-2 mt-4">
-                    Regístrate como paciente activo
-                </h1>
-
-                <h3 className="text-cyan-700 w-1/2 text-lg italic text-center mb-4 mx-auto">
-                    Todos los datos son obligatorios
-                </h3>
-
-                <ScrollPanel style={{ width: '85%', height: '400px' }}>
-                    <div className="grid grid-cols-[40%_60%] gap-2 bg-cyan-100 mx-auto rounded-lg px-8 py-4">
-                        {fields.map((field, index) => (
-                            <React.Fragment key={index}>
-                                <label className="text-cyan-700 font-bold mb-2 content-center">{field.label}</label>
-                                {field.component}
-                            </React.Fragment>
-                        ))}
-                    </div>
-                </ScrollPanel>
-
-                <div className="flex gap-8 mb-4 mt-4 pb-4">
-                    <NavButton label="Volver" btnFunction={returnToLogin} />
-                    <NavButton label="Registrarse" btnFunction={registerUser} />
-                </div>
-            </div>
+        <main className="flex">
+        {/* Imagen decorativa */}
+        <div className="w-1/2 flex items-center justify-center">
+            <img src="/reg.png" width="450" height="450" alt="Registro de usuario" />
         </div>
+
+        <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
+            <header className="text-center mb-4 mt-4">
+                <h1 className="text-cyan-700 font-bold text-3xl">Regístrate como paciente activo</h1>
+                <p id="form-description" className="text-cyan-700 text-lg italic">Todos los datos son obligatorios</p>
+            </header>
+
+                <form
+                    className='flex flex-col items-center '
+                    aria-describedby="form-description"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        registerUser();
+                    }}
+                >
+                    <ScrollPanel style={{ width: '85%', height: '400px' }}>
+                        <div className="grid grid-cols-[40%_60%] gap-2 bg-cyan-100 mx-auto rounded-lg px-8 py-4">
+                            {fields.map((field, index) => {
+                                const inputId = `field-${index}`;
+                                return (
+                                    <React.Fragment key={index}>
+                                        <label
+                                            htmlFor={inputId}
+                                            className="text-cyan-700 font-bold mb-2 content-center text-sm"
+                                        >
+                                            {field.label}
+                                        </label>
+                                        {React.cloneElement(field.component, { id: inputId, required: true })}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </div>
+                    </ScrollPanel>
+
+                    <div className="col-span-2 flex justify-center gap-8 mt-6">
+                        <NavButton type="button" label="Volver" btnFunction={returnToLogin} />
+                        <NavButton type="submit" label="Registrarse" btnFunction={registerUser} />
+                    </div>
+                </form>
+            </div>
+        </main>
     );
 }

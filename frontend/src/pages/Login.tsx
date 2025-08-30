@@ -3,9 +3,14 @@ import { Avatar } from 'primereact/avatar';
 import { InputText } from 'primereact/inputtext';
 import 'primeicons/primeicons.css';
 import NavButton from '../components/NavButton';
+import '../App.css';
 
 export default function Login() {
     //const [value, setValue] = useState<string>('');
+    const login = () => {
+        // Logic to remember the password
+        window.open('https://react.dev', '_blank')
+    }
 
     const rememberPassword = () => {
         // Logic to remember the password
@@ -14,25 +19,24 @@ export default function Login() {
 
     const registerUser = () => {
         // Logic to register the user
-        window.open('https://react.dev', '_blank')
+        //window.open('https://react.dev', '_blank')
     }
 
     return (
-        <div className="min-h-screen flex">
+        <main className="min-h-screen flex">
             <div className="w-1/2 flex items-center justify-center">
-                <img src="/login.png" width="450" height="450" alt="Login" />
+                <img src="/login.png" width="450" height="450" alt="Ilustración de inicio de sesión" />
             </div>
 
             <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
-                <h1 className="text-cyan-700 font-bold w-3/4 text-3xl text-center mx-auto mb-16">
-                    ¡Bienvenidos al sistema de gestión de citas!
-                </h1>
+                <header className="w-3/4 text-center mb-16">
+                    <h1 className="text-cyan-700 font-bold text-3xl">
+                        ¡Bienvenidos al sistema de gestión de citas!
+                    </h1>
+                </header>
 
-                {/* contenedor del formulario: importante -> relative + pt-14 */}
-                <div className="relative w-2/3 bg-cyan-100 mx-auto rounded-lg flex flex-col items-center mb-4 pt-14 pb-8 px-8">
-
-                    {/* avatar flotando, centrado y saliendo por arriba */}
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-10">
+                <section className="relative w-2/3 bg-cyan-100 mx-auto rounded-lg flex flex-col items-center mb-4 pt-14 pb-8 px-8" aria-labelledby="login-title">
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-10" aria-hidden="true">
                         <Avatar
                             icon="pi pi-user"
                             size="xlarge"
@@ -42,25 +46,60 @@ export default function Login() {
                         />
                     </div>
 
-                    <label htmlFor="username" className='text-cyan-700 font-bold w-full mb-2 text-center'>Usuario</label> 
-                    <InputText id="username" placeholder='Ingrese su usuario..' className=' h-11 w-70' invalid:border-pink-500 invalid:text-pink-600/> 
-                    
-                    <label htmlFor="password" className='text-cyan-700 font-bold w-full mt-6 mb-2 text-center'>Contraseña</label> 
-                    <Password className='h-11' id='password' variant="filled" feedback={false} toggleMask placeholder='Ingrese su contraseña..' />
+                    <form
+                        className="flex flex-col w-full items-center p-0"
+                        onSubmit={login}
+                        aria-labelledby="login-title"
+                    >
+                        <fieldset className="w-full border-0 p-0 items-center flex flex-col">
+                            <legend id="login-title" className="sr-only">Formulario de inicio de sesión</legend>
 
-                    <a onClick={rememberPassword}
-                    className="hover:underline text-cyan-700 w-full mt-4 mb-2 text-center cursor-pointer text-xs italic">
-                    ¿Olvidaste tu contraseña?
-                    </a>
+                            <label htmlFor="username" className="text-cyan-700 font-bold mb-2 text-center">Usuario</label>
+                            <InputText
+                                id="username"
+                                name="username"
+                                required
+                                placeholder="Ingrese su usuario..."
+                                style={{ width: '100%' }}
+                                aria-required="true"
+                                autoComplete="username"
+                            />
 
-                    <a onClick={registerUser}
-                    className="hover:underline text-cyan-700 w-full text-center cursor-pointer text-xs italic">
-                    ¿No tienes cuenta?, regístrate aquí
-                    </a>
-                </div>
+                            <label htmlFor="password" className="text-cyan-700 font-bold w-full mt-6 mb-2 text-center">Contraseña</label>
+                            <Password
+                                id="password"
+                                name="password"
+                                required
+                                variant="filled"
+                                style={{ width: '100%', padding: '0' }}
+                                feedback={false}
+                                toggleMask
+                                placeholder="Ingrese su contraseña..."
+                                aria-required="true"
+                                autoComplete="current-password"
+                            />
 
-                <NavButton label="Ingresar" btnFunction={registerUser} />
+                            <button
+                                type="button"
+                                onClick={rememberPassword}
+                                className="hover:underline text-cyan-700 w-full mt-4 mb-2 text-center text-xs italic cursor-pointer"
+                            >
+                                ¿Olvidaste tu contraseña?
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={registerUser}
+                                className="hover:underline text-cyan-700 w-full text-center text-xs italic mb-4 cursor-pointer"
+                            >
+                                ¿No tienes cuenta? Regístrate aquí
+                            </button>
+
+                            <NavButton type="submit" label="Ingresar" btnFunction={login} />
+                        </fieldset>
+                    </form>
+                </section>
             </div>
-        </div>
+        </main>
     );
 }

@@ -29,12 +29,19 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="w-full bg-cyan-200 p-2">
-            <div className="card flex justify-content-center">
-                <Toast ref={toast}></Toast>
-                <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
-                <Button text icon="pi pi-bars" style={{color:'var(--color-cyan-500)'}} onClick={(event) => menuLeft.current?.toggle(event)} aria-controls="popup_menu_left" aria-haspopup />
-            </div>
+        <nav className="w-full bg-cyan-200 p-2" aria-label="Menú principal">
+            <Toast ref={toast} />
+            <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
+            <Button
+                text
+                icon="pi pi-bars"
+                style={{ color: 'var(--color-cyan-700)' }}
+                onClick={(event) => menuLeft.current?.toggle(event)}
+                aria-controls="popup_menu_left"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-label="Abrir menú de navegación"
+            />
         </nav>
     );
 }

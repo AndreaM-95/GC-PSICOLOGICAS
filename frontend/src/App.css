@@ -16,3 +16,11 @@ html{
 .p-card-content{
   padding: 0px;
 }
+
+.p-icon-field, .p-icon-field-right{
+  width: 100%;
+}
+
+.p-password-input.p-inputtext.p-component.p-variant-filled{
+  width: 100%;
+}
