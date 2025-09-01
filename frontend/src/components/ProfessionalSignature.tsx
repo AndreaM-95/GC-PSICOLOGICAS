@@ -10,7 +10,7 @@ interface ProfessionalSignatureProps {
 
 export default function ProfessionalSignature({ signature,name, specialty, licenseNumber, document }: ProfessionalSignatureProps) {
     return (
-        <figure className="w-full flex flex-col text-cyan-700 font-bold text-sm italic">
+        <figure className="w-full flex flex-col text-cyan-700 font-bold text-sm italic px-6">
             <Divider />
             <img
                 src={signature}
