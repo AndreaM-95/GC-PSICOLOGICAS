@@ -4,7 +4,7 @@ import PatientInfoCard from "../../components/PatientInfoCard";
 import { Avatar } from "primereact/avatar";
 import NavButton from "../../components/NavButton";
 
-export default function Gestiones() {
+export default function MedicalAppointmentManagement() {
     return (
         <main>
             <Navbar/>
