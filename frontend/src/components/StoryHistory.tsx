@@ -42,7 +42,7 @@ export default function StoryHistory() {
             style={{padding: '0px', width: '85%', margin:'auto' }}
         >
             <div className="flex justify-start gap-3 pb-3">
-                <NavButton label="Ver detalle completo" icon="pi pi-eye" btnFunction={() => {}} />
+                <NavButton type={"button"} label="Ver detalle completo" icon="pi pi-eye" btnFunction={() => {}} />
             </div>
 
             <ScrollPanel style={{ height: '200px' }}>

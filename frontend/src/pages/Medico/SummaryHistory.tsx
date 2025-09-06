@@ -33,7 +33,7 @@ export default function SummaryHistory() {
             <InfoUserCard patient={patient} />
 
             <div className="m-auto w-[85%] flex justify-end gap-3 py-3">
-                <NavButton label="Crear historia" icon="pi pi-plus" btnFunction={() => {}} />
+                <NavButton type={"button"} label="Crear historia" icon="pi pi-plus" btnFunction={() => {}} />
             </div>
 
             <StoryHistory/>

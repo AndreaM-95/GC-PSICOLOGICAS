@@ -21,8 +21,8 @@ export default function DetailsMedicalHistory() {
         </div>
 
         <div className="flex justify-end w-3/4 gap-4 mt-2 mx-auto pb-4">
-            <NavButton icon="pi pi-send" label="Enviar al correo" btnFunction={sendHistoryByEmail} />
-            <NavButton label="Volver" btnFunction={returnToPage} />
+            <NavButton type={"button"} icon="pi pi-send" label="Enviar al correo" btnFunction={sendHistoryByEmail} />
+            <NavButton type={"button"} label="Volver" btnFunction={returnToPage} />
         </div>
 
         <PatientDataSummary/>  

@@ -7,10 +7,11 @@ import SummaryHistory from './pages/Medico/SummaryHistory'
 import DetailsMedicalHistory from './pages/Medico/DetailsMedicalHistory'
 import SearchMedicalHistory from './pages/Admin/SearchMedicalHistory'
 import CreateMedicalHistory from './pages/Medico/CreateMedicalHistory'
+import CreateAuthorization from './pages/Medico/CreateAuthorization'
 */
 
+import Gestiones from './pages/Admin/Gestiones'
 import Footer from './components/Footer'
-import CreateAuthorization from './pages/Medico/CreateAuthorization'
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
       <DetailsMedicalHistory />     //Falta semántica
       <SearchMedicalHistory/>       //Falta semántica
       <CreateMedicalHistory/> 
-      */}
       <CreateAuthorization/>
+      */}
+      <Gestiones/>
       <Footer />
     </>
   )

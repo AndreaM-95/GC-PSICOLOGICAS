@@ -1,7 +1,6 @@
 import { Card } from "primereact/card";
 import React from "react";
 
-
 interface Patient {
     nameUser: string,
     lastNameUser: string,
