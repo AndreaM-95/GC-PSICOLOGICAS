@@ -24,11 +24,11 @@ const patient = {
 
 export default function SummaryHistory() {
     return (
-        <div className="pb-8">
+        <main className="pb-8">
             <Navbar />
-            <div className="m-auto w-[85%]">
+            <header className="m-auto w-[85%]">
                 <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">Historia clínica</h1>
-            </div>
+            </header>
                         
             <InfoUserCard patient={patient} />
 
@@ -37,6 +37,6 @@ export default function SummaryHistory() {
             </div>
 
             <StoryHistory/>
-        </div>
+        </main>
     )
 }

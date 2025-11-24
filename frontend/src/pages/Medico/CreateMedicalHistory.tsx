@@ -108,7 +108,7 @@ export default function CreateMedicalHistory() {
         <main className="pb-8">
             <Navbar />
             <header className="m-auto w-3/4">
-                <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">Detalles de la historia clínica</h1>
+                <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">Crear registro de consulta</h1>
             </header>
             <PatientDataSummary/>
 

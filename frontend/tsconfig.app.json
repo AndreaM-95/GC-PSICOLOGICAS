@@ -19,7 +19,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    //"erasableSyntaxOnly": true, Me impide usar enums
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },

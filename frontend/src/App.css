@@ -24,3 +24,7 @@ html{
 .p-password-input.p-inputtext.p-component.p-variant-filled{
   width: 100%;
 }
+
+.contrasena input{
+  width: 100%;
+}

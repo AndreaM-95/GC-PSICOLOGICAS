@@ -5,58 +5,44 @@ import { Tag } from 'primereact/tag';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button';
+import { EstadosCita, type ICita } from '../types';
 
-
-interface Appointment {
-    id: number;
-    stateAppointmentId: number;
-    stateAppointment: string;
-    date: string;
-    time: string;
-    psychologistId: number;
-    psychologistName: string;
-    clientId: number;
-    clientName: string;
-    sessionType: string;
-    placeMeetingId: number;
-    placeMeeting: string;
-    timeAppointment: string;
-}
-
-export default function AppointmentCard({ appointment }: { appointment: Appointment }) {
+export default function AppointmentCard( citaMedica: ICita) {
     const appointmentFields = [
-        { label: 'Fecha', value: `${appointment.date} | ${appointment.time}` },
-        { label: 'Psicólogo', value: appointment.psychologistName },
-        { label: 'Paciente', value: appointment.clientName },
-        { label: 'Tipo de sesión', value: appointment.sessionType },
-        { label: 'Lugar de la cita', value: appointment.placeMeeting },
-        { label: 'Duración', value: appointment.timeAppointment },
+        { label: 'Fecha', value: `${citaMedica.fechaCita.toLocaleDateString("es-CO", { weekday: "long", day: "numeric", month: "long" })}` },
+        { label: 'Hora', value: `${citaMedica.horaCita.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", hour12: true })}` },
+        { label: 'Psicólogo', value: `${citaMedica.idMedico.idPersona.nombres} ${citaMedica.idMedico.idPersona.apellidos}` },
+        { label: 'Paciente', value: `${citaMedica.idPaciente.idPersona.nombres} ${citaMedica.idPaciente.idPersona.apellidos}` },
+        { label: 'Motivo', value: citaMedica.motivo },
+        { label: 'Modalidad', value: citaMedica.modalidad },
+        { label: 'Duración', value: "1 hora" },
     ];
 
-    const isDisabled = appointment.stateAppointment !== "Confirmada"; // true si NO está confirmada
+    const isDisabled = citaMedica.idEstadoCita !== "Confirmada"; //Si la cita no está confirmada
 
-    const StateAppointmentColor = (state: string) => {
+    //Falta no asistida
+    const StateAppointmentColor = (state: EstadosCita) => {
         switch (state) {
-            case "Confirmada":
-                return "success";
-            case "Asistida":
+            case state = EstadosCita.NOASISTIDA:
+                return "warning";
+            case  state = EstadosCita.ASISTIDA:
                 return "info";
-            case "Cancelada":
+            case  state = EstadosCita.CANCELADA:
                 return "danger";
             default:
-                return "warning";
+                return "success";
         }
     }
 
     const rescheduleTheAppointment = () => {
         if (!isDisabled) {
-            console.log("Historial de la cita:", appointment.id);
+            console.log("Historial de la cita:", citaMedica.idEstadoCita);
         }
     };
 
     const cancelAppointment = () => {
         if (!isDisabled) {
-            console.log("Cancelar cita:", appointment.id);
+            console.log("Cancelar cita:", citaMedica.idEstadoCita);
         }
     };
 
@@ -65,8 +51,8 @@ export default function AppointmentCard({ appointment }: { appointment: Appointm
             style={{ background: '#f1faee', padding: '0px' }}
         >
             <div className="flex flex-wrap p-0">
-                <Tag severity={StateAppointmentColor(appointment.stateAppointment)} value={appointment.stateAppointment} className='w-4/12'></Tag>
-                <div className='flex justify-end gap-2 w-[calc(100%-33.33%)]'>
+                <Tag severity={StateAppointmentColor(citaMedica.idEstadoCita as EstadosCita)} value={citaMedica.idEstadoCita} className='w-[40%]'></Tag>
+                <div className='flex justify-end gap-2 w-[calc(100%-40%)]'>
                     <Button icon="pi pi-history" disabled={isDisabled} aria-label="Filter" onClick={rescheduleTheAppointment} style={{ width: '2rem', height: '2rem' }} />
 
                     <Button icon="pi pi-times" disabled={isDisabled} aria-label="Filter" onClick={cancelAppointment} style={{ width: '2rem', height: '2rem' }} />
@@ -74,16 +60,15 @@ export default function AppointmentCard({ appointment }: { appointment: Appointm
             </div>
 
             <Divider />
-            <div className="grid grid-cols-[40%_60%] gap-1">
+            <div className="grid grid-cols-[40%_60%]">
                 {appointmentFields.map((field, index) => (
                     <React.Fragment key={index}>
-                    <label className="text-cyan-700 w-full font-bold mb-2 text-sm content-center">{field.label}</label>
-                    <label className="text-cyan-700 w-full mb-2 text-sm content-center">{field.value}</label>
+                    <label className="text-cyan-700 w-full font-bold mb-2 text-[13px] content-center">{field.label}</label>
+                    <label className="text-cyan-700 w-full mb-2 text-[13px] content-center">{field.value}</label>
                     </React.Fragment>
                 ))}
             </div>
         </Card>
-
     )
 }
         

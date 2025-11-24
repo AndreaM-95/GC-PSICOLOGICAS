@@ -9,6 +9,7 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import '../App.css';
 import React from 'react';
 import NavButton from '../components/NavButton';
+import '../App.css';
 
 interface TypeDocuments {
     id: number;
@@ -51,7 +52,7 @@ export default function Register() {
         { label: 'EPS', component: <InputText placeholder="Digite aquí.." className="w-full" /> },
         { label: 'Contacto de emergencia', component: <InputText placeholder="Digite aquí.." className="w-full" /> },
         { label: 'Número contacto de emergencia', component: <InputMask mask="99-9999999999" placeholder="57-333333333" className="w-full" /> },
-        { label: 'Cree una contraseña', component: <Password toggleMask placeholder="Ingrese su contraseña.." className="w-full" /> }
+        { label: 'Cree una contraseña', component: <Password toggleMask placeholder="Ingrese su contraseña.." className="contrasena" /> }
     ];
 
     const returnToLogin = () => {
@@ -63,27 +64,28 @@ export default function Register() {
     };
 
     return (
-        <main className="flex">
-        {/* Imagen decorativa */}
-        <div className="w-1/2 flex items-center justify-center">
-            <img src="/reg.png" width="450" height="450" alt="Registro de usuario" />
-        </div>
+        <main className="flex h-full">
+            {/* Imagen decorativa */}
+            <div className="w-1/2 flex items-center justify-center">
+                <img src="/reg.png" width="450" height="450" alt="Registro de usuario" />
+            </div>
 
-        <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
-            <header className="text-center mb-4 mt-4">
-                <h1 className="text-cyan-700 font-bold text-3xl">Regístrate como paciente activo</h1>
-                <p id="form-description" className="text-cyan-700 text-lg italic">Todos los datos son obligatorios</p>
-            </header>
-
+            <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center h-[850px]">
+                <header className="text-center mb-12">
+                    <h1 className="text-cyan-700 font-bold text-3xl">Regístrate como paciente activo</h1>
+                    <p id="form-description" className="text-cyan-700 text-lg italic">Todos los datos son obligatorios</p>
+                </header>
+                
+                 {/* Formulario de registro */}
                 <form
-                    className='flex flex-col items-center '
+                    className='flex flex-col items-center w-full'
                     aria-describedby="form-description"
                     onSubmit={(e) => {
                         e.preventDefault();
                         registerUser();
                     }}
                 >
-                    <ScrollPanel style={{ width: '85%', height: '400px' }}>
+                    <ScrollPanel style={{ width: '85%', height: '500px' }}>
                         <div className="grid grid-cols-[40%_60%] gap-2 bg-cyan-100 mx-auto rounded-lg px-8 py-4">
                             {fields.map((field, index) => {
                                 const inputId = `field-${index}`;
@@ -91,7 +93,7 @@ export default function Register() {
                                     <React.Fragment key={index}>
                                         <label
                                             htmlFor={inputId}
-                                            className="text-cyan-700 font-bold mb-2 content-center text-sm"
+                                            className="text-cyan-700 font-bold mb-2 content-center text-sm w-full"
                                         >
                                             {field.label}
                                         </label>

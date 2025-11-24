@@ -37,8 +37,6 @@ const DataMenu = [
 
 export default function Menu() {
     //TODO: Implementar el nombre del usuario
-
-
     return (
         <main>
             <Navbar/>
@@ -54,7 +52,7 @@ export default function Menu() {
                             <MenuCard
                                 icon={item.icon}
                                 title={item.title}
-                                subtitle={item.subtitle}
+                                description={item.subtitle}
                                 url={item.url}
                             />
                         </li>

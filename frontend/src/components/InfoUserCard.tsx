@@ -21,7 +21,7 @@ interface Patient {
 }
 
 export default function InfoUserCard({ patient }: { patient: Patient }) {
-
+    //TODO: Reemplazar estructura, usar la interfaz y conexión con BDD
     const patientFields = [
         { label: 'Nombres', value: patient.nameUser },
         { label: 'Apellidos', value: patient.lastNameUser },

@@ -5,14 +5,15 @@ interface InputDropdownProps {
     textField: string;
     value: string;
     onChange: (value: string) => void;
+    isVisible?: boolean;
     id?: string;
 }
 
-export default function InputDropdown({ dataDrops, textField, value, onChange, id }: InputDropdownProps) {
+export default function InputDropdown({ dataDrops, textField, value, onChange, isVisible, id }: InputDropdownProps) {
     const inputId = id || textField.toLowerCase().replace(/\s+/g, "-");
     return (
-        <div className="w-full mt-4 px-4">
-            <label htmlFor={inputId} className="block text-cyan-700 mb-2">
+        <div className="w-full mt-4">
+            <label htmlFor={inputId} className="block text-cyan-700 mb-2" hidden={isVisible}>
                 {textField}
             </label>
             <Dropdown

@@ -1,3 +1,5 @@
+import type { EstadoPersona, RolPersona } from "./enums"
+
 export interface IPersona{
   idPersona: number,
   nombres: string,
@@ -13,25 +15,14 @@ export interface IPersona{
   nombresContactoEmergencia: string,
   celularContactoEmergencia: number,
   contrasena: string,
-  idEstado: estadoPersona.ACTIVO
-}
-
-export enum estadoPersona{
-    ACTIVO = 'activo',
-    INACTIVO = 'inactivo',
-}
-
-export enum rolPersona{
-    ADMIN = 'admin',
-    MEDICO = 'medico',
-    PACIENTE = 'paciente'
+  idEstado: EstadoPersona
 }
 
 export interface IAdmin{
     idAdministrativo: number,
     idPersona: IPersona,
     cargo: string,
-    rol: rolPersona.ADMIN
+    rol: RolPersona
 }
 
 export interface IMedico{
@@ -39,12 +30,12 @@ export interface IMedico{
     idPersona: IPersona,
     licencia: string,
     especialidad: string,
-    rol: rolPersona.MEDICO
+    rol: RolPersona
 }
 
 export interface IPaciente{
     idPaciente: number,
     idPersona: IPersona,
     fechaRegistro: Date,
-    rol: rolPersona.PACIENTE
+    rol: RolPersona
 }

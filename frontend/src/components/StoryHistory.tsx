@@ -6,6 +6,7 @@ import '../App.css'
 import NavButton from "./NavButton";
 
 export default function StoryHistory() {
+    //TODO: Reemplazar con información de la BDD
     const history = [
         {
             date: "2023-03-01",
