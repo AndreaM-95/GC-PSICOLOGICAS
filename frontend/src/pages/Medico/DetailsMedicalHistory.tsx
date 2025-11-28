@@ -1,16 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/Navbar";
 import DetailsMedicalCard from "../../components/DetailsMedicalCard";
 import NavButton from "../../components/NavButton";
 import PatientDataSummary from "../../components/PatientDataSummary";
 
+
 //TODO: Traer los datos de la historia clínica
 export default function DetailsMedicalHistory() {
+  const navigate = useNavigate();
+
   const sendHistoryByEmail = () => {
     // TODO: Implement email sending logic
   };
 
   const returnToPage = () => {
-    // TODO: Implement return to previous page logic
+    navigate('/summaryHistory');
   };
 
   return (

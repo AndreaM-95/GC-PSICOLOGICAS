@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Password } from 'primereact/password';
 import { Avatar } from 'primereact/avatar';
 import { InputText } from 'primereact/inputtext';
@@ -6,10 +7,10 @@ import NavButton from '../components/NavButton';
 import '../App.css';
 
 export default function Login() {
+    const navigate = useNavigate();
     //const [value, setValue] = useState<string>('');
     const login = () => {
-        // Logic to remember the password
-        window.open('https://react.dev', '_blank')
+        navigate('/menu');
     }
 
     const rememberPassword = () => {
@@ -18,8 +19,7 @@ export default function Login() {
     }
 
     const registerUser = () => {
-        // Logic to register the user
-        //window.open('https://react.dev', '_blank')
+        navigate('/register');
     }
 
     return (

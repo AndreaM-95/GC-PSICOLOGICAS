@@ -1,36 +1,14 @@
-//import Menu from './pages/Menu'
-/**/
-// import Register from './pages/Register'
-// import Login from './pages/Login' //HASTA AQUÍ HAY SEMÁNTICA
-//import ListDoctorAppointments from './pages/Admin/ListDoctorAppointments'
-// import SummaryHistory from './pages/Medico/SummaryHistory'
-// import DetailsMedicalHistory from './pages/Medico/DetailsMedicalHistory'
-// import SearchMedicalHistory from './pages/Admin/SearchMedicalHistory'
-// import CreateMedicalHistory from './pages/Medico/CreateMedicalHistory'
- import CreateAuthorization from './pages/Medico/CreateAuthorization'
-// import MedicalAppointmentManagement from './pages/Admin/MedicalAppointmentManagement'
-
+import { BrowserRouter } from 'react-router-dom';
 import Footer from './components/Footer'
-//import AppointmentManagement from './pages/Admin/AppointmentManagement'
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
-    <>
-      {/*
-      <Login /> 
-      <Register />
-      <Menu/>
-      <AppointmentManagement/>      // Cita médica - ADMIN
-      <ListDoctorAppointments />    // Agenda del médico - ADMIN
-      <DetailsMedicalHistory />     //Falta semántica
-      <SummaryHistory />            //Falta semántica
-      <SearchMedicalHistory/>       //Falta semántica
-      <CreateMedicalHistory/> 
-      */}
-      <CreateAuthorization/>
+    <BrowserRouter>
+      <AppRoutes />
       <Footer />
-    </>
-  )
+    </BrowserRouter>
+  );
 }
 
 export default App

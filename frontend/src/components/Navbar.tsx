@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'; 
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
 import type { MenuItem } from 'primereact/menuitem';
@@ -6,6 +7,7 @@ import { Toast } from 'primereact/toast';
 import 'primeicons/primeicons.css';
 
 export default function Navbar() {
+    const navigate = useNavigate();
     const menuLeft = useRef<Menu>(null);
     const toast = useRef<Toast>(null);
     const items: MenuItem[] = [
@@ -14,19 +16,26 @@ export default function Navbar() {
             items: [
                 {
                     label: 'Inicio',
-                    icon: 'pi pi-home'
+                    icon: 'pi pi-home',
+                    command: () => navigate('/menu')
                 },
                 {
                     label: 'Perfil',
-                    icon: 'pi pi-user'
+                    icon: 'pi pi-user',
+                    command: () => navigate('/profile')
                 },
                 {
                     label: 'Salir',
-                    icon: 'pi pi-sign-out'
+                    icon: 'pi pi-sign-out',
+                    command: () => logout()
                 }
             ]
         }
     ];
+
+    const logout = () => {
+        navigate('/login');
+    }
 
     return (
         <nav className="w-full bg-cyan-200 p-2" aria-label="Menú principal">

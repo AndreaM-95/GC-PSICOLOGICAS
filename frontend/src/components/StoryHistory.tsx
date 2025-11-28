@@ -4,8 +4,12 @@ import { DataTable } from "primereact/datatable";
 import { ScrollPanel } from "primereact/scrollpanel";
 import '../App.css'
 import NavButton from "./NavButton";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function StoryHistory() {
+    const navigate = useNavigate();
+
     //TODO: Reemplazar con información de la BDD
     const history = [
         {
@@ -43,7 +47,7 @@ export default function StoryHistory() {
             style={{padding: '0px', width: '85%', margin:'auto' }}
         >
             <div className="flex justify-start gap-3 pb-3">
-                <NavButton type={"button"} label="Ver detalle completo" icon="pi pi-eye" btnFunction={() => {}} />
+                <NavButton type={"button"} label="Ver detalle completo" icon="pi pi-eye" btnFunction={() => {navigate('/detailsMedicalHistory');}} />
             </div>
 
             <ScrollPanel style={{ height: '200px' }}>

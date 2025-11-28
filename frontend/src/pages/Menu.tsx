@@ -2,40 +2,39 @@ import MenuCard from "../components/MenuCard";
 import 'primeicons/primeicons.css';
 import Navbar from "../components/Navbar";
 
-const DataMenu = [
-    {
-        icon: "pi pi-user-plus",
-        title: "Gestión del personal",
-        subtitle: "Accede a la información del personal activo.",
-        url: "/perfil"
-    },
-    {
-        icon: "pi pi-users",
-        title: "Gestión del paciente",
-        subtitle: "Accede a la información del paciente.",
-        url: "/citas"
-    },
-    {
-        icon: "pi pi-heart",
-        title: "Gestión de citas",
-        subtitle: "Accede a la gestión de una cita médica.",
-        url: "/configuracion"
-    },
-    {
-        icon: "pi pi-address-book",
-        title: "Gestión de la historia clínica",
-        subtitle: "Accede a la historia clínica de los pacientes.",
-        url: "/configuracion"
-    },
-    {
-        icon: "pi pi-file-check",
-        title: "Gestión de las autorizaciones",
-        subtitle: "Accede a las autorizaciones pendientes de los pacientes.",
-        url: "/autorizaciones"
-    }
-];
-
 export default function Menu() {
+    const DataMenu = [
+        {
+            icon: "pi pi-user-plus",
+            title: "Gestión del personal",
+            subtitle: "Accede a la información del personal activo.",
+            url: "/perfil"
+        },
+        {
+            icon: "pi pi-users",
+            title: "Gestión del paciente",
+            subtitle: "Accede a la información del paciente.",
+            url: "/citas"
+        },
+        {
+            icon: "pi pi-heart",
+            title: "Gestión de citas",
+            subtitle: "Accede a la gestión de una cita médica.",
+            url: "/appointmentManagement"
+        },
+        {
+            icon: "pi pi-address-book",
+            title: "Gestión de la historia clínica",
+            subtitle: "Accede a la historia clínica de los pacientes.",
+            url: "/summaryHistory"
+        },
+        {
+            icon: "pi pi-file-check",
+            title: "Gestión de las autorizaciones",
+            subtitle: "Accede a las autorizaciones pendientes de los pacientes.",
+            url: "/autorizaciones"
+        }
+    ];
     //TODO: Implementar el nombre del usuario
     return (
         <main>

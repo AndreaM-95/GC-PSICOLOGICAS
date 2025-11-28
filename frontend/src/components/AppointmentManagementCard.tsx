@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Card } from "primereact/card";
 import NavButton from "./NavButton";
 import { Calendar } from "primereact/calendar";
 import InputDropdown from "./InputDropdown";
 
 export default function AppointmentManagementCard({isActiveProp = true}: {isActiveProp?: boolean}) {
+    const navigate = useNavigate();
+
     const [date, setDate] = useState<Date>();
     const [psychologist, setPsychologist] = useState<string>("");
     const [placeMeeting, setPlaceMeeting] = useState<string>("");
@@ -66,7 +69,7 @@ export default function AppointmentManagementCard({isActiveProp = true}: {isActi
 
             <div className="col-span-2 flex justify-end gap-4 mt-6">
                 <NavButton type="submit" label="Asignar cita" btnFunction={() => {}} />
-                <NavButton type="button" label="Volver" btnFunction={() => {}} />
+                <NavButton type="button" label="Volver" btnFunction={() => {navigate('/menu');}} />
             </div>
         </form>
     </Card>

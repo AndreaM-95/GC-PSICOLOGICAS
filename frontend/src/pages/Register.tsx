@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import { Password } from 'primereact/password';
 import { InputText } from 'primereact/inputtext';
@@ -22,6 +23,7 @@ interface Genres {
 }
 
 export default function Register() {
+    const navigate = useNavigate();
     const [selectedTypeDoc, setSelectedTypeDoc] = useState<TypeDocuments | null>(null);
     const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
     const [date, setDate] = useState<Date | null>(null);
@@ -56,7 +58,7 @@ export default function Register() {
     ];
 
     const returnToLogin = () => {
-        //window.open('https://react.dev', '_blank');
+        navigate('/login');
     };
 
     const registerUser = () => {

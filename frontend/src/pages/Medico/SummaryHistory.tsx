@@ -2,6 +2,7 @@ import InfoUserCard from "../../components/InfoUserCard";
 import Navbar from "../../components/Navbar";
 import StoryHistory from "../../components/StoryHistory";
 import NavButton from "../../components/NavButton";
+import { useNavigate } from 'react-router-dom';
 
 const patient = {
     nameUser: "John",
@@ -23,6 +24,8 @@ const patient = {
 };
 
 export default function SummaryHistory() {
+  const navigate = useNavigate();
+
     return (
         <main className="pb-8">
             <Navbar />
@@ -33,7 +36,7 @@ export default function SummaryHistory() {
             <InfoUserCard patient={patient} />
 
             <div className="m-auto w-[85%] flex justify-end gap-3 py-3">
-                <NavButton type={"button"} label="Crear historia" icon="pi pi-plus" btnFunction={() => {}} />
+                <NavButton type={"button"} label="Crear historia" icon="pi pi-plus" btnFunction={() => {navigate('/createMedicalHistory');}} />
             </div>
 
             <StoryHistory/>

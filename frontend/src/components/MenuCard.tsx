@@ -1,4 +1,5 @@
 import { Avatar } from 'primereact/avatar';
+import { useNavigate } from 'react-router-dom';
 
 interface MenuCardProps {
     icon: string;
@@ -8,9 +9,12 @@ interface MenuCardProps {
 }
 
 export default function MenuCard(props: MenuCardProps) {
+    const navigate = useNavigate();
     return (
         <a
-            href={props.url}
+            onClick={() => navigate(props.url)}
+            role="button"
+            tabIndex={0}
             className="block no-underline transition-transform duration-200 hover:scale-101 hover:shadow-lg"
             style={{ background: '#f1faee', display: 'block', padding: '1rem', borderRadius: '8px' }}
             aria-label={`Ir a ${props.title}`}

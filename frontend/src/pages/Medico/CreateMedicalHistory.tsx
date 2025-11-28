@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { ScrollPanel } from "primereact/scrollpanel";
 import Navbar from "../../components/Navbar";
 import NavButton from "../../components/NavButton";
@@ -25,6 +26,7 @@ interface InfoConsulta {
 
 
 export default function CreateMedicalHistory() {
+    const navigate = useNavigate();
     const [reasonAppoinment, setReasonAppoinment] = useState<string>("");       //Motivo de la cita
     const [observation, setObservation] = useState<string>("");                 //Observaciones iniciales
     const [mentalHistory, setMentalHistory] = useState<string>("");             //Antecedentes psicológicos o psiquiátricos
@@ -101,7 +103,7 @@ export default function CreateMedicalHistory() {
     };
 
     const returnToPage = () => {
-        // TODO: Implement return to previous page logic
+        navigate('/summaryHistory');
     };
 
     return (
