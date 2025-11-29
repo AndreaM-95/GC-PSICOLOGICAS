@@ -4,6 +4,14 @@
 
 ```
 npm install react-router-dom
+
+npm install --save-dev @types/class-validator
+npm install class-validator class-transformer
+npm install @nestjs/typeorm typeorm mysql2
+npm install -D typeorm ts-node
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+npm install --save-dev jest @types/jest ts-jest
+npm install --save @nestjs/swagger swagger-ui-express
 ```
 
 ---
@@ -20,6 +28,9 @@ npm install react-router-dom
 
 # AQUITECTURA
 ## Cliente
+
+
+## Servidor
 ```
 src/
  ├── common/
@@ -33,10 +44,19 @@ src/
  │   ├── 1763522992399-SeedUsers.ts
  │   └── 1763523631917-InitMigration.ts 
  ├── modules/
+ |   ├── appointments/
+ │   |   ├── dto/
+ |   │   |   └── createAppointment.dto.ts
+ │   |   ├── entities/
+ |   │   |   └── Appointment.entity.ts
+ │   |   ├── test/
+ |   │   |   ├── appointments.controller.spec.ts
+ |   │   |   └── appointments.service.spec.ts
+ │   |   ├── appointments.controller.ts
+ │   |   ├── appointments.module.ts
+ │   |   └── appointments.service.ts
  |   ├── auth/
  │   |   ├── dto/
- |   │   |   ├── admin-create-user.dto.ts
- |   │   |   ├── change-password-user.dto.ts
  |   │   |   ├── login-user.dto.ts
  |   │   |   └── register.dto.ts
  │   |   ├── guards/
@@ -54,51 +74,31 @@ src/
  │   |   ├── auth.controller.ts
  │   |   ├── auth.module.ts
  │   |   └── auth.service.ts
- |   ├── medicalAuthorization/
+ |   ├── medicalAuthorizations/
  │   |   ├── dto/
- |   │   |   ├── create-payment-from-trip.dto.ts
- |   │   |   ├── earnings-query.dto.ts
- |   │   |   ├── passenger-payment-history-query.dto.ts
- |   │   |   └── payment-response.dto.ts
+ |   │   |   └── create-medical-authorization.dto.ts
  │   |   ├── entities/
- |   │   |   └── Payment.entity.ts
+ |   │   |   └── MedicalAuthorization.entity.ts
  │   |   ├── test/
  |   │   |   ├── payment.controller.spec.ts
  |   │   |   └── payment.service.spec.ts
  │   |   ├── payment.controller.ts
  │   |   ├── payment.module.ts
  │   |   └── payment.service.ts
- |   ├── appointment/
+ |   ├── medical-histories/
  │   |   ├── dto/
- |   │   |   └── createRating.dto.ts
+ |   │   |   └── create-medical-history.dto.ts
  │   |   ├── entities/
- |   │   |   └── Rating.entity.ts
+ |   │   |   └── MedicalHistory.entity.ts
  │   |   ├── test/
- |   │   |   ├── ratings.controller.spec.ts
- |   │   |   └── ratings.service.spec.ts
- │   |   ├── ratings.controller.ts
- │   |   ├── ratings.module.ts
- │   |   └── ratings.service.ts
- |   ├── medicalRecord/
- │   |   ├── dto/
- |   │   |   └── create-medicalRecord.dto.ts
- │   |   ├── entities/
- |   │   |   ├── locations.entity.ts
- |   │   |   └── trip.entity.ts
- │   |   ├── test/
- |   │   |   ├── trips.controller.spec.ts
- |   │   |   └── trips.service.spec.ts
- │   |   ├── trips.controller.ts
- │   |   ├── trips.module.ts
- │   |   └── trips.service.ts
+ |   │   |   ├── medical-histories.controller.spec.ts
+ |   │   |   └── medical-histories.service.spec.ts
+ │   |   ├── medical-histories.controller.ts
+ │   |   ├── medical-histories.module.ts
+ │   |   └── medical-histories.service.ts
  |   └──  users/
  │       ├── dto/
- |       |   ├── change-password.dto.ts
- |       |   ├── createUser.dto.ts
- |       |   ├── recover-password.dto.ts
- |       |   ├── updateDriverStatus.dto.ts
- |       |   ├── updateUserAdmin.dto.ts
- |       |   └── updateUserSelf.dto.ts
+ |       |   └── createUser.dto.ts
  │       ├── entities/
  |       |   └── User.entity.ts
  │       ├── test/
@@ -113,5 +113,3 @@ src/
  ├── app.service.ts
  └── main.ts
 ```
-
-## Servidor
