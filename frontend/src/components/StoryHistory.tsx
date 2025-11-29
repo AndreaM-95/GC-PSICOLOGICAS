@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function StoryHistory() {
     const navigate = useNavigate();
-
     //TODO: Reemplazar con información de la BDD
     const history = [
         {
