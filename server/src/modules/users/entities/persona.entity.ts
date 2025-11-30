@@ -43,8 +43,8 @@ export class Persona {
   @Column({ length: 100 })
   ciudadResidencia: string;
 
-  @Column()
-  celular: number;
+  @Column({ type: 'varchar', length: 20 })
+  celular: string;
 
   @Column({ length: 100, unique: true })
   correo: string;
@@ -55,8 +55,8 @@ export class Persona {
   @Column({ length: 100 })
   nombresContactoEmergencia: string;
 
-  @Column()
-  celularContactoEmergencia: number;
+  @Column({ type: 'varchar', length: 20 })
+  celularContactoEmergencia: string;
 
   @Column({ length: 100 })
   contrasena: string;

@@ -32,10 +32,9 @@ export class PersonaBaseDto {
     ciudadResidencia: string;
 
     @IsNotEmpty({ message: 'cellphone number is required'})
-    @IsNumber()
-    @Min(10)
-    @Max(10, { message: "Phone number must have exactly 10 digits" })
-    celular: number;
+    @IsString()
+    @Length(10,10, { message: "Phone number must have exactly 10 digits" })
+    celular: string;
     
     @IsNotEmpty({ message: 'Email is required'})
     @IsString()
@@ -51,17 +50,16 @@ export class PersonaBaseDto {
     nombresContactoEmergencia: string;
 
     @IsNotEmpty({ message: 'The emergency contact number is required'})
-    @IsNumber()
-    @Min(10)
-    @Max(10, { message: "Phone number must have exactly 10 digits" })
-    celularContactoEmergencia: number;
+    @IsString()
+    @Length(10,10, { message: "Phone number must have exactly 10 digits" })
+    celularContactoEmergencia: string;
 
     @IsNotEmpty({ message: 'Password is required'})
     @IsString()
     @Length(6, 10, { message: 'The password must be al least 6 characters long and no more than 10 characters'})
     contrasena: string;
 
-    @IsNotEmpty({ message: 'Rol is required'})
-    @IsEnum(Roles)
-    rol: Roles;
+    // @IsNotEmpty({ message: 'Rol is required'})
+    // @IsEnum(Roles)
+    // rol: Roles;
 }
