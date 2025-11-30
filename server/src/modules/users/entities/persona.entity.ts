@@ -1,3 +1,8 @@
+import { Administrativo } from './administrativo.entity';
+import { EstadosUsuario, Genero, Roles } from '../../../common/enums';
+import { Profesional } from './profesional.entity';
+import { Cita } from '../../appointments/entities/cita.entity';
+import { HistoriaClinica } from '../../medical-histories/entities/historiaClinica.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,17 +11,10 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
 } from 'typeorm';
 
-import { Profesional } from './profesional.entity';
-import { Administrativo } from './administrativo.entity';
-import { Cita } from './cita.entity';
-import { HistoriaClinica } from './historiaClinica.entity';
-import { EstadosUsuario, Roles } from 'src/common/enums';
-
-@Entity('user')
-export class User {
+@Entity('persona')
+export class Persona {
   @PrimaryGeneratedColumn()
   idPersona: number;
 
@@ -35,26 +33,30 @@ export class User {
   @Column({ type: 'date' })
   fechaNacimiento: Date;
 
-  @Column({ length: 20 })
-  genero: string;
+  @Column({
+    type: 'enum',
+    enum: Genero,
+    default: Genero.OTRO,
+  })
+  genero: Genero;
 
   @Column({ length: 100 })
   ciudadResidencia: string;
 
   @Column()
-  celular: string;
+  celular: number;
 
   @Column({ length: 100, unique: true })
   correo: string;
 
-  @Column({ length: 100, nullable: true })
-  eps?: string;
+  @Column({ length: 100 })
+  eps: string;
 
-  @Column({ type: 'text', nullable: true })
-  nombresContactoEmergencia?: string;
+  @Column({ length: 100 })
+  nombresContactoEmergencia: string;
 
-  @Column({ nullable: true })
-  celularContactoEmergencia?: string;
+  @Column()
+  celularContactoEmergencia: number;
 
   @Column({ length: 100 })
   contrasena: string;
