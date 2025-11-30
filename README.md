@@ -36,6 +36,16 @@ src/
  ├── common/
  │   ├── decorators
  │   │   └── user.decorator.ts
+ │   ├── enums
+ │   |   ├── Especialidades.ts
+ │   |   ├── EstadosAutorizacion.ts
+ │   |   ├── EstadosCita.ts
+ │   |   ├── EstadosUsuario.ts
+ │   |   ├── Generos.ts
+ │   |   ├── index.ts
+ │   |   ├── ModalidadCita.ts
+ │   |   ├── Roles.ts
+ │   |   └── TipoAntecedente.ts
  │   ├── exceptions
  │   |   └── custom-http.exception.ts
  │   └──  filters
@@ -100,7 +110,9 @@ src/
  │   |   └── medical-histories.service.ts
  |   └──  users/
  │       ├── dto/
- |       |   └── createUser.dto.ts
+ |       |   ├── crear-admin.dto.ts
+ |       |   ├── crear-profesional.dto.ts
+ |       |   └── persona-base.dto.ts
  │       ├── entities/
  |       |   ├── administrativo.entity.ts
  |       |   ├── persona.entity.ts

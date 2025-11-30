@@ -1,4 +1,5 @@
 export * from "./EstatosUsuario"
+export * from "./TipoDocumento"
 export * from "./Generos"
 export * from "./Roles"
 export * from "./Especialidades"

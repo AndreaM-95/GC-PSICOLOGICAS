@@ -1,6 +1,7 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsString, Length, Max, Min } from "class-validator";
+import { IsString, IsEmail, IsNumber, IsDateString, IsEnum, IsNotEmpty, Length, Min, Max } from "class-validator";
+import { Genero, Roles } from "src/common/enums";
 
-export class CreateUserDTO {
+export class PersonaBaseDto {
     @IsNotEmpty({ message: 'Name is required'})
     @IsString()
     nombres: string;
@@ -23,8 +24,8 @@ export class CreateUserDTO {
     fechaNacimiento: string;
 
     @IsNotEmpty({ message: 'Gender is required'})
-    @IsString()
-    genero: string;
+    @IsEnum(Genero)
+    genero: Genero;
 
     @IsNotEmpty({ message: 'City of residence required'})
     @IsString()
@@ -35,6 +36,11 @@ export class CreateUserDTO {
     @Min(10)
     @Max(10, { message: "Phone number must have exactly 10 digits" })
     celular: number;
+    
+    @IsNotEmpty({ message: 'Email is required'})
+    @IsString()
+    @IsEmail()
+    correo: string;
 
     @IsNotEmpty({ message: 'EPS required'})
     @IsString()
@@ -50,12 +56,12 @@ export class CreateUserDTO {
     @Max(10, { message: "Phone number must have exactly 10 digits" })
     celularContactoEmergencia: number;
 
-    @IsNotEmpty({ message: 'Email is required'})
-    @IsString()
-    correo:string;
-
     @IsNotEmpty({ message: 'Password is required'})
     @IsString()
     @Length(6, 10, { message: 'The password must be al least 6 characters long and no more than 10 characters'})
-    constrasena:string;
+    contrasena: string;
+
+    @IsNotEmpty({ message: 'Rol is required'})
+    @IsEnum(Roles)
+    rol: Roles;
 }
