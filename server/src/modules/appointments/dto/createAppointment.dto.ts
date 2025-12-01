@@ -1,30 +1,32 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { ModalidadCita } from "../../../common/enums";
 
-export class CreateAppointmentDTO{
-    @IsNotEmpty({ message: 'Date is required'})
-    fechaCreacion: Date;
-    
-    @IsNotEmpty({ message: 'idAdmin is required'})
+export class CreateAppointmentDTO {
+    @IsNotEmpty()
+    @IsNumber()
     idAdministrativo: number;
 
-    @IsNotEmpty({ message: 'idDoctor is required'})
-    idMedico: number;
+    @IsNotEmpty()
+    @IsNumber()
+    idProfesional: number;
 
-    @IsNotEmpty({ message: 'idPatient is required'})
+    @IsNotEmpty()
+    @IsNumber()
     idPaciente: number;
 
-    @IsNotEmpty({ message: 'idState appointment is required'})
-    idEstadoCita: number;
+    @IsNotEmpty()
+    fechaCita: string;
 
-    @IsNotEmpty({ message: 'Appoinment date is required'})
-    fechaCita: Date;
-
-    @IsNotEmpty({ message: 'Appoinment hour is required'})
-    horaCita: Date;
-    
-    @IsNotEmpty({ message: 'Mode is required'})
+    @IsNotEmpty()
     @IsString()
-    modalidad:string;
+    horaCita: string;   // formato HH:mm
+
+    @IsNotEmpty()
+    @IsEnum(ModalidadCita)
+    modalidad: ModalidadCita;
+
+    @IsOptional()
+    consultorio?: string;
 
     @IsOptional()
     motivo?: string;

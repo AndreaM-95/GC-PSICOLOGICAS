@@ -73,4 +73,6 @@ export class UsersService {
     //Actualizar rol
     //Actualizar estado
     //Actualizar información
+
+    //Eliminar usuario (Solo admin)
 }
