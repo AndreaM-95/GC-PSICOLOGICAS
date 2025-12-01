@@ -7,6 +7,7 @@ import { EstadosCita } from 'src/common/enums';
 import { Persona } from '../users/entities/persona.entity';
 import { Administrativo } from '../users/entities/administrativo.entity';
 import { Profesional } from '../users/entities/profesional.entity';
+import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
 
 @Injectable()
 export class AppointmentsService {
@@ -135,5 +136,93 @@ export class AppointmentsService {
     }
 
     // Reprogramar cita - ADMIN
+    //TODO: Debe tomar el id cuando de click en el botón desde el frontend
+    async adminRescheduleAppointment( updateData: UpdateAppointmentDTO ) {
+        const { idCita, fechaCita, horaCita, modalidad, motivo, consultorio, idProfesional, idAdministrativo } = updateData;
+
+        // 1. Buscar la cita
+        const cita = await this.appointmentRepository.findOne({
+            where: { idCita },
+            relations: ["paciente", "profesional", "profesional.persona", "administrativo", "administrativo.persona"]
+        });
+
+        if (!cita) throw new NotFoundException("La cita no existe");
+
+        // 2. Cambiar profesional si viene en el DTO
+        if (idProfesional) {
+            const profesional = await this.professionalRepository.findOne({
+                where: { idProfesional },
+                relations: ["persona"]
+            });
+            if (!profesional) throw new NotFoundException("Profesional no encontrado");
+            cita.profesional = profesional;
+        }
+
+        // 3. Cambiar administrativo si viene en el DTO
+        if (idAdministrativo) {
+            const administrativo = await this.adminRepository.findOne({ where: { idAdministrativo } });
+            if (!administrativo) throw new NotFoundException("Administrativo no encontrado");
+            cita.administrativo = administrativo;
+        }
+
+        // 4. Validación de fecha
+        if (fechaCita) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const newDate = new Date(fechaCita);
+
+            if (newDate < today) {
+                throw new BadRequestException("La nueva fecha no puede ser anterior a hoy");
+            }
+
+            cita.fechaCita = newDate; // ← CORRECCIÓN
+        }
+
+        // 5. Validación de hora si se cambia
+        if (horaCita) {
+            // Si la reprogramación es hoy
+            if (fechaCita) {
+                const now = new Date();
+                const currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+
+                const newDate = new Date(fechaCita);
+                if (newDate.getTime() === currentDate.getTime()) {
+                    const [h, m] = horaCita.split(":").map(Number);
+
+                    if (h < now.getHours() || (h === now.getHours() && m <= now.getMinutes())) {
+                        throw new BadRequestException("La nueva hora debe ser mayor a la hora actual");
+                    }
+                }
+            }
+
+            cita.horaCita = horaCita;
+        }
+
+        // 6. Otros campos opcionales
+        if (modalidad) cita.modalidad = modalidad;
+        if (motivo) cita.motivo = motivo;
+        if (consultorio) cita.consultorio = consultorio;
+
+        // 7. Guardar cambios
+        const updated = await this.appointmentRepository.save(cita);
+
+        return {
+            message: "Cita reprogramada exitosamente",
+            cita: {
+                idCita: updated.idCita,
+                fechaCita: updated.fechaCita,
+                horaCita: updated.horaCita,
+                modalidad: updated.modalidad,
+                motivo: updated.motivo,
+                consultorio: updated.consultorio,
+                paciente: `${updated.paciente.nombres} ${updated.paciente.apellidos}`,
+                profesional: `${updated.profesional.persona.nombres} ${updated.profesional.persona.apellidos}`,
+            }
+        };
+    }
+
+
     // Cancelar cita - ADMIN
 }

@@ -19,7 +19,7 @@ export class CreateAppointmentDTO {
 
     @IsNotEmpty()
     @IsString()
-    horaCita: string;   // formato HH:mm
+    horaCita: string;
 
     @IsNotEmpty()
     @IsEnum(ModalidadCita)
