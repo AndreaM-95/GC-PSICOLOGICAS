@@ -8,6 +8,7 @@ import { Persona } from '../users/entities/persona.entity';
 import { Administrativo } from '../users/entities/administrativo.entity';
 import { Profesional } from '../users/entities/profesional.entity';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
+import { CancelAppointmentDTO } from './dto/cancelAppointment.dto';
 
 @Injectable()
 export class AppointmentsService {
@@ -225,4 +226,52 @@ export class AppointmentsService {
 
 
     // Cancelar cita - ADMIN
+    async cancelAppointment(dto: CancelAppointmentDTO) {
+        const { idCita, motivo, idAdministrativo } = dto;
+
+        // 1. Buscar la cita existente
+        const cita = await this.appointmentRepository.findOne({
+            where: { idCita },
+            relations: ["administrativo", "administrativo.persona"]
+        });
+
+        if (!cita) {
+            throw new NotFoundException("La cita no existe");
+        }
+
+        // 2. Validar si ya está cancelada
+        if (cita.estado === EstadosCita.CANCELADA) {
+            throw new BadRequestException("La cita ya está cancelada");
+        }
+
+        // 3. Buscar administrativo que ejecuta la acción
+        const administrativo = await this.adminRepository.findOne({
+            where: { idAdministrativo },
+            relations: ["persona"]
+        });
+
+        if (!administrativo) {
+            throw new NotFoundException("El administrativo que intenta cancelar no existe");
+        }
+
+        // 4. Actualizar estado de la cita
+        cita.estado = EstadosCita.CANCELADA;
+        cita.motivo = motivo; // Guardar motivo de cancelación
+        cita.administrativo = administrativo; // Registrar quién canceló
+
+        await this.appointmentRepository.save(cita);
+
+        // 5. Respuesta al cliente
+        return {
+            message: "La cita ha sido cancelada exitosamente",
+            cita: {
+                idCita: cita.idCita,
+                fechaCita: cita.fechaCita,
+                horaCita: cita.horaCita,
+                estado: cita.estado,
+                motivoCancelacion: motivo,
+                canceladoPor: `${administrativo.persona.nombres} ${administrativo.persona.apellidos}`
+            }
+        };
+    }
 }

@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDTO } from './dto/createAppointment.dto';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
+import { CancelAppointmentDTO } from './dto/cancelAppointment.dto';
 
 @Controller('appointments')
 export class AppointmentsController {
@@ -20,5 +21,10 @@ export class AppointmentsController {
     @Put('/patient')
     adminRescheduleAppointment(@Body() body: UpdateAppointmentDTO) {
         return this.appointmentService.adminRescheduleAppointment(body);
+    }
+
+    @Patch("cancel")
+    cancelAppointment(@Body() dto: CancelAppointmentDTO) {
+        return this.appointmentService.cancelAppointment(dto);
     }
 }
