@@ -93,9 +93,47 @@ export class AppointmentsService {
         };
     }
 
-
-
     // Listar citas - ADMIN
+    async adminListAppointments(document: string) {
+        const paciente = await this.personRepository.findOne({
+            where: { numeroDocumento: document },
+            relations: [
+                "citasComoPaciente",
+                "citasComoPaciente.profesional",
+                "citasComoPaciente.profesional.persona",
+                "citasComoPaciente.administrativo",
+                "citasComoPaciente.administrativo.persona"
+            ],
+        });
+
+
+        if (!paciente) throw new NotFoundException("No existe un paciente con este número de documento");
+
+        if (!paciente.citasComoPaciente || paciente.citasComoPaciente.length === 0) {
+            throw new NotFoundException("El paciente no tiene citas registradas");
+        }
+
+        return {
+            paciente: `${paciente.nombres} ${paciente.apellidos}`,
+            totalCitas: paciente.citasComoPaciente.length,
+            citas: paciente.citasComoPaciente.map(c => ({
+                idCita: c.idCita,
+                fechaCita: c.fechaCita,
+                horaCita: c.horaCita,
+                modalidad: c.modalidad,
+                motivo: c.motivo,
+                consultorio: c.consultorio,
+                estado: c.estado,
+                profesional: c.profesional?.persona?.nombres 
+                    ? `${c.profesional.persona.nombres} ${c.profesional.persona.apellidos}`
+                    : null,
+                administrativo: c.administrativo?.persona?.nombres
+                    ? `${c.administrativo.persona.nombres} ${c.administrativo.persona.apellidos}`
+                    : null
+            }))
+        };
+    }
+
     // Reprogramar cita - ADMIN
     // Cancelar cita - ADMIN
 }
