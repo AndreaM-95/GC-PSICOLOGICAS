@@ -1,29 +1,38 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDTO } from './dto/createAppointment.dto';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
 import { CancelAppointmentDTO } from './dto/cancelAppointment.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Roles as Rol } from 'src/common/enums/Roles';
+import { JwtAuthGuard } from '../../common/guards/jwt.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
 @Controller('appointments')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class AppointmentsController {
     constructor(private readonly appointmentService: AppointmentsService ) {}
 
     @Post()
+    @Roles(Rol.ADMINISTRATIVO)
     adminCreateAppointment(@Body() body: CreateAppointmentDTO) {
         return this.appointmentService.adminCreateAppointment(body);
     }
 
     @Get('/patient/:document')
+    @Roles(Rol.ADMINISTRATIVO)
     adminListAppointments(@Param('document') document:string) {
         return this.appointmentService.adminListAppointments(document);
     }
 
     @Put('/patient')
+    @Roles(Rol.ADMINISTRATIVO)
     adminRescheduleAppointment(@Body() body: UpdateAppointmentDTO) {
         return this.appointmentService.adminRescheduleAppointment(body);
     }
 
     @Patch("cancel")
+    @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     cancelAppointment(@Body() dto: CancelAppointmentDTO) {
         return this.appointmentService.cancelAppointment(dto);
     }

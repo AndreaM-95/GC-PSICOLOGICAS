@@ -224,7 +224,6 @@ export class AppointmentsService {
         };
     }
 
-
     // Cancelar cita - ADMIN
     async cancelAppointment(dto: CancelAppointmentDTO) {
         const { idCita, motivo, idAdministrativo } = dto;

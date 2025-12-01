@@ -18,11 +18,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET_KEY')!,
-        signOptions: { expiresIn: parseInt(config.get<string>('JWT_EXPIRES_IN')!) }
+        signOptions: { expiresIn: config.get<number>('JWT_EXPIRES_IN')! }
       })
     })
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy]
 })
-export class AuthModule {}
+export class AuthModule { }

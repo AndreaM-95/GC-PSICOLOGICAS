@@ -46,8 +46,7 @@ export class AuthService {
 
         if (!user || !isPasswordValid)
             throw new UnauthorizedException("Credenciales invalidas");
-        
-
+    
         const payloadToken = { sub: user.idPersona, name: user.nombres, email: user.correo, role: user.rol };
         const token = await this.jwtService.signAsync(payloadToken);
 
