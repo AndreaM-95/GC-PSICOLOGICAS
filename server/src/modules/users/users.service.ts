@@ -6,8 +6,10 @@ import { CrearAdminDto } from './dto/crear-admin.dto';
 import { CrearProfesionalDto } from './dto/crear-profesional.dto';
 import { PersonaBaseDto } from './dto/persona-base.dto';
 import { Administrativo } from './entities/administrativo.entity';
-import { Roles } from 'src/common/enums';
+import { EstadosUsuario, Roles } from 'src/common/enums';
 import { Profesional } from './entities/profesional.entity';
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class UsersService {
@@ -23,10 +25,12 @@ export class UsersService {
     ){}
 
     async createAdmin(newAdmin: CrearAdminDto) {
+        const hashedPassword = await bcrypt.hash(newAdmin.contrasena, 10);
         const { cargo, ...personaData } = newAdmin;
 
         const persona = this.personRepository.create({
             ...personaData,
+            contrasena: hashedPassword,
             rol: Roles.ADMINISTRATIVO,
         });
 
@@ -42,10 +46,12 @@ export class UsersService {
 
     //Crear profesional
     async createProfessional(newProfessional: CrearProfesionalDto) {
+        const hashedPassword = await bcrypt.hash(newProfessional.contrasena, 10);
         const { licencia, especialidad, ...personaData } = newProfessional;
 
         const persona = this.personRepository.create({
             ...personaData,
+            contrasena: hashedPassword,
             rol: Roles.PROFESIONAL,
         });
 
@@ -62,13 +68,37 @@ export class UsersService {
 
     //Crear paciente
     async createPatient(newPatient: PersonaBaseDto) {
-        const patientCreated = this.personRepository.create(newPatient);
+        const hashedPassword = await bcrypt.hash(newPatient.contrasena, 10);
+        const patientCreated = this.personRepository.create({
+            ...newPatient,
+            contrasena: hashedPassword
+        });
         return this.personRepository.save(patientCreated);
     }
 
     //Buscar usuario por nombre o documento (solo personal)
     //Buscar usuario por nombre o documento (solo pacientes)
     //Buscar usuario por nombre o documento (solo medicos)
+
+    //Listar personas
+    private listByRole(rol: Roles) {
+        return this.personRepository.find({
+            where: { rol, estado: EstadosUsuario.ACTIVO },
+        });
+    }
+
+    async listAdministrators() {
+        return this.listByRole(Roles.ADMINISTRATIVO);
+    }
+
+    async listProfessionals() {
+        return this.listByRole(Roles.PROFESIONAL);
+    }
+
+    async listPatients() {
+        return this.listByRole(Roles.PACIENTE);
+    }
+
 
     //Actualizar rol
     //Actualizar estado

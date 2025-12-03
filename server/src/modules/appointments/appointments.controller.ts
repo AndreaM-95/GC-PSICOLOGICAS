@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDTO } from './dto/createAppointment.dto';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
@@ -15,8 +15,8 @@ export class AppointmentsController {
 
     //@Roles(Rol.ADMINISTRATIVO)
     @Post()
-    adminCreateAppointment(@Body() body: CreateAppointmentDTO) {
-        return this.appointmentService.adminCreateAppointment(body);
+    adminCreateAppointment(@Request() req, @Body() body: CreateAppointmentDTO) {
+        return this.appointmentService.adminCreateAppointment(req.user, body);
     }
 
     //@Roles(Rol.ADMINISTRATIVO)
@@ -27,8 +27,8 @@ export class AppointmentsController {
 
     //@Roles(Rol.ADMINISTRATIVO)
     @Put('/patient')
-    adminRescheduleAppointment(@Body() body: UpdateAppointmentDTO) {
-        return this.appointmentService.adminRescheduleAppointment(body);
+    adminRescheduleAppointment(@Request() req, @Body() body: UpdateAppointmentDTO) {
+        return this.appointmentService.adminRescheduleAppointment(req.user, body);
     }
 
     //@Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)

@@ -4,10 +4,6 @@ import { ModalidadCita } from "../../../common/enums";
 export class CreateAppointmentDTO {
     @IsNotEmpty()
     @IsNumber()
-    idAdministrativo: number;
-
-    @IsNotEmpty()
-    @IsNumber()
     idProfesional: number;
 
     @IsNotEmpty()

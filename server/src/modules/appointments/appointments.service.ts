@@ -1,14 +1,15 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cita } from './entities/cita.entity';
 import { Repository } from 'typeorm';
 import { CreateAppointmentDTO } from './dto/createAppointment.dto';
-import { EstadosCita } from 'src/common/enums';
+import { EstadosCita, Roles } from 'src/common/enums';
 import { Persona } from '../users/entities/persona.entity';
 import { Administrativo } from '../users/entities/administrativo.entity';
 import { Profesional } from '../users/entities/profesional.entity';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
 import { CancelAppointmentDTO } from './dto/cancelAppointment.dto';
+import { CustomHttpException } from 'src/common/exceptions/custom-http.exception';
 
 @Injectable()
 export class AppointmentsService {
@@ -27,8 +28,15 @@ export class AppointmentsService {
     ) {}
 
     // Crear cita - ADMIN
-    async adminCreateAppointment(newAppointment: CreateAppointmentDTO) {
-        const { idPaciente, idProfesional, idAdministrativo, fechaCita, horaCita, modalidad, motivo, consultorio } = newAppointment;
+    async adminCreateAppointment(adminFromToken, newAppointment: CreateAppointmentDTO) {
+
+        if (adminFromToken.rol !== Roles.ADMINISTRATIVO) {
+            throw new CustomHttpException("Solo los administrativos pueden crear citas", HttpStatus.FORBIDDEN);
+        }
+
+        const idAdministrativo = adminFromToken.idPersona; 
+
+        const { idPaciente, idProfesional, fechaCita, horaCita, modalidad, motivo, consultorio } = newAppointment;
 
         // ---------- BUSCAR ENTIDADES ----------
         const paciente = await this.personRepository.findOne({ where: { idPersona: idPaciente } });
@@ -138,8 +146,14 @@ export class AppointmentsService {
 
     // Reprogramar cita - ADMIN
     //TODO: Debe tomar el id cuando de click en el botón desde el frontend
-    async adminRescheduleAppointment( updateData: UpdateAppointmentDTO ) {
-        const { idCita, fechaCita, horaCita, modalidad, motivo, consultorio, idProfesional, idAdministrativo } = updateData;
+    async adminRescheduleAppointment(userFromToken, updateData: UpdateAppointmentDTO ) {
+       
+        if (userFromToken.rol !== Roles.ADMINISTRATIVO) {
+            throw new CustomHttpException("Solo los administrativos pueden cancelar citas", HttpStatus.FORBIDDEN);
+        }
+        const idAdministrativo = userFromToken.idPersona;
+
+        const { idCita, fechaCita, horaCita, modalidad, motivo, consultorio, idProfesional } = updateData;
 
         // 1. Buscar la cita
         const cita = await this.appointmentRepository.findOne({
