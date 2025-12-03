@@ -22,6 +22,7 @@ export default function InputDropdown({ dataDrops, textField, value, onChange, i
                 onChange={(e) => onChange(e.value)}
                 options={dataDrops}
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Selecciona aquí.."
                 className="w-full"
                 required

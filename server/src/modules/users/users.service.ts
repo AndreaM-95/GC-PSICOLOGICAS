@@ -82,10 +82,18 @@ export class UsersService {
 
     //Listar personas
     private listByRole(rol: Roles) {
+        const relationsMap = {
+            [Roles.ADMINISTRATIVO]: ["administrativo"],
+            [Roles.PROFESIONAL]: ["profesional"],
+            [Roles.PACIENTE]: []
+        };
+
         return this.personRepository.find({
             where: { rol, estado: EstadosUsuario.ACTIVO },
+            relations: relationsMap[rol]
         });
     }
+
 
     async listAdministrators() {
         return this.listByRole(Roles.ADMINISTRATIVO);

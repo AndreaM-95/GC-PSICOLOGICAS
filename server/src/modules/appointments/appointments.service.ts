@@ -30,7 +30,7 @@ export class AppointmentsService {
     // Crear cita - ADMIN
     async adminCreateAppointment(adminFromToken, newAppointment: CreateAppointmentDTO) {
 
-        if (adminFromToken.rol !== Roles.ADMINISTRATIVO) {
+        if (adminFromToken.role !== 'administrativo') {
             throw new CustomHttpException("Solo los administrativos pueden crear citas", HttpStatus.FORBIDDEN);
         }
 
@@ -40,21 +40,19 @@ export class AppointmentsService {
 
         // ---------- BUSCAR ENTIDADES ----------
         const paciente = await this.personRepository.findOne({ where: { idPersona: idPaciente } });
-        if (!paciente) throw new NotFoundException('Paciente no encontrado');
+        if (!paciente) throw new CustomHttpException('Paciente no encontrado', HttpStatus.NOT_FOUND);
 
         const profesional = await this.professionalRepository.findOne({
             where: { idProfesional },
             relations: ["persona"]
         });
-        if (!profesional) throw new NotFoundException('Profesional no encontrado');
+        if (!profesional) throw new CustomHttpException('Profesional no encontrado', HttpStatus.NOT_FOUND);
 
         const administrativo = await this.adminRepository.findOne({ where: { idAdministrativo } });
-        if (!administrativo) throw new NotFoundException('Administrativo no encontrado');
+        if (!administrativo) throw new CustomHttpException('Administrativo no encontrado', HttpStatus.NOT_FOUND);
 
-
-        // ---------- CONSTRUIR FECHA SIN PROBLEMAS DE ZONA HORARIA ----------
         const [yy, mm, dd] = fechaCita.split('-').map(Number); 
-        const citaDate = new Date(yy, mm - 1, dd); // <-- local time sin UTC shift
+        const citaDate = new Date(yy, mm - 1, dd);
 
 
         // ---------- VALIDACIONES ----------
@@ -62,7 +60,7 @@ export class AppointmentsService {
         today.setHours(0, 0, 0, 0);
 
         if (citaDate < today) {
-            throw new BadRequestException('La fecha de cita no puede ser anterior a hoy.');
+            throw new CustomHttpException('La fecha de cita no puede ser anterior a hoy.');
         }
 
         const now = new Date();
@@ -71,7 +69,7 @@ export class AppointmentsService {
             const [hour, minute] = horaCita.split(':').map(Number);
 
             if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
-                throw new BadRequestException('La hora debe ser mayor que la hora actual.');
+                throw new CustomHttpException('La hora debe ser mayor que la hora actual.');
             }
         }
 
@@ -117,10 +115,10 @@ export class AppointmentsService {
         });
 
 
-        if (!paciente) throw new NotFoundException("No existe un paciente con este número de documento");
+        if (!paciente) throw new CustomHttpException("No existe un paciente con este número de documento", HttpStatus.NOT_FOUND);
 
         if (!paciente.citasComoPaciente || paciente.citasComoPaciente.length === 0) {
-            throw new NotFoundException("El paciente no tiene citas registradas");
+            throw new CustomHttpException("El paciente no tiene citas registradas", HttpStatus.NOT_FOUND);
         }
 
         return {
@@ -161,7 +159,7 @@ export class AppointmentsService {
             relations: ["paciente", "profesional", "profesional.persona", "administrativo", "administrativo.persona"]
         });
 
-        if (!cita) throw new NotFoundException("La cita no existe");
+        if (!cita) throw new CustomHttpException("La cita no existe", HttpStatus.NOT_FOUND);
 
         // 2. Cambiar profesional si viene en el DTO
         if (idProfesional) {
@@ -169,14 +167,14 @@ export class AppointmentsService {
                 where: { idProfesional },
                 relations: ["persona"]
             });
-            if (!profesional) throw new NotFoundException("Profesional no encontrado");
+            if (!profesional) throw new CustomHttpException("Profesional no encontrado", HttpStatus.NOT_FOUND);
             cita.profesional = profesional;
         }
 
         // 3. Cambiar administrativo si viene en el DTO
         if (idAdministrativo) {
             const administrativo = await this.adminRepository.findOne({ where: { idAdministrativo } });
-            if (!administrativo) throw new NotFoundException("Administrativo no encontrado");
+            if (!administrativo) throw new CustomHttpException("Administrativo no encontrado", HttpStatus.NOT_FOUND);
             cita.administrativo = administrativo;
         }
 
@@ -188,7 +186,7 @@ export class AppointmentsService {
             const newDate = new Date(fechaCita);
 
             if (newDate < today) {
-                throw new BadRequestException("La nueva fecha no puede ser anterior a hoy");
+                throw new CustomHttpException("La nueva fecha no puede ser anterior a hoy");
             }
 
             cita.fechaCita = newDate; // ← CORRECCIÓN
@@ -207,7 +205,7 @@ export class AppointmentsService {
                     const [h, m] = horaCita.split(":").map(Number);
 
                     if (h < now.getHours() || (h === now.getHours() && m <= now.getMinutes())) {
-                        throw new BadRequestException("La nueva hora debe ser mayor a la hora actual");
+                        throw new CustomHttpException("La nueva hora debe ser mayor a la hora actual");
                     }
                 }
             }
@@ -249,12 +247,12 @@ export class AppointmentsService {
         });
 
         if (!cita) {
-            throw new NotFoundException("La cita no existe");
+            throw new CustomHttpException("La cita no existe", HttpStatus.NOT_FOUND);
         }
 
         // 2. Validar si ya está cancelada
         if (cita.estado === EstadosCita.CANCELADA) {
-            throw new BadRequestException("La cita ya está cancelada");
+            throw new CustomHttpException("La cita ya está cancelada");
         }
 
         // 3. Buscar administrativo que ejecuta la acción
@@ -264,7 +262,7 @@ export class AppointmentsService {
         });
 
         if (!administrativo) {
-            throw new NotFoundException("El administrativo que intenta cancelar no existe");
+            throw new CustomHttpException("El administrativo que intenta cancelar no existe", HttpStatus.NOT_FOUND);
         }
 
         // 4. Actualizar estado de la cita

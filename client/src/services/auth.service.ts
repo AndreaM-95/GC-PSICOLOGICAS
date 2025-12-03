@@ -1,11 +1,7 @@
+import type { ILogin } from '../types/auth';
 import api from './api';
 
-export interface LoginDTO {
-  email: string;
-  password: string;
-}
-
-export const loginRequest = async (data: LoginDTO) => {
+export const loginRequest = async (data: ILogin) => {
   const response = await api.post('/auth/login', data);
   return response.data;
 };

@@ -20,16 +20,18 @@ export default function Login() {
             const data = await loginRequest({ email, password });
             console.log("Login OK:", data);
 
-            // Guardas el token si tu backend lo envía
-            if (data.token) {
-                localStorage.setItem("token", data.token);
+            // Guardar el token REAL que envía tu backend
+            if (data.accessToken) {
+                localStorage.setItem("accessToken", data.accessToken);
             }
+
             navigate("/menu");
         } catch (err: any) {
             setError("Credenciales incorrectas");
             console.error(err);
         }
     }
+
 
     const rememberPassword = () => {
         // Logic to remember the password

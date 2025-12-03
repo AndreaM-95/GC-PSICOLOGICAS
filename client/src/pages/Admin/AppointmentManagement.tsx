@@ -6,11 +6,11 @@ export default function AppointmentManagement() {
         <main>
             <header className="m-auto">
                 <Navbar/>
-                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto my-8">Solicita una cita médica</h1>
+                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto my-8">Agendamiento de cita médica</h1>
             </header>
 
             <section className="flex justify-center content-center">
-                <AppointmentManagementCard isActiveProp={true} />
+                <AppointmentManagementCard />
             </section>
         </main>
     );
