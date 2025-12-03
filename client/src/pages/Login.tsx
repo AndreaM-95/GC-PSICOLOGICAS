@@ -5,12 +5,30 @@ import { InputText } from 'primereact/inputtext';
 import 'primeicons/primeicons.css';
 import NavButton from '../components/NavButton';
 import '../App.css';
+import { loginRequest } from '../services/auth.service';
+import { useState } from 'react';
 
 export default function Login() {
     const navigate = useNavigate();
-    //const [value, setValue] = useState<string>('');
-    const login = () => {
-        navigate('/menu');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const login = async () => {
+        if (event) event.preventDefault();
+        try {
+            const data = await loginRequest({ email, password });
+            console.log("Login OK:", data);
+
+            // Guardas el token si tu backend lo envía
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+            }
+            navigate("/menu");
+        } catch (err: any) {
+            setError("Credenciales incorrectas");
+            console.error(err);
+        }
     }
 
     const rememberPassword = () => {
@@ -58,17 +76,21 @@ export default function Login() {
                             <InputText
                                 id="username"
                                 name="username"
+                                type='email'
                                 required
+                                value={email}
                                 placeholder="Ingrese su usuario..."
                                 style={{ width: '100%' }}
                                 aria-required="true"
                                 autoComplete="username"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
 
                             <label htmlFor="password" className="text-cyan-700 font-bold w-full mt-6 mb-2 text-center">Contraseña</label>
                             <Password
                                 id="password"
                                 name="password"
+                                type="password"
                                 required
                                 variant="filled"
                                 style={{ width: '100%', padding: '0' }}
@@ -77,6 +99,7 @@ export default function Login() {
                                 placeholder="Ingrese su contraseña..."
                                 aria-required="true"
                                 autoComplete="current-password"
+                                onChange={(e) => setPassword(e.target.value)}
                             />
 
                             <button

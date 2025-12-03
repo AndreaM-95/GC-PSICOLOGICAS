@@ -13,26 +13,26 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 export class AppointmentsController {
     constructor(private readonly appointmentService: AppointmentsService ) {}
 
+    //@Roles(Rol.ADMINISTRATIVO)
     @Post()
-    @Roles(Rol.ADMINISTRATIVO)
     adminCreateAppointment(@Body() body: CreateAppointmentDTO) {
         return this.appointmentService.adminCreateAppointment(body);
     }
 
+    //@Roles(Rol.ADMINISTRATIVO)
     @Get('/patient/:document')
-    @Roles(Rol.ADMINISTRATIVO)
     adminListAppointments(@Param('document') document:string) {
         return this.appointmentService.adminListAppointments(document);
     }
 
+    //@Roles(Rol.ADMINISTRATIVO)
     @Put('/patient')
-    @Roles(Rol.ADMINISTRATIVO)
     adminRescheduleAppointment(@Body() body: UpdateAppointmentDTO) {
         return this.appointmentService.adminRescheduleAppointment(body);
     }
 
+    //@Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Patch("cancel")
-    @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     cancelAppointment(@Body() dto: CancelAppointmentDTO) {
         return this.appointmentService.cancelAppointment(dto);
     }
