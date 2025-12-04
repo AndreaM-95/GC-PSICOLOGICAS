@@ -1,4 +1,4 @@
-import type { ICita } from "../types";
+import type { ICancelarCita, ICita } from "../types";
 import api from "./api";
 
 export const createAppointmentRequest = async (data: ICita) => {
@@ -15,7 +15,7 @@ export const updateAppointmentRequest = async (data:ICita) =>{
     return response.data;
 }
 
-export const cancelAppointmentRequest = async (data:ICita) =>{
+export const cancelAppointmentRequest = async (data:ICancelarCita) =>{
     const response = await api.patch('/appointments/cancel', data);
     return response.data;
 }

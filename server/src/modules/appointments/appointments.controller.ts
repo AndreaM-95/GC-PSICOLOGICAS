@@ -33,7 +33,7 @@ export class AppointmentsController {
 
     //@Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Patch("cancel")
-    cancelAppointment(@Body() dto: CancelAppointmentDTO) {
-        return this.appointmentService.cancelAppointment(dto);
+    cancelAppointment(@Request() req, @Body() dto: CancelAppointmentDTO) {
+        return this.appointmentService.cancelAppointment(req.user, dto);
     }
 }

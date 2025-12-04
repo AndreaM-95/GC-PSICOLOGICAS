@@ -121,10 +121,21 @@ export class AppointmentsService {
             throw new CustomHttpException("El paciente no tiene citas registradas", HttpStatus.NOT_FOUND);
         }
 
+        // Filtrar solo las citas activas
+        let citasActivas = paciente.citasComoPaciente.filter(c => 
+            c.estado === 'Confirmada'
+        );
+
+        if (citasActivas.length === 0) {
+            return {
+                citas: []
+            };
+        }
+
         return {
             paciente: `${paciente.nombres} ${paciente.apellidos}`,
-            totalCitas: paciente.citasComoPaciente.length,
-            citas: paciente.citasComoPaciente.map(c => ({
+            totalCitas: citasActivas.length, // Mostrar el total de citas activas
+            citas: citasActivas.map(c => ({
                 idCita: c.idCita,
                 fechaCita: c.fechaCita,
                 horaCita: c.horaCita,
@@ -237,8 +248,14 @@ export class AppointmentsService {
     }
 
     // Cancelar cita - ADMIN
-    async cancelAppointment(dto: CancelAppointmentDTO) {
-        const { idCita, motivo, idAdministrativo } = dto;
+    async cancelAppointment(adminFromToken, dto: CancelAppointmentDTO) {
+        if (adminFromToken.role !== 'administrativo') {
+            throw new CustomHttpException("Solo los administrativos pueden crear citas", HttpStatus.FORBIDDEN);
+        }
+
+        const idAdministrativo = adminFromToken.idPersona; 
+
+        const { idCita, motivo } = dto;
 
         // 1. Buscar la cita existente
         const cita = await this.appointmentRepository.findOne({

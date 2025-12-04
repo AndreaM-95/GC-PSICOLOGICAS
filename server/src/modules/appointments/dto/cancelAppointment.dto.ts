@@ -8,8 +8,4 @@ export class CancelAppointmentDTO {
     @IsNotEmpty()
     @IsString()
     motivo: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    idAdministrativo: number;
 }

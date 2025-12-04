@@ -13,3 +13,8 @@ export interface IEstadoCita {
     nombreEstado: string,
     descripcion?: string
 }
+
+export interface ICancelarCita {
+    idCita: number,
+    motivo: string
+}

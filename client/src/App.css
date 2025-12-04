@@ -28,3 +28,9 @@ html{
 .contrasena input{
   width: 100%;
 }
+
+.p-tabview-nav{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}

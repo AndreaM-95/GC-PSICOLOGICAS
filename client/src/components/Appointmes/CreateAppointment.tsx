@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
 import { Card } from "primereact/card";
-import NavButton from "./NavButton";
+import NavButton from "../NavButton";
 import { Calendar } from "primereact/calendar";
-import InputDropdown from "./InputDropdown";
 import { Toast } from 'primereact/toast';
 
-import { getPatients, getProfessionals } from "../services/user.service";
-import { createAppointmentRequest } from "../services/appointments.service";
+import { getPatients, getProfessionals } from "../../services/user.service";
+import { createAppointmentRequest } from "../../services/appointments.service";
 
-import type { ICita } from "../types";
+import type { ICita } from "../../types";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 
-export default function AppointmentManagementCard() {
-    const navigate = useNavigate();
+export default function CreateAppointment() {
     const toast = useRef<Toast>(null);
 
     // Estados del formulario
@@ -138,15 +135,11 @@ export default function AppointmentManagementCard() {
         setReason("");
     };
 
-    const returnMenu = () => {
-        navigate('/menu');
-    };
-
     return (
-        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', marginBottom: '30px' }} >
+        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto' }} >
             <Toast ref={toast} />
             <form
-                className="grid gap-2 grid-cols-2 align-middle"
+                className="grid gap-2 grid-cols-2 align-middle items-center"
                 onSubmit={createAppointment}
             >
                 <label className="font-bold text-cyan-700">Paciente:</label>
@@ -233,9 +226,8 @@ export default function AppointmentManagementCard() {
                 <label className="font-bold text-cyan-700">Motivo:</label>
                 <InputText placeholder="Escribe aquí.." value={reason} onChange={(e) => setReason(e.target.value)} />
 
-                <div className="col-span-2 flex justify-end gap-4 mt-6">
+                <div className="col-span-2 flex justify-end">
                     <NavButton type="submit" label="Asignar cita" btnFunction={() => console.log('click')} />
-                    <NavButton type="button" label="Volver" btnFunction={returnMenu}/>
                 </div>
             </form>
         </Card>
