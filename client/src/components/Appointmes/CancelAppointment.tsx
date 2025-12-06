@@ -6,6 +6,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { AutoComplete } from 'primereact/autocomplete';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Divider } from "primereact/divider";
 import { cancelAppointmentRequest, patientAppointmentsRequest } from "../../services/appointments.service";
 import { getPatients } from "../../services/user.service";
 import type { ICancelarCita } from "../../types";
@@ -157,7 +158,7 @@ export default function CancelAppointment() {
     };
 
     return (
-        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width: '80%' }} >
+        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width: '100%' }} >
             <Toast ref={toast} />
             <form 
                 className="grid gap-2 align-middle items-center"
@@ -178,10 +179,13 @@ export default function CancelAppointment() {
                     className="col-span-2"
                 />
 
+                <Divider className="col-span-2"/>
+
                 <label htmlFor="patient" className="font-bold text-cyan-700">Paciente:</label>
                 <InputText
                     id="patient"
                     value={patient}
+                    placeholder="Nombre del paciente.."
                     readOnly
                 />
 
@@ -213,7 +217,7 @@ export default function CancelAppointment() {
                             responsiveLayout="scroll"
                             emptyMessage="No se encontraron citas activas"
                         >
-                            <Column field="idCita" header="ID Cita"  style={{color: '#49A7CC'}}></Column>
+                            <Column field="idCita" header="COD"  style={{color: '#49A7CC'}}></Column>
                             <Column 
                                 field="fechaCita" 
                                 header="Fecha" 

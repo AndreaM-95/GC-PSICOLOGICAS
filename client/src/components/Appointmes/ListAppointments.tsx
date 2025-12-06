@@ -8,7 +8,6 @@ import { Column } from "primereact/column";
 import { getPatients } from "../../services/user.service";
 import { allPatientAppointmentsRequest } from "../../services/appointments.service";
 
-
 export default function ListAppointments() {
     const toast = useRef<Toast>(null);
     const [documentPatient, setDocumentPatient] = useState<string>("");
@@ -111,7 +110,7 @@ export default function ListAppointments() {
     };
      
     return (
-        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto' }} >
+        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width:'100%' }} >
             <Toast ref={toast} />
 
             <div className="w-full flex justify-center">
@@ -130,7 +129,7 @@ export default function ListAppointments() {
                 />
             </div>
 
-            <Divider/>
+            <Divider className="col-span-2"/>
             
             <div className="card">
                 {appointmentsPatient.length > 0 ? (
@@ -143,7 +142,7 @@ export default function ListAppointments() {
                         responsiveLayout="scroll"
                         emptyMessage="No se encontraron citas activas"
                     >
-                        <Column field="idCita" header="ID Cita"  style={{color: '#49A7CC'}}></Column>
+                        <Column field="idCita" header="COD"  style={{color: '#49A7CC'}}></Column>
                         <Column field="estado" header="Estado" style={{color: '#49A7CC'}}></Column>
                         <Column 
                             field="fechaCita" 

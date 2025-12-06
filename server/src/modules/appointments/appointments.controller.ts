@@ -31,7 +31,7 @@ export class AppointmentsController {
     }
 
     //@Roles(Rol.ADMINISTRATIVO)
-    @Put('/patient')
+    @Put('update')
     adminRescheduleAppointment(@Request() req, @Body() body: UpdateAppointmentDTO) {
         return this.appointmentService.adminRescheduleAppointment(req.user, body);
     }

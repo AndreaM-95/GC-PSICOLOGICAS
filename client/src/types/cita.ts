@@ -33,6 +33,17 @@ export interface ICitaDetalle {
     administrativo: string;
 }
 
+export interface IUpdateAppointment{
+    idCita: number,
+    idProfesional: number,
+    idPaciente: number,
+    fechaCita: string;
+    horaCita: string;
+    modalidad: 'presencial' | 'virtual';
+    consultorio: string;
+    motivo: string;
+}
+
 
 export interface ICancelarCita {
     idCita: number,

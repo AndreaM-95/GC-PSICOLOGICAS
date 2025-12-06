@@ -197,11 +197,10 @@ export class AppointmentsService {
     }
 
     // Reprogramar cita - ADMIN
-    //TODO: Debe tomar el id cuando de click en el botón desde el frontend
     async adminRescheduleAppointment(userFromToken, updateData: UpdateAppointmentDTO ) {
        
-        if (userFromToken.rol !== Roles.ADMINISTRATIVO) {
-            throw new CustomHttpException("Solo los administrativos pueden cancelar citas", HttpStatus.FORBIDDEN);
+        if (userFromToken.role !== 'administrativo'){
+            throw new CustomHttpException("Solo los administrativos pueden reprogramar citas", HttpStatus.FORBIDDEN);
         }
         const idAdministrativo = userFromToken.idPersona;
 
@@ -243,7 +242,7 @@ export class AppointmentsService {
                 throw new CustomHttpException("La nueva fecha no puede ser anterior a hoy");
             }
 
-            cita.fechaCita = newDate; // ← CORRECCIÓN
+            cita.fechaCita = newDate;
         }
 
         // 5. Validación de hora si se cambia
@@ -277,16 +276,13 @@ export class AppointmentsService {
 
         return {
             message: "Cita reprogramada exitosamente",
-            cita: {
-                idCita: updated.idCita,
-                fechaCita: updated.fechaCita,
-                horaCita: updated.horaCita,
-                modalidad: updated.modalidad,
-                motivo: updated.motivo,
-                consultorio: updated.consultorio,
-                paciente: `${updated.paciente.nombres} ${updated.paciente.apellidos}`,
-                profesional: `${updated.profesional.persona.nombres} ${updated.profesional.persona.apellidos}`,
-            }
+            fechaCita: updated.fechaCita,
+            horaCita: updated.horaCita,
+            modalidad: updated.modalidad,
+            motivo: updated.motivo,
+            consultorio: updated.consultorio,
+            paciente: `${updated.paciente.nombres} ${updated.paciente.apellidos}`,
+            profesional: `${updated.profesional.persona.nombres} ${updated.profesional.persona.apellidos}`
         };
     }
 
