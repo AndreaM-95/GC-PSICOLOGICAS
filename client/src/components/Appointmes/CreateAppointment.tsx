@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card } from "primereact/card";
-import NavButton from "../NavButton";
-import { Calendar } from "primereact/calendar";
 import { Toast } from 'primereact/toast';
-
-import { getPatients, getProfessionals } from "../../services/user.service";
-import { createAppointmentRequest } from "../../services/appointments.service";
-
-import type { ICita } from "../../types";
+import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import { getPatients, getProfessionals } from "../../services/user.service";
+import { createAppointmentRequest } from "../../services/appointments.service";
+import type { ICita } from "../../types";
+import NavButton from "../NavButton";
 
 export default function CreateAppointment() {
     const toast = useRef<Toast>(null);
@@ -31,7 +29,7 @@ export default function CreateAppointment() {
     const minHour = new Date();
     minHour.setHours(8, 0, 0, 0); // 8:00 AM
     const maxHour = new Date();
-    maxHour.setHours(17, 0, 0, 0); // 6:00 PM
+    maxHour.setHours(17, 0, 0, 0); // 5:00 PM
 
     // --- Cargar pacientes y profesionales desde la API ---
     useEffect(() => {
@@ -40,12 +38,9 @@ export default function CreateAppointment() {
                 const profs = await getProfessionals();
                 const pats = await getPatients();
 
-                console.log("PROFESIONAL RAW DATA:", profs);
-                console.log("PACIENTES RAW DATA:", pats);
-
                 setProfessionals(
                     profs.map((p: any) => ({
-                        id: p.profesional.idProfesional, // Asegúrate que esta ruta sea correcta
+                        id: p.profesional.idProfesional,
                         name: `${p.nombres} ${p.apellidos}`,
                         especialidad: p.profesional?.especialidad ?? "N/A",
                     }))
@@ -101,7 +96,6 @@ export default function CreateAppointment() {
             consultorio: spaceMeeting.toString().toLowerCase(),
             motivo: reason
         };
-
         
         try {
             await createAppointmentRequest(newAppointment);

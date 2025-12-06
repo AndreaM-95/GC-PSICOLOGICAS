@@ -34,17 +34,18 @@ export interface IAdmin{
     rol: rolPersona.ADMIN
 }
 
-export interface IMedico{
-    idMedico: number,
-    idPersona: IPersona,
-    licencia: string,
-    especialidad: string,
-    rol: rolPersona.MEDICO
+export interface IProfesional{
+    idPersona: number,
+    nombres: string,
+    apellidos: string,
+    tipoDocumento: string,
+    numeroDocumento: string;
 }
 
 export interface IPaciente{
-    idPaciente: number,
-    idPersona: IPersona,
-    fechaRegistro: Date,
-    rol: rolPersona.PACIENTE
+    idPersona: number,
+    nombres: string,
+    apellidos: string,
+    tipoDocumento: string,
+    numeroDocumento: string;
 }

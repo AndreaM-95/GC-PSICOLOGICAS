@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { InputText } from "primereact/inputtext";
-import NavButton from "../NavButton";
-import { Avatar } from "primereact/avatar";
+import { useState, useEffect, useRef } from "react";
 import { Card } from "primereact/card";
-import AppointmentCard from "../AppointmentCard";
 import { Toast } from 'primereact/toast';
-import { InputNumber } from "primereact/inputnumber";
 import { Divider } from "primereact/divider";
 import { AutoComplete } from "primereact/autocomplete";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getPatients } from "../../services/user.service";
-import { allPatientAppointmentsRequest, patientAppointmentsRequest } from "../../services/appointments.service";
+import { allPatientAppointmentsRequest } from "../../services/appointments.service";
 
 
 export default function ListAppointments() {
@@ -59,19 +54,18 @@ export default function ListAppointments() {
             patient.document.toString().includes(query)
         );
         setFilteredPatients(filtered);
-                console.log('Search Query:', event.query);
     };
 
     // Cuando se selecciona un paciente
-        const onPatientSelect = (e: { value: any }) => {
-            const selected = e.value;
-            setSelectedPatient(selected);
-            setPatient(selected.name);
-            setDocumentPatient(selected.document);
-            setCodAppointment(null);
-            setSelectedAppointment(null);
-            loadPatientAppointments(selected.document);
-        };
+    const onPatientSelect = (e: { value: any }) => {
+        const selected = e.value;
+        setSelectedPatient(selected);
+        setPatient(selected.name);
+        setDocumentPatient(selected.document);
+        setCodAppointment(null);
+        setSelectedAppointment(null);
+        loadPatientAppointments(selected.document);
+    };
     
     const loadPatientAppointments = async (document: string) => {
         try {
@@ -104,8 +98,7 @@ export default function ListAppointments() {
         }
     };
 
-
-        // Cuando se selecciona una cita
+    // Cuando se selecciona una cita
     const onAppointmentSelect = (appointment: any) => {
         setSelectedAppointment(appointment);
         setCodAppointment(appointment.idCita);
@@ -116,8 +109,7 @@ export default function ListAppointments() {
         const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('es-ES', options);
     };
-    
-    
+     
     return (
         <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto' }} >
             <Toast ref={toast} />

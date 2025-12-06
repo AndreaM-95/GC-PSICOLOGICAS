@@ -1,3 +1,4 @@
+import type { IPaciente, IProfesional } from '../types';
 import api from './api';
 
 export const getProfile = async () => {
@@ -12,13 +13,15 @@ export const getAdmins = async () => {
 };
 
 //Traer profesionales
-export const getProfessionals = async () => {
-  const response = await api.get('/users/professionals');
+export async function getProfessionals(): Promise<IProfesional[]> {
+  const response = await api.get<IProfesional[]>('/users/professionals');
   return response.data;
 };
 
 //Traer pacientes
-export const getPatients = async () => {
-  const response = await api.get('/users/patients');
+//IPaciente
+export async function getPatients(): Promise<IPaciente[]> {
+  const response = await api.get<IPaciente[]>('/users/patients');
   return response.data;
-};
+}
+

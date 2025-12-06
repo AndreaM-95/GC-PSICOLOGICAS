@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { InputText } from "primereact/inputtext";
-import NavButton from "../NavButton";
 import { Card } from "primereact/card";
 import { Toast } from 'primereact/toast';
 import { InputNumber } from "primereact/inputnumber";
-import type { ICancelarCita } from "../../types";
-import { cancelAppointmentRequest, patientAppointmentsRequest } from "../../services/appointments.service";
-import { getPatients } from "../../services/user.service";
 import { AutoComplete } from 'primereact/autocomplete';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { cancelAppointmentRequest, patientAppointmentsRequest } from "../../services/appointments.service";
+import { getPatients } from "../../services/user.service";
+import type { ICancelarCita } from "../../types";
+import NavButton from "../NavButton";
 
 export default function CancelAppointment() {
     const toast = useRef<Toast>(null);
@@ -35,7 +35,6 @@ export default function CancelAppointment() {
                         name: `${p.nombres} ${p.apellidos}`,
                     }))
                 );
-                console.log("PACIENTES:", pats);
             } catch (err: any) {
                 console.error("Error cargando pacientes:", err);
                 toast.current?.show({
@@ -56,7 +55,6 @@ export default function CancelAppointment() {
             patient.document.toString().includes(query)
         );
         setFilteredPatients(filtered);
-                console.log('Search Query:', event.query);
     };
 
     // Cuando se selecciona un paciente
@@ -141,6 +139,12 @@ export default function CancelAppointment() {
             });
         }
     };
+    
+    // Formatear la fecha de la cita
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('es-ES', options);
+    };
 
     const cleanForm = () => {
         setSelectedPatient(null);
@@ -150,12 +154,6 @@ export default function CancelAppointment() {
         setReason("");
         setAppointmentsPatient([]);
         setSelectedAppointment(null);
-    };
-
-    // Formatear la fecha de la cita
-    const formatDate = (dateString: string) => {
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString('es-ES', options);
     };
 
     return (
