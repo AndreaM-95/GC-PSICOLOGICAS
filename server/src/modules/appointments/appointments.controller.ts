@@ -19,6 +19,11 @@ export class AppointmentsController {
         return this.appointmentService.adminCreateAppointment(req.user, body);
     }
 
+    @Get('/patients/:document')
+    listAppointments(@Param('document') document:string) {
+        return this.appointmentService.listAppointments(document);
+    }
+
     //@Roles(Rol.ADMINISTRATIVO)
     @Get('/patient/:document')
     adminListAppointments(@Param('document') document:string) {

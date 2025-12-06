@@ -10,6 +10,11 @@ export const patientAppointmentsRequest = async (document:number) =>{
     return response.data;
 }
 
+export const allPatientAppointmentsRequest = async (document:number) =>{
+    const response = await api.get(`/appointments/patients/${document}`);
+    return response.data;
+}
+
 export const updateAppointmentRequest = async (data:ICita) =>{
     const response = await api.put('/appointments/patient', data);
     return response.data;
