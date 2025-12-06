@@ -8,18 +8,25 @@ import { getPatients, getProfessionals } from "../../services/user.service";
 import { createAppointmentRequest } from "../../services/appointments.service";
 import type { ICita } from "../../types";
 import NavButton from "../NavButton";
+import { AutoComplete } from "primereact/autocomplete";
+import { Divider } from "primereact/divider";
 
 export default function CreateAppointment() {
     const toast = useRef<Toast>(null);
 
     // Estados del formulario
-    const [selectedPatient, setSelectedPatient] = useState<string | number>("");
+    const [selectedPatient, setSelectedPatient] = useState<any>(null);
     const [selectedProfessional, setSelectedProfessional] = useState<string | number>("");
     const [date, setDate] = useState<Date | null>(null);
     const [time, setTime] = useState<Date | null>(null);
     const [placeMeeting, setPlaceMeeting] = useState<string>("");
     const [spaceMeeting, setSpaceMeeting] = useState<string>("");
     const [reason, setReason] = useState<string>("");
+
+    //Búsqueda y selección de pacientes
+    const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
+    const [patient, setPatient] = useState("");
+    const [documentPatient, setDocumentPatient] = useState("");
 
     // Estados para BD
     const [patients, setPatients] = useState<any[]>([]);
@@ -31,12 +38,20 @@ export default function CreateAppointment() {
     const maxHour = new Date();
     maxHour.setHours(17, 0, 0, 0); // 5:00 PM
 
-    // --- Cargar pacientes y profesionales desde la API ---
+    // Cargar pacientes y profesionales al montar el componente
     useEffect(() => {
         async function loadData() {
             try {
-                const profs = await getProfessionals();
                 const pats = await getPatients();
+                const profs = await getProfessionals();
+
+                setPatients(
+                    pats.map((p: any) => ({
+                        id: p.idPersona,
+                        document: p.numeroDocumento ?? "",
+                        name: `${p.nombres} ${p.apellidos}`,
+                    }))
+                );
 
                 setProfessionals(
                     profs.map((p: any) => ({
@@ -45,18 +60,16 @@ export default function CreateAppointment() {
                         especialidad: p.profesional?.especialidad ?? "N/A",
                     }))
                 );
-
-                setPatients(
-                    pats.map((p: any) => ({
-                        id: p.idPersona,
-                        name: `${p.nombres} ${p.apellidos}`,
-                    }))
-                );
-            } catch (err) {
+            } catch (err: any) {
                 console.error("Error cargando datos:", err);
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Error al cargar los datos',
+                    life: 3000
+                });
             }
         }
-
         loadData();
     }, []);
 
@@ -71,6 +84,24 @@ export default function CreateAppointment() {
         { id: 3, name: "No aplica" }
     ];
 
+    // Buscar pacientes por documento mientras se escribe
+    const searchPatient = (event: { query: string }) => {
+        const query = event.query;
+        const filtered = patients.filter(patient => 
+            patient.document.toString().includes(query)
+        );
+        setFilteredPatients(filtered);
+    };
+    
+    // Cuando se selecciona un paciente
+    const onPatientSelect = (e: { value: any }) => {
+        cleanForm();
+        const selected = e.value;
+
+        setSelectedPatient(selected);
+        setPatient(selected.name ?? "");
+        setDocumentPatient(selected.document);
+    };
 
     // --- Enviar cita al backend ---
     const createAppointment = async (e: React.FormEvent) => {
@@ -89,7 +120,7 @@ export default function CreateAppointment() {
 
         const newAppointment: ICita = {
             idProfesional: Number(selectedProfessional),
-            idPaciente: typeof selectedPatient === 'string' ? Number(selectedPatient) : selectedPatient,
+            idPaciente: selectedPatient.id,
             fechaCita: date.toISOString().split("T")[0],  // YYYY-MM-DD
             horaCita: time.toTimeString().slice(0, 5),   // HH:mm
             modalidad: placeMeeting.toLowerCase() as 'presencial' | 'virtual',
@@ -122,6 +153,8 @@ export default function CreateAppointment() {
     const cleanForm = () => {
         setSelectedProfessional("");
         setSelectedPatient("");
+        setPatient("");
+        setDocumentPatient("");
         setDate(null);
         setTime(null);
         setPlaceMeeting("");
@@ -130,23 +163,34 @@ export default function CreateAppointment() {
     };
 
     return (
-        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto' }} >
+        <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width: '100%' }} >
             <Toast ref={toast} />
             <form
-                className="grid gap-2 grid-cols-2 align-middle items-center"
+                className="grid gap-2 align-middle items-center"
+                style={{ gridTemplateColumns: '35% 65%' }}
                 onSubmit={createAppointment}
             >
-                <label className="font-bold text-cyan-700">Paciente:</label>
-                <Dropdown
-                    value={selectedPatient}
-                    onChange={(e) => setSelectedPatient(e.value)}
-                    options={patients}
-                    optionLabel="name"
-                    optionValue="id"
-                    placeholder="Selecciona un paciente.."
-                    className="w-full"
-                    required
-                    aria-label={'Selecciona un paciente..'}
+                <AutoComplete
+                    id="documentPatient"
+                    value={documentPatient}
+                    suggestions={filteredPatients}
+                    completeMethod={searchPatient}
+                    field="document"
+                    onChange={(e) => setDocumentPatient(e.value)}
+                    onSelect={onPatientSelect}
+                    placeholder="Ingrese documento del paciente"
+                    aria-label="Buscar paciente por documento"
+                    dropdown
+                    className="col-span-2"
+                />
+                <Divider className="col-span-2"/>
+
+                <label htmlFor="patient" className="font-bold text-cyan-700">Paciente:</label>
+                <InputText
+                    id="patient"
+                    value={patient}
+                    placeholder="Nombre del paciente.."
+                    readOnly
                 />
 
                 <label className="font-bold text-cyan-700">Profesional:</label>

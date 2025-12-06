@@ -33,7 +33,6 @@ export default function UpdateAppointment() {
     const [newConsultory, setNewConsultory] = useState("");
     const [reason, setReason] = useState("");
 
-
     // Estados para BD
     const [patients, setPatients] = useState<any[]>([]);
     const [professionals, setProfessionals] = useState<any[]>([]);
