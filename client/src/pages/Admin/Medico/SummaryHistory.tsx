@@ -1,7 +1,7 @@
-import InfoUserCard from "../../components/InfoUserCard";
-import Navbar from "../../components/Navbar";
-import StoryHistory from "../../components/StoryHistory";
-import NavButton from "../../components/NavButton";
+import InfoUserCard from "../../../components/InfoUserCard";
+import Navbar from "../../../components/Navbar";
+import StoryHistory from "../../../components/StoryHistory";
+import NavButton from "../../../components/NavButton";
 import { useNavigate } from 'react-router-dom';
 
 const patient = {
@@ -30,16 +30,21 @@ export default function SummaryHistory() {
         <main className="pb-8">
             <Navbar />
             <header className="m-auto w-[85%]">
-                <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">Historia clínica</h1>
+                <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2 text-center">Historia clínica</h1>
             </header>
                         
-            <InfoUserCard patient={patient} />
-
             <div className="m-auto w-[85%] flex justify-end gap-3 py-3">
-                <NavButton type={"button"} label="Crear historia" icon="pi pi-plus" btnFunction={() => {navigate('/createMedicalHistory');}} />
+                <NavButton type={"button"} label="Volver" btnFunction={() => {navigate('/menu');}} />
             </div>
 
+            <InfoUserCard patient={patient} />
+
+            {/* <div className="m-auto w-[85%] flex justify-end gap-3 py-3">
+                <NavButton type={"button"} label="Crear historia" icon="pi pi-plus" btnFunction={() => {navigate('/createMedicalHistory');}} />
+            </div> */}
+
             <StoryHistory/>
+            
         </main>
     )
 }

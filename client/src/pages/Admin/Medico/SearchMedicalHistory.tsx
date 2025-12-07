@@ -1,7 +1,8 @@
-import InfoUserCard from "../../components/InfoUserCard";
-import Navbar from "../../components/Navbar";
-import StoryHistory from "../../components/StoryHistory";
-import NavButton from "../../components/NavButton";
+import React from "react";
+import Navbar from "../../../components/Navbar";
+import InfoUserCard from "../../../components/InfoUserCard";
+import StoryHistory from "../../../components/StoryHistory";
+import NavButton from "../../../components/NavButton";
 import { InputText } from "primereact/inputtext";
 import { Avatar } from "primereact/avatar";
 
@@ -41,8 +42,8 @@ export default function SearchMedicalHistory() {
             <InfoUserCard patient={patient} />
 
             <div className="m-auto w-[85%] flex justify-end gap-3 py-3">
-                <NavButton icon="pi pi-send" label="Enviar al correo" btnFunction={() => {}} />
-                <NavButton label="Volver" btnFunction={() => {}} />
+                <NavButton type="submit" icon="pi pi-send" label="Enviar al correo" btnFunction={() => {}} />
+                <NavButton type="button" label="Volver" btnFunction={() => {}} />
             </div>
 
             <StoryHistory/>

@@ -1,10 +1,13 @@
 import Navbar from "../../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { TabView, TabPanel } from 'primereact/tabview';
+import UpdateAppointment from "../../components/Appointments/UpdateAppointment";
+import CancelAppointment from "../../components/Appointments/CancelAppointment";
 import NavButton from "../../components/NavButton";
-import CreatePersonnel from "../../components/Personnel/CreatePersonnel";
+import CreateAppointment from "../../components/Appointments/CreateAppointment";
+import ListAppointments from "../../components/Appointments/ListAppointments";
 
-export default function PersonnelManagement() {
+export default function PatientsManagement() {
     const navigate = useNavigate();
     
     const returnMenu = () => {
@@ -18,29 +21,29 @@ export default function PersonnelManagement() {
                 <div className="flex justify-end mt-4 pr-6">
                     <NavButton type="button" label="Volver" icon="pi pi-arrow-left" btnFunction={returnMenu}/>
                 </div>
-                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto mb-8">Gestión del personal</h1>
+                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto mb-8">Gestión de los pacientes</h1>
             </header>
 
             <section className="flex justify-center">
                 <TabView>
-                    <TabPanel header="Crear administrativo o médico">
-                        <CreatePersonnel />
+                    <TabPanel header="Crear paciente">
+                        <CreateAppointment />
                     </TabPanel>
-                    <TabPanel header="Listar personal activo">
+                    <TabPanel header="Listar pacientes">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
                             <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
                             <h3>Póximamente</h3>
                         </div>
                         {/* <ListAppointments /> */}
                     </TabPanel>
-                    <TabPanel header="Actualizar personal">
+                    <TabPanel header="Actualizar paciente">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
                             <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
                             <h3>Póximamente</h3>
                         </div>
                         {/* <UpdateAppointment /> */}
                     </TabPanel>
-                    <TabPanel header="Inactivar personal">
+                    <TabPanel header="Inactivar paciente">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
                             <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
                             <h3>Póximamente</h3>

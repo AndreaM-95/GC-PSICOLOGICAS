@@ -8,13 +8,13 @@ export default function Menu() {
             icon: "pi pi-user-plus",
             title: "Gestión del personal",
             subtitle: "Accede a la información del personal activo.",
-            url: "/perfil"
+            url: "/personnelManagement"
         },
         {
             icon: "pi pi-users",
             title: "Gestión del paciente",
             subtitle: "Accede a la información del paciente.",
-            url: "/citas"
+            url: "/patientsManagement"
         },
         {
             icon: "pi pi-heart",
@@ -32,10 +32,10 @@ export default function Menu() {
             icon: "pi pi-file-check",
             title: "Gestión de las autorizaciones",
             subtitle: "Accede a las autorizaciones pendientes de los pacientes.",
-            url: "/autorizaciones"
+            url: "/authorizationManagement"
         }
     ];
-    //TODO: Implementar el nombre del usuario
+    
     return (
         <main>
             <Navbar/>

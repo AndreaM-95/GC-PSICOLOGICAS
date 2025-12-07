@@ -43,7 +43,8 @@ export default function StoryHistory() {
 
     return (
         <Card
-            style={{padding: '0px', width: '85%', margin:'auto' }}
+        className="mt-2"
+            style={{padding: '0px', width: '85%', margin:'auto', marginTop: '20px'}}
         >
             <div className="flex justify-start gap-3 pb-3">
                 <NavButton type={"button"} label="Ver detalle completo" icon="pi pi-eye" btnFunction={() => {navigate('/detailsMedicalHistory');}} />

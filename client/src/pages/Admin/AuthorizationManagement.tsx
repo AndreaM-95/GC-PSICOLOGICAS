@@ -7,7 +7,7 @@ import NavButton from "../../components/NavButton";
 import CreateAppointment from "../../components/Appointments/CreateAppointment";
 import ListAppointments from "../../components/Appointments/ListAppointments";
 
-export default function AppointmentManagement() {
+export default function AuthorizationManagement() {
     const navigate = useNavigate();
     
     const returnMenu = () => {
@@ -21,22 +21,25 @@ export default function AppointmentManagement() {
                 <div className="flex justify-end mt-4 pr-6">
                     <NavButton type="button" label="Volver" icon="pi pi-arrow-left" btnFunction={returnMenu}/>
                 </div>
-                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto mb-8">Gestión de citas médicas</h1>
+                <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto mb-8">Gestión de autorizaciones médicas</h1>
             </header>
 
             <section className="flex justify-center">
                 <TabView>
-                    <TabPanel header="Agendar cita">
-                        <CreateAppointment />
-                    </TabPanel>
-                    <TabPanel header="Listar citas">
+                    <TabPanel header="Listar autorizaciones">
                         <ListAppointments />
                     </TabPanel>
-                    <TabPanel header="Reprogramar cita">
-                        <UpdateAppointment />
+                    <TabPanel header="Crear autorización">
+                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
+                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
+                            <h3>Sólo médicos</h3>
+                        </div>
                     </TabPanel>
-                    <TabPanel header="Cancelar cita">
-                        <CancelAppointment />
+                    <TabPanel header="Renovar autorización">
+                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
+                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
+                            <h3>Sólo médicos</h3>
+                        </div>
                     </TabPanel>
                 </TabView>
             </section>

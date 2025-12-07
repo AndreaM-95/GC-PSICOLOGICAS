@@ -29,7 +29,7 @@ export enum rolPersona{
 
 export interface IAdmin{
     idAdministrativo: number,
-    idPersona: IPersona,
+    idPersona: number,
     cargo: string,
     rol: rolPersona.ADMIN
 }
@@ -48,4 +48,57 @@ export interface IPaciente{
     apellidos: string,
     tipoDocumento: string,
     numeroDocumento: string;
+}
+
+
+// --- CREACIÓN DE PERFILES
+export interface ICrearAdmin{
+  nombres: string,
+  apellidos: string,
+  tipoDocumento: string,
+  numeroDocumento: string,
+  fechaNacimiento: string,
+  genero: string,
+  ciudadResidencia: string,
+  celular: number,
+  correo: string,
+  eps: string,
+  nombresContactoEmergencia: string,
+  celularContactoEmergencia: number,
+  contrasena: string,
+  cargo: string
+}
+
+export interface ICrearProfesional{
+  nombres: string,
+  apellidos: string,
+  tipoDocumento: string,
+  numeroDocumento: string,
+  fechaNacimiento: string,
+  genero: string,
+  ciudadResidencia: string,
+  celular: number,
+  correo: string,
+  eps: string,
+  nombresContactoEmergencia: string,
+  celularContactoEmergencia: number,
+  contrasena: string,
+  licencia: string,
+  especialidad: string
+}
+
+export interface ICrearPaciente{
+  nombres: string,
+  apellidos: string,
+  tipoDocumento: string,
+  numeroDocumento: string,
+  fechaNacimiento: string,
+  genero: string,
+  ciudadResidencia: string,
+  celular: number,
+  correo: string,
+  eps: string,
+  nombresContactoEmergencia: string,
+  celularContactoEmergencia: number,
+  contrasena: string
 }
