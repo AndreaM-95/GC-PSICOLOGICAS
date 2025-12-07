@@ -6,14 +6,13 @@ import { Dropdown } from "primereact/dropdown";
 import NavButton from "../NavButton";
 import { InputNumber } from "primereact/inputnumber";
 import type { ICrearAdmin, ICrearProfesional } from "../../types";
-import { createAdminRequest, createProfessionalRequest } from "../../services/user.service";
+import { createAdminRequest, createPatientRequest, createProfessionalRequest } from "../../services/user.service";
 import { Calendar } from "primereact/calendar";
 
-export default function CreatePersonnel() {
+export default function CreatePatient() {
     const toast = useRef<Toast>(null);
 
     // Estados del formulario
-    const [rol, setRol] = useState<string>("");
     const [nombres, setNombres] = useState<string>("");
     const [apellidos, setApellidos] = useState<string>("");
     const [tipoDocumento, setTipoDocumento] = useState<string>("");
@@ -28,21 +27,9 @@ export default function CreatePersonnel() {
     const [celularContactoEmergencia, setCelularContactoEmergencia] = useState<number>(0);
     const [contrasena, setContrasena] = useState<string>("");
 
-    // Estados adicionales si es administrativo
-    const [cargo, setCargo] = useState<string>("");
-
-    // Estados adicionales si es profesional
-    const [licencia, setLicencia] = useState<string>("");
-    const [especialidad, setEspecialidad] = useState<string>("");
-
-
-    const roles = [
-        { id: 1, name: "Administrativo" },
-        { id: 2, name: "Profesional" }
-    ];
-
     const tipoDoc = [
         { id: 1, name: "CC" },
+        { id: 2, name: "TI" },
         { id: 2, name: "CE" }
     ];
 
@@ -50,11 +37,6 @@ export default function CreatePersonnel() {
         { id: 1, name: "femenino" },
         { id: 2, name: "masculino" },
         { id: 2, name: "otro" }
-    ];
-
-    const especialidades = [
-        { id: 1, name: "psicología" },
-        { id: 2, name: "psiquiatría" }
     ];
 
     // --- Enviar perfil al backend ---
@@ -75,27 +57,7 @@ export default function CreatePersonnel() {
             return;
         }
 
-        if (rol === "Administrativo" && !cargo) {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'El campo cargo es obligatorio',
-                life: 3000
-            });
-            return;
-        }
-
-        if (rol === "Profesional" && (!licencia || !especialidad)) {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Licencia y especialidad son obligatorios',
-                life: 3000
-            });
-            return;
-        }
-
-        const baseData = {
+        const patientData = {
             nombres,
             apellidos,
             tipoDocumento,
@@ -112,27 +74,8 @@ export default function CreatePersonnel() {
         };
 
         try {
-            if (rol === "Administrativo") {
-                const adminData: ICrearAdmin = {
-                    ...baseData,
-                    cargo,
-                };
-
-                await createAdminRequest(adminData);
-            }
-
-            if (rol === "Profesional") {
-                const profData: ICrearProfesional = {
-                    ...baseData,
-                    licencia,
-                    especialidad,
-                };
-
-                await createProfessionalRequest(profData);
-            }
-
+            await createPatientRequest(patientData);
             cleanForm();
-
             toast.current?.show({
                 severity: 'success',
                 summary: 'Éxito',
@@ -152,7 +95,6 @@ export default function CreatePersonnel() {
     };
 
     const cleanForm = () => {
-        setRol("");
         setNombres("");
         setApellidos("");
         setTipoDocumento("");
@@ -166,9 +108,6 @@ export default function CreatePersonnel() {
         setNombreContactoEmergencia("");
         setCelularContactoEmergencia(0);
         setContrasena("");
-        setCargo("");
-        setLicencia("");
-        setEspecialidad("");
     };
 
     return (
@@ -179,18 +118,6 @@ export default function CreatePersonnel() {
                 style={{ gridTemplateColumns: '35% 65%' }}
                 onSubmit={createProfile}
             >
-                <label className="font-bold text-cyan-700">Rol del empleado:</label>
-                <Dropdown
-                    value={rol} onChange={(e) => setRol(e.value)}
-                    options={roles}
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Selecciona aquí.."
-                    className="w-full"
-                    required
-                    aria-label="Selecciona el rol.."
-                />
-
                 <label htmlFor="patient" className="font-bold text-cyan-700">Nombres:</label>
                 <InputText
                     id="patient"
@@ -305,40 +232,6 @@ export default function CreatePersonnel() {
                     type="password"
                     required
                 />
-
-                {rol === "Administrativo" && (
-                    <>
-                        <label className="font-bold text-cyan-700">Cargo:</label>
-                        <InputText 
-                            placeholder="Escribe aquí.." 
-                            value={cargo} onChange={(e) => setCargo(e.target.value)} 
-                            required
-                        />
-                    </>
-                )}
-
-                {rol === "Profesional" && (
-                    <>
-                        <label className="font-bold text-cyan-700">Número de licencia:</label> 
-                        <InputText 
-                            placeholder="Escribe aquí.." 
-                            value={licencia} onChange={(e) => setLicencia(e.target.value)}
-                            required
-                        />
-
-                        <label className="font-bold text-cyan-700">Especialidad:</label>
-                        <Dropdown
-                            value={especialidad} onChange={(e) => setEspecialidad(e.value)}
-                            options={especialidades}
-                            optionLabel="name"
-                            optionValue="name"
-                            placeholder="Selecciona aquí.."
-                            className="w-full"
-                            aria-label="Selecciona el lugar.."
-                            required
-                        />
-                    </>
-                )}
 
                 <div className="col-span-2 flex justify-end">
                     <NavButton type="submit" label="Crear perfil" btnFunction={() => console.log('click')} />

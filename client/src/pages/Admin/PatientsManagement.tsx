@@ -1,11 +1,8 @@
 import Navbar from "../../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { TabView, TabPanel } from 'primereact/tabview';
-import UpdateAppointment from "../../components/Appointments/UpdateAppointment";
-import CancelAppointment from "../../components/Appointments/CancelAppointment";
 import NavButton from "../../components/NavButton";
-import CreateAppointment from "../../components/Appointments/CreateAppointment";
-import ListAppointments from "../../components/Appointments/ListAppointments";
+import CreatePatient from "../../components/Patients/CreatePatient";
 
 export default function PatientsManagement() {
     const navigate = useNavigate();
@@ -27,7 +24,7 @@ export default function PatientsManagement() {
             <section className="flex justify-center">
                 <TabView>
                     <TabPanel header="Crear paciente">
-                        <CreateAppointment />
+                        <CreatePatient />
                     </TabPanel>
                     <TabPanel header="Listar pacientes">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
