@@ -5,8 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import NavButton from "../NavButton";
 import { InputNumber } from "primereact/inputnumber";
-import type { ICrearAdmin, ICrearProfesional } from "../../types";
-import { createAdminRequest, createPatientRequest, createProfessionalRequest } from "../../services/user.service";
+import { createPatientRequest } from "../../services/user.service";
 import { Calendar } from "primereact/calendar";
 
 export default function CreatePatient() {

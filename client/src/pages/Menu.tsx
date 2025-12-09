@@ -1,6 +1,6 @@
-import MenuCard from "../components/MenuCard";
 import 'primeicons/primeicons.css';
-import Navbar from "../components/Navbar";
+import MenuCard from "@/components/MenuCard";
+import Navbar from "@/components/Navbar";
 
 export default function Menu() {
     const DataMenu = [
@@ -37,26 +37,29 @@ export default function Menu() {
     ];
     
     return (
-        <main>
+        <main className='h-screen'>
             <Navbar/>
-            <header className="m-auto w-3/4">
-                <h1 className="text-cyan-700 font-bold text-2xl mx-auto mt-8 mb-2">¡Hola Camilo!</h1>
-                <h2 className="text-cyan-700 font-bold text-lg mx-auto">¿Qué necesitas hacer hoy?</h2>
-            </header>
 
-            <section className="w-3/4 mx-auto my-8">
-                <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-                    {DataMenu.map((item, index) => (
-                        <li key={index}>
-                            <MenuCard
-                                icon={item.icon}
-                                title={item.title}
-                                description={item.subtitle}
-                                url={item.url}
-                            />
-                        </li>
-                    ))}
-                </ul>
+            <section className="w-3/4 2xl:w-[60%] mx-auto flex flex-wrap items-center justify-around" aria-label="Menú principal de opciones">
+                <div className='w-full my-10'>
+                    <h1 className="text-cyan-700 font-bold text-2xl mb-2">¡Hola Camilo!</h1>
+                    <h2 className="text-cyan-700 font-bold text-lg">¿Qué necesitas hacer hoy?</h2>
+                </div>
+
+                <section className="my-auto">
+                    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+                        {DataMenu.map((item, index) => (
+                            <li key={index}>
+                                <MenuCard
+                                    icon={item.icon}
+                                    title={item.title}
+                                    description={item.subtitle}
+                                    url={item.url}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </section>
             </section>
         </main>
     );

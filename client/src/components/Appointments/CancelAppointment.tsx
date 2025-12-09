@@ -103,7 +103,7 @@ export default function CancelAppointment() {
             toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Todos los campos requeridos deben estar completos',
+                detail: 'Todos los campos son obligatorios.',
                 life: 3000
             });
             return;

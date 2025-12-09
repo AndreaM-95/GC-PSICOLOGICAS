@@ -11,6 +11,7 @@ import '../App.css';
 import React from 'react';
 import NavButton from '../components/NavButton';
 import '../App.css';
+import Footer from '@/components/Footer';
 
 interface TypeDocuments {
     id: number;
@@ -112,6 +113,8 @@ export default function Register() {
                     </div>
                 </form>
             </div>
+
+            <Footer />
         </main>
     );
 }

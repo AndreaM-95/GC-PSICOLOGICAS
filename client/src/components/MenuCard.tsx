@@ -15,7 +15,7 @@ export default function MenuCard(props: MenuCardProps) {
             onClick={() => navigate(props.url)}
             role="button"
             tabIndex={0}
-            className="block no-underline transition-transform duration-200 hover:scale-101 hover:shadow-lg"
+            className="block shadow-gray-300 shadow-xs no-underline transition-transform duration-200  hover:scale-101 hover:shadow-cyan-400 hover:cursor-pointer"
             style={{ background: '#f1faee', display: 'block', padding: '1rem', borderRadius: '8px' }}
             aria-label={`Ir a ${props.title}`}
         >

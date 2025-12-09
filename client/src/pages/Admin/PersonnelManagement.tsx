@@ -21,7 +21,7 @@ export default function PersonnelManagement() {
                 <h1 className="text-cyan-700 font-bold text-center text-2xl mx-auto mb-8">Gestión del personal</h1>
             </header>
 
-            <section className="flex justify-center">
+            <section className="flex justify-center mb-[100px]">
                 <TabView>
                     <TabPanel header="Crear administrativo o médico">
                         <CreatePersonnel />

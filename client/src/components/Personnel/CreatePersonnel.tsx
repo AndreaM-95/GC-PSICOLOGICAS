@@ -191,120 +191,128 @@ export default function CreatePersonnel() {
                     aria-label="Selecciona el rol.."
                 />
 
-                <label htmlFor="patient" className="font-bold text-cyan-700">Nombres:</label>
-                <InputText
-                    id="patient"
-                    value={nombres} onChange={(e) => setNombres(e.target.value)}
-                    placeholder="Nombre del paciente.."
-                    required
-                />
+                {rol === "" ? 
+                    <Card className="card col-span-2 flex text-center align-items-center justify-content-center justify-around bg-[#f1faee]">
+                        <i className="pi pi-info-circle" style={{fontSize: '2rem', color: 'var(--primary-color)'}}></i>
+                        <h3>Primero debes seleccionar el rol del empleado</h3>
+                    </Card>
+                    :
+                    <>
+                        <label htmlFor="patient" className="font-bold text-cyan-700">Nombres:</label>
+                        <InputText
+                            id="patient"
+                            value={nombres} onChange={(e) => setNombres(e.target.value)}
+                            placeholder="Nombre del paciente.."
+                            required
+                        />
 
-                <label htmlFor="patient" className="font-bold text-cyan-700">Apellidos:</label>
-                <InputText
-                    id="patient"
-                    value={apellidos} onChange={(e) => setApellidos(e.target.value)}
-                    placeholder="Nombre del paciente.."
-                    required
-                />
+                        <label htmlFor="patient" className="font-bold text-cyan-700">Apellidos:</label>
+                        <InputText
+                            id="patient"
+                            value={apellidos} onChange={(e) => setApellidos(e.target.value)}
+                            placeholder="Nombre del paciente.."
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Tipo de documento:</label>
-                <Dropdown
-                    value={tipoDocumento} onChange={(e) => setTipoDocumento(e.value)}
-                    options={tipoDoc}
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Selecciona aquí.."
-                    className="w-full"
-                    aria-label="Selecciona el tipo de documento.."
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Tipo de documento:</label>
+                        <Dropdown
+                            value={tipoDocumento} onChange={(e) => setTipoDocumento(e.value)}
+                            options={tipoDoc}
+                            optionLabel="name"
+                            optionValue="name"
+                            placeholder="Selecciona aquí.."
+                            className="w-full"
+                            aria-label="Selecciona el tipo de documento.."
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Número de documento:</label>
-                <InputText 
-                    placeholder="Escribe aquí.." 
-                    value={documento} onChange={(e) => setDocumento(e.target.value)} 
-                    required
-                />
-                
-                <label className="font-bold text-cyan-700">Fecha de nacimiento:</label>
-                <Calendar
-                    value={fechaNacimiento}
-                    onChange={(e) => setFechaNacimiento(e.value ?? null)}
-                    maxDate={new Date()}    // No permitir días superiores a hoy
-                    dateFormat="dd/mm/yy"
-                    showIcon
-                    placeholder="Selecciona aquí.."
-                    className="w-full"
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Número de documento:</label>
+                        <InputText 
+                            placeholder="Escribe aquí.." 
+                            value={documento} onChange={(e) => setDocumento(e.target.value)} 
+                            required
+                        />
+                        
+                        <label className="font-bold text-cyan-700">Fecha de nacimiento:</label>
+                        <Calendar
+                            value={fechaNacimiento}
+                            onChange={(e) => setFechaNacimiento(e.value ?? null)}
+                            maxDate={new Date()}    // No permitir días superiores a hoy
+                            dateFormat="dd/mm/yy"
+                            showIcon
+                            placeholder="Selecciona aquí.."
+                            className="w-full"
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Género:</label>
-                <Dropdown
-                    value={genero} onChange={(e) => setGenero(e.value)}
-                    options={generos}
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Selecciona aquí.."
-                    className="w-full"
-                    aria-label="Selecciona el género.."
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Género:</label>
+                        <Dropdown
+                            value={genero} onChange={(e) => setGenero(e.value)}
+                            options={generos}
+                            optionLabel="name"
+                            optionValue="name"
+                            placeholder="Selecciona aquí.."
+                            className="w-full"
+                            aria-label="Selecciona el género.."
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Ciudad de residencia:</label>
-                <InputText 
-                    placeholder="Escribe aquí.." 
-                    value={ciudadResidencia} onChange={(e) => setCiudadResidencia(e.target.value)}
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Ciudad de residencia:</label>
+                        <InputText 
+                            placeholder="Escribe aquí.." 
+                            value={ciudadResidencia} onChange={(e) => setCiudadResidencia(e.target.value)}
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Número de celular:</label>
-                <InputNumber 
-                    placeholder="Ej: 3138264545" 
-                    value={celular} onChange={(e) => setCelular(Number(e.value))}
-                    type="tel" name="telefono"
-                    useGrouping={false}
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Número de celular:</label>
+                        <InputNumber 
+                            placeholder="Ej: 3138264545" 
+                            value={celular} onChange={(e) => setCelular(Number(e.value))}
+                            type="tel" name="telefono"
+                            useGrouping={false}
+                            required
+                        />
 
+                        <label className="font-bold text-cyan-700">EPS:</label>
+                        <InputText 
+                            placeholder="Escribe aquí.." 
+                            value={eps} onChange={(e) => setEps(e.target.value)}
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">EPS:</label>
-                <InputText 
-                    placeholder="Escribe aquí.." 
-                    value={eps} onChange={(e) => setEps(e.target.value)}
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Nombre del contacto de emergencia:</label>
+                        <InputText 
+                            placeholder="Escribe aquí.." 
+                            value={nombreContactoEmergencia} onChange={(e) => setNombreContactoEmergencia(e.target.value)}
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Nombre del contacto de emergencia:</label>
-                <InputText 
-                    placeholder="Escribe aquí.." 
-                    value={nombreContactoEmergencia} onChange={(e) => setNombreContactoEmergencia(e.target.value)}
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Número de celular del contacto de emergencia:</label>
+                        <InputNumber 
+                            placeholder="Escribe aquí.." 
+                            value={celularContactoEmergencia} onChange={(e) => setCelularContactoEmergencia(Number(e.value))}
+                            type="tel" name="telefono"
+                            useGrouping={false}
+                            required
+                        />
+                        
+                        <label className="font-bold text-cyan-700">Correo electrónico:</label>
+                        <InputText 
+                            placeholder="Ej. test@gmail.com" 
+                            value={correo} onChange={(e) => setCorreo(e.target.value)}
+                            type="email"
+                            required
+                        />
 
-                <label className="font-bold text-cyan-700">Número de celular del contacto de emergencia:</label>
-                <InputNumber 
-                    placeholder="Escribe aquí.." 
-                    value={celularContactoEmergencia} onChange={(e) => setCelularContactoEmergencia(Number(e.value))}
-                    type="tel" name="telefono"
-                    useGrouping={false}
-                    required
-                />
-                
-                <label className="font-bold text-cyan-700">Correo electrónico:</label>
-                <InputText 
-                    placeholder="Ej. test@gmail.com" 
-                    value={correo} onChange={(e) => setCorreo(e.target.value)}
-                    type="email"
-                    required
-                />
-
-                <label className="font-bold text-cyan-700">Contraseña:</label>
-                <InputText 
-                    placeholder="Escribe aquí.." 
-                    value={contrasena} onChange={(e) => setContrasena(e.target.value)} 
-                    type="password"
-                    required
-                />
+                        <label className="font-bold text-cyan-700">Contraseña:</label>
+                        <InputText 
+                            placeholder="Escribe aquí.." 
+                            value={contrasena} onChange={(e) => setContrasena(e.target.value)} 
+                            type="password"
+                            required
+                        />
+                    </>
+                }
 
                 {rol === "Administrativo" && (
                     <>

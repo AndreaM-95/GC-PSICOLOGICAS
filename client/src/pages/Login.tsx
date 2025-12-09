@@ -1,14 +1,17 @@
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Toast } from 'primereact/toast';
+import 'primeicons/primeicons.css';
 import { Password } from 'primereact/password';
 import { Avatar } from 'primereact/avatar';
 import { InputText } from 'primereact/inputtext';
-import 'primeicons/primeicons.css';
-import NavButton from '../components/NavButton';
+import NavButton from '@/components/NavButton';
+import { loginRequest } from '@/services/auth.service';
 import '../App.css';
-import { loginRequest } from '../services/auth.service';
-import { useState } from 'react';
+import Footer from '@/components/Footer';
 
 export default function Login() {
+    const toast = useRef<Toast>(null);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,15 +23,18 @@ export default function Login() {
             const data = await loginRequest({ email, password });
             console.log("Login OK:", data);
 
-            // Guardar el token REAL que envía tu backend
             if (data.accessToken) {
                 localStorage.setItem("accessToken", data.accessToken);
             }
 
             navigate("/menu");
         } catch (err: any) {
-            setError("Credenciales incorrectas");
             console.error(err);
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Credenciales inválidas',
+                life: 3000
+            });
         }
     }
 
@@ -44,11 +50,15 @@ export default function Login() {
 
     return (
         <main className="min-h-screen flex">
+            <Toast ref={toast} />
+            
             <div className="w-1/2 flex items-center justify-center">
                 <img src="/login.png" width="450" height="450" alt="Ilustración de inicio de sesión" />
             </div>
 
-            <div className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
+            <section 
+            
+className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
                 <header className="w-3/4 text-center mb-16">
                     <h1 className="text-cyan-700 font-bold text-3xl">
                         ¡Bienvenidos al sistema de gestión de citas!
@@ -124,7 +134,9 @@ export default function Login() {
                         </fieldset>
                     </form>
                 </section>
-            </div>
+            </section>
+
+            <Footer />
         </main>
     );
 }

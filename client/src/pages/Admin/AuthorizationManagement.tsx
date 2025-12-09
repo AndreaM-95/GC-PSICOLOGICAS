@@ -27,7 +27,10 @@ export default function AuthorizationManagement() {
             <section className="flex justify-center">
                 <TabView>
                     <TabPanel header="Listar autorizaciones">
-                        <ListAppointments />
+                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
+                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
+                            <h3>Próximamente</h3>
+                        </div>
                     </TabPanel>
                     <TabPanel header="Crear autorización">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">

@@ -108,11 +108,11 @@ export default function CreateAppointment() {
         e.preventDefault();
 
         // Validación previa
-        if (!selectedProfessional || !date || !time || !placeMeeting) {
+        if (!patient || !selectedProfessional || !date || !time || !placeMeeting) {
             toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Todos los campos requeridos deben estar completos',
+                detail: 'Todos los campos son obligatorios.',
                 life: 3000
             });
             return;

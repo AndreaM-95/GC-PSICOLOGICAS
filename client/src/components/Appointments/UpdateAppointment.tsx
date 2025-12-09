@@ -164,7 +164,7 @@ export default function UpdateAppointment() {
             toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Todos los campos requeridos deben estar completos',
+                detail: 'Todos los campos son obligarorios.',
                 life: 3000
             });
             return;
