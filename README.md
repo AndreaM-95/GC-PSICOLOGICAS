@@ -1,33 +1,22 @@
-# Plataforma de citas
+<h1 align="center">GESTIÓN DE CITAS PSICOLÓGICAS</h1>
+<p align="center"> <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green"></p>
 
-### Paquetes instalados
+<h2>CONFIGURACIÓN DEL PROYECTO</h2> 
 
-```
-npm install react-router-dom
-
-npm install --save-dev @types/class-validator
-npm install class-validator class-transformer
-npm install @nestjs/typeorm typeorm mysql2
-npm install -D typeorm ts-node
-npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
-npm install --save-dev jest @types/jest ts-jest
-npm install --save @nestjs/swagger swagger-ui-express
-```
-
----
-# CONFIGURACIÓN DEL ENTORNO
-
-## Ejecutar el proyecto
-1. Instalar dependencias tanto para server como client: `npm install`
-2. Debe tener una BDD con el nombre citas_psicologicas
+1. Instalar dependencias tanto para `server` como `client` ejecutando: `npm install` <br>
+2. Debe tener una BDD con el nombre `citas_psicologicas`
 3. En la carpeta del server, se debe iniciar las migraciones: `npm run typeorm migration:run` 
 4. Ejecuta el frontend: `npm run dev`
 5. Ejecuta el backend: `npm run start:dev`
 
 ---
 
-## Ejecuta el flujo del administrador
-- Desde postman, usar el endpoint `POST` para crear el primer admin y así ejecutar su flujo. Su ruta es: `localhost/4000/users/admin`
+<h2>EJECUCIÓN DE LOS FLUJOS</h2>
+
+<h3>FLUJO DEL ADMINISTRADOR</h3> 
+
+`⚠️IMPORTANTE⚠️:` Debe crear el usuario del administrativo para los pasos siguientes, esto lo hará en postman. Acontinuación las instrucciones:
+- Una vez esté en postman, usar el endpoint `POST` para crear el primer admin. Su ruta es: `http://localhost:4000/users/admin`
 - Ejemplo de estructura del objeto para la creación del usuario:
 ```  
    {
@@ -51,9 +40,12 @@ npm install --save @nestjs/swagger swagger-ui-express
 - Inicia sesión con el correo corporativo y la contraseña
 - Selecciona el panel de su interés
 
-## Flujos de creación y manipulación de datos
+---
 
-### Crear administrativo
+<h3>CREACIÓN Y MANIPULACIÓN DE DATOS</h3>
+<h4>📁CREACIÓN DE PERFILES</h4>
+
+#### `👩‍💼 Administrativo`
 1. Una vez inicie sesión, seleccione la tarjeta `Gestión del personal`
 2. Debe seleccionar el rol del usuario que desea crear, en este caso, un administrativo
 3. Diligencie todos los campos, éstos son obligatorios
@@ -61,7 +53,7 @@ npm install --save @nestjs/swagger swagger-ui-express
 5. Una vez creado, el formulario se limpiará
 6. Verifique en su base de datos la creación de éste
 
-### Crear profesional - Médico -
+#### `👩‍⚕️ Profesional - Médico -`
 1. Una vez inicie sesión, seleccione la tarjeta `Gestión del personal`
 2. Debe seleccionar el rol del usuario que desea crear, en este caso, un profesional
 3. Diligencie todos los campos, éstos son obligatorios
@@ -69,27 +61,30 @@ npm install --save @nestjs/swagger swagger-ui-express
 5. Una vez creado, el formulario se limpiará
 6. Verifique en su base de datos la creación de éste
 
-### Crear paciente
+#### `🧍‍♀️ Paciente`
 1. Una vez inicie sesión, seleccione la tarjeta `Gestión del paciente`
 2. Diligencie todos los campos, éstos son obligatorios
 3. De click en el botón de `Crear perfil`
 4. Una vez creado, el formulario se limpiará
 5. Verifique en su base de datos la creación de éste
 
-### Módulo de citas
+---
+
+<h4>📁MÓDULO DE CITAS</h4>
+
 Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión de citas`, aquí podrá realizar:
 
-#### Crear cita
+#### `✔️Crear cita`
 1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
 2. Diligencia todos los campos, éstos son obligatorios
 3. Una vez creado, el formulario se limpiará
 4. Verifique en su base de datos la creación de la cita
 
-#### Listar citas
+#### `🔍Listar citas`
 1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
 2. Verá una tabla con las citas del paciente cumpliendo el orden de confirmada, asistida, cancelada y no asistida
 
-#### Reprogramar cita
+#### `📝Reprogramar cita`
 1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
 2. Selecciona la cita que desea reprogramar, esta tendrá un estado de `confirmada`
 3. Diligencia todos los campos, éstos son obligatorios
@@ -97,7 +92,7 @@ Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión de ci
 5. Una vez diligenciado, el formulario se limpiará
 6. Verifique en su base de datos la actualización de la cita
 
-#### Cancelar cita
+#### `❌Cancelar cita`
 1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
 2. Selecciona la cita que desea cancelar, esta tendrá un estado de `confirmada`
 3. Diligencia todos los campos, éstos son obligatorios
@@ -105,7 +100,9 @@ Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión de ci
 5. Una vez diligenciado, el formulario se limpiará
 6. Verifique en su base de datos la cancelación de la cita
 
-# AQUITECTURA
+---
+
+# 🏗️ AQUITECTURA DEL SISTEMA
 ## Cliente
 
 
@@ -209,8 +206,55 @@ src/
  └── main.ts
 ```
 
+---
+
+## 🛠️ STACK TECNOLÓGICO
+
+| BACKEND | FRONTEND | OTRAS |
+|--------|-------|-------|
+| Typescript | Typescript | Postman |
+| Nest JS | React JS | DBeaver |
+| Typeorm | Tailwind CSS | GIT/GITHUB |
+| JWT | Primereact | |
+| Bcrypt | |
+| MySQL | |
+
+---
+
 ## Generación y ejecución de migraciones
 ```
 npm run typeorm migration:generate src/migrations/InitMigration
 npm run typeorm migration:run
 ```
+
+---
+
+### 🛠️ Paquetes instalados
+
+```
+npm install react-router-dom
+
+npm install --save-dev @types/class-validator
+npm install class-validator class-transformer
+npm install @nestjs/typeorm typeorm mysql2
+npm install -D typeorm ts-node
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+npm install --save-dev jest @types/jest ts-jest
+npm install --save @nestjs/swagger swagger-ui-express
+```
+
+---
+
+## 👩‍💻 DESARROLLO
+
+**⭐ APRENDIZ** — Yuri Andrea Mejía Ramírez <br>
+**⭐ FICHA** — 3118300 <br>
+**⭐ UBICACIÓN** — Bogotá DC <br>
+**⭐ AÑO** — 2025 <br>
+
+---
+
+## 📄 LICENCIA
+
+💜 **GESTIÓN DE CITAS** — Una plataforma para citas psicológicas.  
+© 2025 **OL-STUDIOS** — Todos los derechos reservados.
