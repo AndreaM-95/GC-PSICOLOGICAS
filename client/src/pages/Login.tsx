@@ -9,14 +9,19 @@ import NavButton from '@/components/NavButton';
 import { loginRequest } from '@/services/auth.service';
 import '../App.css';
 import Footer from '@/components/Footer';
+import { useAppToast } from '@/hooks/useAppToast';
 
 export default function Login() {
-    const toast = useRef<Toast>(null);
     const navigate = useNavigate();
+    const { toast, showMessage } = useAppToast();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
+    /**
+     * @description Función asincrónica que maneja el inicio de sesión del usuario
+     * @summary En caso de éxito, devuelve un accessToken con la información del usuario
+     * @throws En caso de eeror, muestra en consola la información de este y al usuario un mensaje de credenciales inválidas
+     */
     const login = async () => {
         if (event) event.preventDefault();
         try {
@@ -30,22 +35,18 @@ export default function Login() {
             navigate("/menu");
         } catch (err: any) {
             console.error(err);
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Credenciales inválidas',
-                life: 3000
-            });
+            showMessage("error","Credenciales inválidas");
         }
     }
 
-
+    //TODO: Crear lógica de recuperado de contraseña
     const rememberPassword = () => {
-        // Logic to remember the password
-        window.open('https://react.dev', '_blank')
+        showMessage("info","Próximamente");
     }
 
+    //TODO: Crear lógica de registro de usuario paciente
     const registerUser = () => {
-        navigate('/register');
+        showMessage("info","Próximamente");
     }
 
     return (
@@ -56,9 +57,7 @@ export default function Login() {
                 <img src="/login.png" width="450" height="450" alt="Ilustración de inicio de sesión" />
             </div>
 
-            <section 
-            
-className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
+            <section className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
                 <header className="w-3/4 text-center mb-16">
                     <h1 className="text-cyan-700 font-bold text-3xl">
                         ¡Bienvenidos al sistema de gestión de citas!
@@ -135,7 +134,6 @@ className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
                     </form>
                 </section>
             </section>
-
             <Footer />
         </main>
     );

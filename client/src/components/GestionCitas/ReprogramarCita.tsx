@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import NavButton from "../NavButton";
 import { Card } from "primereact/card";
@@ -13,14 +13,16 @@ import { Column } from "primereact/column";
 import type { IUpdateAppointment } from "../../types";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
+import { UseInputValidation } from "@/utils/InputValidation";
+import { useAppToast } from "@/hooks/useAppToast";
+import { usePatientProffesionalData } from "@/hooks/usePatientProffesionalData";
 
 export default function UpdateAppointment() {
-    const toast = useRef<Toast>(null);
+    const { toast, showMessage } = useAppToast();
     const [documentPatient, setDocumentPatient] = useState("");
     const [appointmentsPatient, setAppointmentsPatient] = useState<any[]>([]);
     const [codAppointment, setCodAppointment] = useState(0);
     const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
-    
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     
@@ -32,10 +34,6 @@ export default function UpdateAppointment() {
     const [newModality, setNewModality] = useState("");
     const [newConsultory, setNewConsultory] = useState("");
     const [reason, setReason] = useState("");
-
-    // Estados para BD
-    const [patients, setPatients] = useState<any[]>([]);
-    const [professionals, setProfessionals] = useState<any[]>([]);
 
     // Crear horas mínimas y máximas
     const minHour = new Date();
@@ -55,41 +53,12 @@ export default function UpdateAppointment() {
     ];
     
     // Cargar pacientes y profesionales al montar el componente
-    useEffect(() => {
-        async function loadData() {
-            try {
-                const pats = await getPatients();
-                const profs = await getProfessionals();
+    const {patients, professionals} = usePatientProffesionalData(showMessage);
 
-                setPatients(
-                    pats.map((p: any) => ({
-                        id: p.idPersona,
-                        document: p.numeroDocumento,
-                        name: `${p.nombres} ${p.apellidos}`,
-                    }))
-                );
-
-                setProfessionals(
-                    profs.map((p: any) => ({
-                        id: p.profesional.idProfesional,
-                        name: `${p.nombres} ${p.apellidos}`,
-                        especialidad: p.profesional?.especialidad ?? "N/A",
-                    }))
-                );
-            } catch (err: any) {
-                console.error("Error cargando datos:", err);
-                toast.current?.show({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Error al cargar los datos',
-                    life: 3000
-                });
-            }
-        }
-        loadData();
-    }, []);
-
-    // Buscar pacientes por documento mientras se escribe
+    /**
+     * @description Buscar pacientes por documento mientras se escribe
+     * @param event Entrada del usuario
+     */
     const searchPatient = (event: { query: string }) => {
         const query = event.query;
         const filtered = patients.filter(patient => 
@@ -98,7 +67,10 @@ export default function UpdateAppointment() {
         setFilteredPatients(filtered);
     };
     
-    // Cuando se selecciona un paciente
+    /**
+     * @description Selección del paciente y visualización de su nombre en el input
+     * @param e 
+     */
     const onPatientSelect = (e: { value: any }) => {
         cleanForm();
         const selected = e.value;
@@ -109,7 +81,10 @@ export default function UpdateAppointment() {
         loadPatientAppointments(selected.document);
     };
 
-    // Cargar citas del paciente seleccionado
+    /**
+     * @description Encargado de listar las citas del paciente seleccionado
+     * @param document número del documento del paciente
+     */
     const loadPatientAppointments = async (document: string) => {
         try {
             const response = await patientAppointmentsRequest(parseInt(document));
@@ -118,18 +93,15 @@ export default function UpdateAppointment() {
 
         } catch (err: any) {
             console.error("Error cargando citas:", err);
+            showMessage("error", "Error al cargar las citas del paciente.");
             setAppointmentsPatient([]);
-
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error al cargar las citas del paciente',
-                life: 3000
-            });
         }
     };
 
-    // Cuando se selecciona una cita
+    /**
+     * @description Selecciona la cita que se modificará tomando sus campos actuales
+     * @param appointment La cita con todos los datos solicitados
+     */
     const onAppointmentSelect = (appointment: any) => {
         setSelectedAppointment(appointment);
         setCodAppointment(appointment.idCita);
@@ -156,17 +128,16 @@ export default function UpdateAppointment() {
         setReason(appointment.motivo);
     };
 
-    // Reprogramar cita
+    /**
+     * @description Cambia los datos generales de la cita ya creada
+     * @param e Evento del envío del formulario
+     * @returns 
+     */
     const updateAppointment = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!selectedPatient || !codAppointment || !newDate || !newTime || !newModality || !newConsultory || !selectedProfessional) {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Todos los campos son obligarorios.',
-                life: 3000
-            });
+            showMessage("error", "Todos los campos son obligarorios.");
             return;
         }
 
@@ -184,23 +155,12 @@ export default function UpdateAppointment() {
         try {
             await updateAppointmentRequest(appointmentData);
             cleanForm();
-            console.log("Respuesta de actualización:", appointmentData);
-            toast.current?.show({
-                severity: 'success',
-                summary: 'Éxito',
-                detail: 'Cita actualizada con éxito',
-                life: 3000,
-            });
+            showMessage("success", "Cita actualizada con éxito");
             cleanForm();
         } catch (error: any) {
-            console.error("Error completo:", error);
             console.error("Datos de respuesta:", error.response?.data);
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: error.response?.data?.message || "Error al actualizar la cita",
-                life: 3000
-            });
+            console.error(error.response?.data?.message);
+            showMessage("error", "Error al actualizar la cita.");
         }
     };
     
@@ -298,6 +258,7 @@ export default function UpdateAppointment() {
                                 onChange={(e) => setNewTime(e.value ?? null)} 
                                 showTime 
                                 hourFormat="12"
+                                stepMinute={30} 
                                 timeOnly  
                                 showIcon  
                                 icon={() => <i className="pi pi-clock" />}
@@ -338,8 +299,9 @@ export default function UpdateAppointment() {
                             <InputText
                                 id="reason"
                                 value={reason}
-                                onChange={(e) => setReason(e.target.value)}
+                                onChange={UseInputValidation(setReason, "letters")}
                                 placeholder="Escribe aquí.."
+                                required
                             />
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../../../components/Navbar";
-import InfoUserCard from "../../../components/InfoUserCard";
-import StoryHistory from "../../../components/StoryHistory";
-import NavButton from "../../../components/NavButton";
+import Navbar from "../../components/Navbar";
+import InfoUserCard from "../../components/InfoUserCard";
+import StoryHistory from "../../components/StoryHistory";
+import NavButton from "../../components/NavButton";
 import { InputText } from "primereact/inputtext";
 import { Avatar } from "primereact/avatar";
 

@@ -9,5 +9,7 @@ export interface ILoginResponse {
     id: number;
     email: string;
     nombres: string;
+    role: string;
+    numeroDocumento: number;
   };
 }

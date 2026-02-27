@@ -2,9 +2,8 @@ import { Calendar } from "primereact/calendar";
 import { Paginator } from 'primereact/paginator';
 import { useState } from "react";
 
-import AppointmentCard from "../../../components/AppointmentCard";
-import Navbar from "../../../components/Navbar";
-import { EstadoPersona, type IPersona, Generos, type IAdmin, type RolPersona, type IPaciente, type ICita, type EstadosCita, type IProfesional, rolPersona, TipoDocumento, estadoPersona } from "../../../types";
+import Navbar from "@/components/Navbar";
+import { EstadoPersona, type IPersona, Generos, type IAdmin, type RolPersona, type IPaciente, type ICita, type EstadosCita, type IProfesional, rolPersona, TipoDocumento, estadoPersona } from "@/types";
 
 // const DataPersons: IPersona[] = [
 //     {

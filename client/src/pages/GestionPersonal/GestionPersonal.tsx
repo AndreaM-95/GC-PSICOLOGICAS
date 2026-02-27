@@ -4,7 +4,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import NavButton from "../../components/NavButton";
 import CreatePersonnel from "../../components/Personnel/CreatePersonnel";
 
-export default function PersonnelManagement() {
+export default function GestionPersonal() {
     const navigate = useNavigate();
     
     const returnMenu = () => {

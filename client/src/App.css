@@ -34,3 +34,21 @@ html{
   justify-content: center;
   gap: 1rem;
 }
+
+/*CALENDARIO*/
+
+.calendar-small {
+  width: 200px;        /* ancho del popup */
+}
+
+.calendar-small .p-datepicker {
+  font-size: 0.3rem;  /* reduce todo */
+}
+
+.calendar-small .p-datepicker-calendar td {
+  padding: 0.1rem;    /* reduce celdas */
+}
+
+.p-hour-picker span, .p-minute-picker span, .p-ampm-picker span {
+  font-size: 18px;  /* reduce texto */
+}

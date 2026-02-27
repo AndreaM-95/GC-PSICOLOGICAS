@@ -60,11 +60,11 @@ export interface ICrearAdmin{
   fechaNacimiento: string,
   genero: string,
   ciudadResidencia: string,
-  celular: number,
+  celular: string,
   correo: string,
   eps: string,
   nombresContactoEmergencia: string,
-  celularContactoEmergencia: number,
+  celularContactoEmergencia: string,
   contrasena: string,
   cargo: string
 }
@@ -77,11 +77,11 @@ export interface ICrearProfesional{
   fechaNacimiento: string,
   genero: string,
   ciudadResidencia: string,
-  celular: number,
+  celular: string,
   correo: string,
   eps: string,
   nombresContactoEmergencia: string,
-  celularContactoEmergencia: number,
+  celularContactoEmergencia: string,
   contrasena: string,
   licencia: string,
   especialidad: string

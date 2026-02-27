@@ -3,11 +3,11 @@ import { Card } from "primereact/card";
 import { Toast } from 'primereact/toast';
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import NavButton from "../NavButton";
-import { InputNumber } from "primereact/inputnumber";
-import type { ICrearAdmin, ICrearProfesional } from "../../types";
-import { createAdminRequest, createProfessionalRequest } from "../../services/user.service";
+import NavButton from '@/components/NavButton';
+import type { ICrearAdmin, ICrearProfesional } from "@/types";
+import { createAdminRequest, createProfessionalRequest } from "@/services/user.service";
 import { Calendar } from "primereact/calendar";
+import { UseInputValidation } from "@/utils/InputValidation";
 
 export default function CreatePersonnel() {
     const toast = useRef<Toast>(null);
@@ -21,11 +21,11 @@ export default function CreatePersonnel() {
     const [fechaNacimiento, setFechaNacimiento] = useState<Date | null>(null);
     const [genero, setGenero] = useState<string>("");
     const [ciudadResidencia, setCiudadResidencia] = useState<string>("");
-    const [celular, setCelular] = useState<number>(0);
+    const [celular, setCelular] =  useState<string>("");
     const [correo, setCorreo] = useState<string>("");
     const [eps, setEps] = useState<string>("");
     const [nombreContactoEmergencia, setNombreContactoEmergencia] = useState<string>("");
-    const [celularContactoEmergencia, setCelularContactoEmergencia] = useState<number>(0);
+    const [celularContactoEmergencia, setCelularContactoEmergencia] =  useState<string>("");
     const [contrasena, setContrasena] = useState<string>("");
 
     // Estados adicionales si es administrativo
@@ -160,11 +160,11 @@ export default function CreatePersonnel() {
         setFechaNacimiento(null);
         setGenero("");
         setCiudadResidencia("");
-        setCelular(0);
+        setCelular("");
         setCorreo("");
         setEps("");
         setNombreContactoEmergencia("");
-        setCelularContactoEmergencia(0);
+        setCelularContactoEmergencia("");
         setContrasena("");
         setCargo("");
         setLicencia("");
@@ -198,19 +198,21 @@ export default function CreatePersonnel() {
                     </Card>
                     :
                     <>
-                        <label htmlFor="patient" className="font-bold text-cyan-700">Nombres:</label>
+                        <label htmlFor="personnelName" className="font-bold text-cyan-700">Nombres:</label>
                         <InputText
-                            id="patient"
-                            value={nombres} onChange={(e) => setNombres(e.target.value)}
-                            placeholder="Nombre del paciente.."
+                            id="personnelName"
+                            value={nombres}
+                            onChange={UseInputValidation(setNombres, "letters")}
+                            placeholder="Nombre del usuario.."
                             required
                         />
 
-                        <label htmlFor="patient" className="font-bold text-cyan-700">Apellidos:</label>
+                        <label htmlFor="personnelLastName" className="font-bold text-cyan-700">Apellidos:</label>
                         <InputText
-                            id="patient"
-                            value={apellidos} onChange={(e) => setApellidos(e.target.value)}
-                            placeholder="Nombre del paciente.."
+                            id="personnelLastName"
+                            value={apellidos} 
+                            onChange={UseInputValidation(setApellidos, "letters")}
+                            placeholder="Apellido del usuario.."
                             required
                         />
 
@@ -229,7 +231,8 @@ export default function CreatePersonnel() {
                         <label className="font-bold text-cyan-700">Número de documento:</label>
                         <InputText 
                             placeholder="Escribe aquí.." 
-                            value={documento} onChange={(e) => setDocumento(e.target.value)} 
+                            value={documento}
+                            onChange={UseInputValidation(setDocumento, "numbers")}
                             required
                         />
                         
@@ -260,39 +263,46 @@ export default function CreatePersonnel() {
                         <label className="font-bold text-cyan-700">Ciudad de residencia:</label>
                         <InputText 
                             placeholder="Escribe aquí.." 
-                            value={ciudadResidencia} onChange={(e) => setCiudadResidencia(e.target.value)}
+                            value={ciudadResidencia}
+                            onChange={UseInputValidation(setCiudadResidencia, "letters")}
                             required
                         />
 
                         <label className="font-bold text-cyan-700">Número de celular:</label>
-                        <InputNumber 
-                            placeholder="Ej: 3138264545" 
-                            value={celular} onChange={(e) => setCelular(Number(e.value))}
-                            type="tel" name="telefono"
-                            useGrouping={false}
+                        <InputText
+                            placeholder="Ej: 3138521212"
+                            type="tel"
+                            value={celular}
+                            onChange={UseInputValidation(setCelular, "phone")}
+                            maxLength={10}
+                            inputMode="numeric"
                             required
                         />
 
                         <label className="font-bold text-cyan-700">EPS:</label>
                         <InputText 
                             placeholder="Escribe aquí.." 
-                            value={eps} onChange={(e) => setEps(e.target.value)}
+                            value={eps} 
+                            onChange={UseInputValidation(setEps, "letters")}
                             required
                         />
 
                         <label className="font-bold text-cyan-700">Nombre del contacto de emergencia:</label>
                         <InputText 
                             placeholder="Escribe aquí.." 
-                            value={nombreContactoEmergencia} onChange={(e) => setNombreContactoEmergencia(e.target.value)}
+                            value={nombreContactoEmergencia} 
+                            onChange={UseInputValidation(setNombreContactoEmergencia, "letters")}
                             required
                         />
 
                         <label className="font-bold text-cyan-700">Número de celular del contacto de emergencia:</label>
-                        <InputNumber 
-                            placeholder="Escribe aquí.." 
-                            value={celularContactoEmergencia} onChange={(e) => setCelularContactoEmergencia(Number(e.value))}
-                            type="tel" name="telefono"
-                            useGrouping={false}
+                        <InputText
+                            placeholder="Ej: 3138521212"
+                            type="tel"
+                            value={celularContactoEmergencia}
+                            onChange={UseInputValidation(setCelularContactoEmergencia, "phone")}
+                            maxLength={10}
+                            inputMode="numeric"
                             required
                         />
                         

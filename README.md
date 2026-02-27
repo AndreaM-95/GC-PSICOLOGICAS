@@ -104,7 +104,67 @@ Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión de ci
 
 # 🏗️ AQUITECTURA DEL SISTEMA
 ## Cliente
-
+```
+src/
+ ├── assets/
+ ├── components/
+ |   ├── Generales/
+ |   ├── GestionCitas/
+ │   |   ├── CancelarCita.tsx
+ │   |   ├── CrearCita.tsx
+ │   |   ├── ListarCitas.tsx
+ │   |   └── ReprogramarCita.tsx
+ |   ├── GestionHistoria/
+ |   ├── GestionMedicamento/
+ |   ├── GestionPaciente/
+ |   └── GestionPersonal/
+ ├── context/
+ ├── hooks/
+ |   ├── flujoCitas.ts
+ |   ├── useAppToast.ts
+ |   ├── useAuth.ts
+ |   ├── useCreateAppointmentForm.ts
+ |   ├── usePatientProffesionalData.ts
+ |   ├── usePatientsData.ts
+ |   ├── usePatientSearch.ts
+ |   └── useProfessionalData.ts
+ ├── pages/
+ |   ├── GestionCitas/
+ │   |   └── GestionCitas.tsx
+ |   ├── GestionHistoria/
+ │   |   └── GestionHistoria.tsx
+ |   ├── GestionMedicamento/
+ │   |   └── GestionMedicamento.tsx
+ |   ├── GestionPaciente/
+ │   |   └── GestionPaciente.tsx
+ |   ├── GestionPersonal/
+ │   |   └── GestionPersonal.tsx
+ |   ├── Login.tsx
+ |   ├── Menu.tsx
+ |   └── Register.tsx
+ ├── routes/
+ |   └── AppRoutes.tsx
+ ├── services/
+ |   ├── api.ts 
+ |   ├── appointments.service.ts
+ |   ├── auth.service.ts
+ |   └── user.service.ts
+ ├── types/
+ |   ├── auth.ts 
+ |   ├── autorizacion.ts 
+ |   ├── cita.ts 
+ |   ├── enums.ts 
+ |   ├── historia.ts
+ |   ├── index.ts
+ |   └── persona.ts
+ ├── utils/
+ |   ├── formatoFecha.ts 
+ |   └── inputValidation.ts
+ ├── App.css
+ ├── App.tsx
+ ├── index.css
+ └──  main.tsx
+```
 
 ## Servidor
 ```
@@ -250,7 +310,7 @@ npm install --save @nestjs/swagger swagger-ui-express
 **⭐ APRENDIZ** — Yuri Andrea Mejía Ramírez <br>
 **⭐ FICHA** — 3118300 <br>
 **⭐ UBICACIÓN** — Bogotá DC <br>
-**⭐ AÑO** — 2025 <br>
+**⭐ AÑO** — 2025 - 2026 <br>
 
 ---
 

@@ -30,8 +30,8 @@ export class AppointmentsService {
     // Crear cita - ADMIN
     async adminCreateAppointment(adminFromToken, newAppointment: CreateAppointmentDTO) {
 
-        if (adminFromToken.role !== 'administrativo') {
-            throw new CustomHttpException("Solo los administrativos pueden crear citas", HttpStatus.FORBIDDEN);
+        if (adminFromToken.role == 'profesional' ) {
+            throw new CustomHttpException("Sólo los administrativos o pacientes pueden crear citas", HttpStatus.FORBIDDEN);
         }
 
         const idAdministrativo = adminFromToken.idPersona; 

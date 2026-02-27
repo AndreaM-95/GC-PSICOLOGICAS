@@ -1,10 +1,9 @@
 import type { IHistoriaClinica } from "./historia";
-import type { IMedico, IPaciente } from "./persona";
 
 export interface Autorizacion{
   idAutorizacion: number,
-  idPaciente: IPaciente,
-  idMedico: IMedico,
+  idPaciente: number,
+  idMedico: number,
   idHistoria: IHistoriaClinica,
   fechaCreacion: Date,
   horaCreacion: Date,

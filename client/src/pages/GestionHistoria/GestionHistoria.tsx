@@ -1,7 +1,7 @@
-import InfoUserCard from "../../../components/InfoUserCard";
-import Navbar from "../../../components/Navbar";
-import StoryHistory from "../../../components/StoryHistory";
-import NavButton from "../../../components/NavButton";
+import InfoUserCard from "@/components/InfoUserCard";
+import Navbar from "@/components/Navbar";
+import StoryHistory from "@/components/StoryHistory";
+import NavButton from "@/components/NavButton";
 import { useNavigate } from 'react-router-dom';
 
 const patient = {
@@ -23,8 +23,8 @@ const patient = {
     diagnostic: "Bipolar" // example value
 };
 
-export default function SummaryHistory() {
-  const navigate = useNavigate();
+export default function GestionHistoria() {
+    const navigate = useNavigate();
 
     return (
         <main className="pb-8">
