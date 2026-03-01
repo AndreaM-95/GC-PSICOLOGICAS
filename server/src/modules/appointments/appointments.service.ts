@@ -73,6 +73,17 @@ export class AppointmentsService {
             }
         }
 
+        // ---------- VALIDAR SI YA TIENE CITA ACTIVA ----------
+        const citaActiva = await this.appointmentRepository.findOne({
+            where: {
+                paciente: { idPersona: idPaciente },
+                estado: EstadosCita.CONFIRMADA
+            },
+            relations: ["paciente"]
+        });
+
+        if (citaActiva) throw new CustomHttpException( "El paciente ya tiene una cita activa.", HttpStatus.BAD_REQUEST);
+        
         // ---------- CREAR Y GUARDAR ----------
         const cita = this.appointmentRepository.create({
             paciente,
@@ -114,7 +125,6 @@ export class AppointmentsService {
             ],
         });
 
-
         if (!paciente) throw new CustomHttpException("No existe un paciente con este número de documento", HttpStatus.NOT_FOUND);
 
         if (!paciente.citasComoPaciente || paciente.citasComoPaciente.length === 0) {
@@ -123,7 +133,7 @@ export class AppointmentsService {
 
         // Filtrar solo las citas activas
         let citasActivas = paciente.citasComoPaciente.filter(c => 
-            c.estado === 'Confirmada'
+            c.estado === EstadosCita.CONFIRMADA
         );
 
         if (citasActivas.length === 0) {
