@@ -50,8 +50,11 @@ export function useCreateAppointmentForm(showSuccess: any, showError: any ) {
             cleanForm();
             showSuccess("success","Cita creada con éxito.");
         } catch (error: any) {
-            console.error(error.response?.data?.message)
-            showError("error", "Error al crear cita.");
+            const backendMessage =
+                error.response?.data?.message?.message ||
+                "Error inesperado al crear la cita.";
+
+            showError("error", backendMessage);
         }
     };
 
