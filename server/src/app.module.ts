@@ -8,9 +8,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
 import { MedicalAuthorizationsModule } from './modules/medical-authorizations/medical-authorizations.module';
 import { MedicalHistoriesModule } from './modules/medical-histories/medical-histories.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(), //Actualizará el estado de las citas vencidas
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

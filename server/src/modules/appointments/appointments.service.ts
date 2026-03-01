@@ -10,6 +10,8 @@ import { Profesional } from '../users/entities/profesional.entity';
 import { UpdateAppointmentDTO } from './dto/updateAppointment.dto';
 import { CancelAppointmentDTO } from './dto/cancelAppointment.dto';
 import { CustomHttpException } from 'src/common/exceptions/custom-http.exception';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { LessThan } from 'typeorm';
 
 @Injectable()
 export class AppointmentsService {
@@ -26,6 +28,32 @@ export class AppointmentsService {
         @InjectRepository(Profesional)
         private professionalRepository: Repository<Profesional>,
     ) {}
+
+    /**
+     * @description Cada día luego de las 12, cuando la cita esté en estado confirmada pero la fecha venció, cambiará a No asistida
+     * @returns Mensaje de cambio de estado de las citas
+     */
+    @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+    async updateMissedAppointments() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const citasVencidas = await this.appointmentRepository.find({
+            where: {
+                estado: EstadosCita.CONFIRMADA,
+                fechaCita: LessThan(today)
+            }
+        });
+
+        if (citasVencidas.length === 0) return;
+
+        for (const cita of citasVencidas) {
+            cita.estado = EstadosCita.NOASISTIDA;
+        }
+
+        await this.appointmentRepository.save(citasVencidas);
+        console.log(`Se actualizaron ${citasVencidas.length} citas a NO_ASISTIDA`);
+    }
 
     // Crear cita - ADMIN
     async adminCreateAppointment(adminFromToken, newAppointment: CreateAppointmentDTO) {
