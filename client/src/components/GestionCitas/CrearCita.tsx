@@ -27,7 +27,6 @@ export default function CrearCita() {
     const consultorios = [
         { id: 1, name: "Consultorio 1" },
         { id: 2, name: "Consultorio 2" },
-        { id: 3, name: "No aplica" }
     ];
 
     /**
@@ -138,28 +137,34 @@ export default function CrearCita() {
                 <label className="font-bold text-cyan-700">Modalidad:</label>
                 <Dropdown
                     value={placeMeeting}
-                    onChange={(e) => setPlaceMeeting(e.value)}
+                    onChange={(e) => {
+                        setPlaceMeeting(e.value);
+                        if (e.value === "Virtual") setSpaceMeeting(e.value="No aplica");
+                    }}
                     options={modalidades}
                     optionLabel="name"
                     optionValue="name"
                     placeholder="Selecciona aquí.."
                     className="w-full"
                     required
-                    aria-label="Selecciona el lugar.."
                 />
 
-                <label className="font-bold text-cyan-700">Consultorio:</label>
-                <Dropdown
-                    value={spaceMeeting}
-                    onChange={(e) => setSpaceMeeting(e.value)}
-                    options={consultorios}
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Selecciona aquí.."
-                    className="w-full"
-                    required
-                    aria-label="Selecciona el lugar.."
-                />
+                {placeMeeting === "Presencial" && (
+                    <>
+                        <label className="font-bold text-cyan-700">Consultorio:</label>
+                        <Dropdown
+                            value={spaceMeeting}
+                            onChange={(e) => setSpaceMeeting(e.value)}
+                            options={consultorios}
+                            optionLabel="name"
+                            optionValue="name"
+                            placeholder="Selecciona aquí.."
+                            className="w-full"
+                            required={placeMeeting === "Presencial"}
+                            aria-label="Selecciona el consultorio"
+                        />
+                    </>
+                )}
 
                 <label htmlFor="motivo" className="font-bold text-cyan-700">Motivo:</label>
                 <InputText id="motivo" name="motivo" placeholder="Escribe aquí.." value={reason} onChange={(e) => setReason(e.target.value)} />
