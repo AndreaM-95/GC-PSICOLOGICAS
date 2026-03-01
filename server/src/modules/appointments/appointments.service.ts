@@ -30,29 +30,34 @@ export class AppointmentsService {
     ) {}
 
     /**
-     * @description Cada día luego de las 12, cuando la cita esté en estado confirmada pero la fecha venció, cambiará a No asistida
+     * @description Cada día luego de las 12, cuando la cita esté en estado confirmada pero la fecha o la hora venció, cambiará a No asistida
      * @returns Mensaje de cambio de estado de las citas
      */
-    @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+    @Cron('*/5 * * * *') // cada 5 minutos (puedes cambiarlo)
     async updateMissedAppointments() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const citasVencidas = await this.appointmentRepository.find({
+        const now = new Date();
+        const citas = await this.appointmentRepository.find({
             where: {
-                estado: EstadosCita.CONFIRMADA,
-                fechaCita: LessThan(today)
+                estado: EstadosCita.CONFIRMADA
             }
         });
 
-        if (citasVencidas.length === 0) return;
+        let actualizadas = 0;
+        for (const cita of citas) {
+            const [hours, minutes] = cita.horaCita.split(":").map(Number);
+            const fechaCompleta = new Date(cita.fechaCita);
+            fechaCompleta.setHours(hours, minutes, 0, 0);
 
-        for (const cita of citasVencidas) {
-            cita.estado = EstadosCita.NOASISTIDA;
+            if (fechaCompleta < now) {
+                cita.estado = EstadosCita.NOASISTIDA;
+                actualizadas++;
+            }
         }
 
-        await this.appointmentRepository.save(citasVencidas);
-        console.log(`Se actualizaron ${citasVencidas.length} citas a NO_ASISTIDA`);
+        if (actualizadas > 0) {
+            await this.appointmentRepository.save(citas);
+        }
+        console.log(`Citas actualizadas a NO_ASISTIDA: ${actualizadas}`);
     }
 
     // Crear cita - ADMIN
