@@ -305,6 +305,61 @@ npm install --save @nestjs/swagger swagger-ui-express
 
 ---
 
+## 🚀 ENDPOINTS
+
+### 🔐 Auth — `/auth`
+
+| Método | Ruta | Descripción | Requiere Token |
+|--------|-------|--------|-------|
+| POST | `/auth/register` | Registra un nuevo paciente | ❌ |
+| POST | `/auth/login` | Inicia sesión y devuelve token JWT | ❌ |
+| GET | `/auth/profile` | Devuelve la informacion del usuario | ✅ |
+
+
+### 👤 Usuarios — `/appointments`
+
+| Método | Ruta | Descripción | Rol permitido | Token |
+|--------|-------|--------|-------|-------|
+| POST | `/appointments` | Crear una cita medica | admin y paciente | ✅ |
+| GET | `/appointments/:document` | Lista todas las citas | admin y paciente | ✅ |
+| PUT | `/appointments/update` | Actualiza una cita | admin y paciente | ✅ |
+| PATCH | `/appointments/cancel` | Cancelar una cita | admin y paciente | ✅ |
+
+---
+
+## 🔑 Autenticación
+
+- Los endpoints protegidos requieren un **token JWT** en el header:  
+  ```
+  Authorization: Bearer <token>
+  ```
+- Los tokens se generan al iniciar sesión (`/auth/login`).  
+- Las contraseñas se almacenan **encriptadas con bcrypt** antes de guardarse en la base de datos.
+
+### Ejemplo de flujo de prueba
+
+1. Registrar un usuario (`/auth/register`)
+2. Iniciar sesión (`/auth/login`)
+3. Copiar el token JWT devuelto
+4. Usar el token para acceder a `/appointments`, `/appointments/:document` o `/appointments/cancel`
+
+**Ejemplo de Login Request:**
+```json
+{
+  "email": "admin1@gmail.com",
+  "password": "123456"
+}
+```
+
+**Ejemplo de Login Response:**
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+---
+
 ## 👩‍💻 DESARROLLO
 
 **⭐ APRENDIZ** — Yuri Andrea Mejía Ramírez <br>
