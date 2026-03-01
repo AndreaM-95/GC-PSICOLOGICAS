@@ -33,7 +33,7 @@ export class AppointmentsService {
      * @description Cada día luego de las 12, cuando la cita esté en estado confirmada pero la fecha o la hora venció, cambiará a No asistida
      * @returns Mensaje de cambio de estado de las citas
      */
-    @Cron('*/5 * * * *') // cada 5 minutos (puedes cambiarlo)
+    @Cron('*/30 * * * *') // cada 5 minutos (puedes cambiarlo)
     async updateMissedAppointments() {
         const now = new Date();
         const citas = await this.appointmentRepository.find({

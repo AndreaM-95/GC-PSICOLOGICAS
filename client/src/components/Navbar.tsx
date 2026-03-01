@@ -39,7 +39,7 @@ export default function Navbar() {
 
     return (
         <header className="w-full bg-cyan-200 p-2" aria-label="Menú principal">
-            <nav>
+            <nav className='flex'>
                 <Toast ref={toast} />
                 <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
                 <Button
@@ -52,6 +52,8 @@ export default function Navbar() {
                     aria-expanded="false"
                     aria-label="Abrir menú de navegación"
                 />
+                <h2 className="pi pi-wave-pulse text-cyan-700 ml-3 mr-2" style={{ fontSize: '18px', alignContent: 'center'}}></h2>
+                <h1 className="text-cyan-700 font-bold text-xl content-center">PSICOGEST</h1>
             </nav>
         </header>
     );

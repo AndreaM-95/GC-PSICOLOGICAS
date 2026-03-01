@@ -1,4 +1,5 @@
-<h1 align="center">GESTIÓN DE CITAS PSICOLÓGICAS</h1>
+<h1 align="center">PSICOGESTGESTIÓN DE CITAS PSICOLÓGICAS</h1>
+<h2 align="center">GESTIÓN DE CITAS PSICOLÓGICAS</h2>
 <p align="center"> <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green"></p>
 
 <h2>CONFIGURACIÓN DEL PROYECTO</h2> 

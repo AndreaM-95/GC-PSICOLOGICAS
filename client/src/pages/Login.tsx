@@ -59,12 +59,11 @@ export default function Login() {
 
             <section className="w-1/2 flex flex-col bg-cyan-200 items-center justify-center">
                 <header className="w-3/4 text-center mb-16">
-                    <h1 className="text-cyan-700 font-bold text-3xl">
-                        ¡Bienvenidos al sistema de gestión de citas!
-                    </h1>
+                    <h1 className="text-cyan-700 font-bold text-3xl">PSICOGEST</h1>
+                    <h2 className="text-cyan-600 text-xl xl:mt-2">Tu sistema de gestión clínica</h2>
                 </header>
 
-                <section className="relative w-2/3 bg-cyan-100 mx-auto rounded-lg flex flex-col items-center mb-4 pt-14 pb-8 px-8" aria-labelledby="login-title">
+                <section className="relative w-2/3 bg-cyan-100 mx-auto rounded-lg flex flex-col items-center mb-4 pt-10 pb-8 px-8" aria-labelledby="login-title">
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-10" aria-hidden="true">
                         <Avatar
                             icon="pi pi-user"
@@ -83,7 +82,7 @@ export default function Login() {
                         <fieldset className="w-full border-0 p-0 items-center flex flex-col">
                             <legend id="login-title" className="sr-only">Formulario de inicio de sesión</legend>
 
-                            <label htmlFor="username" className="text-cyan-700 font-bold mb-2 text-center">Usuario</label>
+                            <label htmlFor="username" className="text-cyan-700 w-full font-bold">Usuario</label>
                             <InputText
                                 id="username"
                                 name="username"
@@ -97,7 +96,7 @@ export default function Login() {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
 
-                            <label htmlFor="password" className="text-cyan-700 font-bold w-full mt-6 mb-2 text-center">Contraseña</label>
+                            <label htmlFor="password" className="text-cyan-700 font-bold w-full mt-4">Contraseña</label>
                             <Password
                                 id="password"
                                 name="password"

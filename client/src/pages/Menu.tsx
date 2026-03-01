@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import 'primeicons/primeicons.css';
 import MenuCard from "@/components/MenuCard";
 import Navbar from "@/components/Navbar";
+import { Divider } from "primereact/divider";
 
 interface DecodedToken {
     name: string;
@@ -46,20 +47,20 @@ export default function Menu() {
             url: "/gestionCitas",
             roles: ["administrativo", "paciente"]
         },
-        {
-            icon: "pi pi-address-book",
-            title: "Gestión de la historia clínica",
-            subtitle: "Accede a la historia clínica de los pacientes.",
-            url: "/gestionHistoria",
-            roles: ["administrativo", "profesional"]
-        },
-        {
-            icon: "pi pi-file-check",
-            title: "Gestión de las autorizaciones",
-            subtitle: "Accede a las autorizaciones pendientes de los pacientes.",
-            url: "/gestionMedicamento",
-            roles: ["administrativo", "profesional", "paciente"]
-        }
+        // {
+        //     icon: "pi pi-address-book",
+        //     title: "Gestión de la historia clínica",
+        //     subtitle: "Accede a la historia clínica de los pacientes.",
+        //     url: "/gestionHistoria",
+        //     roles: ["administrativo", "profesional"]
+        // },
+        // {
+        //     icon: "pi pi-file-check",
+        //     title: "Gestión de las autorizaciones",
+        //     subtitle: "Accede a las autorizaciones pendientes de los pacientes.",
+        //     url: "/gestionMedicamento",
+        //     roles: ["administrativo", "profesional", "paciente"]
+        // }
     ];
 
     const filteredMenu = DataMenu.filter(item =>
@@ -72,12 +73,16 @@ export default function Menu() {
 
             <section className="w-3/4 2xl:w-[60%] mx-auto flex flex-wrap items-center justify-around">
                 <div className='w-full my-10'>
-                    <h1 className="text-cyan-700 font-bold text-2xl mb-2">
-                        ¡Hola {name}!
+                    <h1 className="text-cyan-700 font-bold text-3xl mb-2 text-center">
+                        Bienvenidos al sistema de gestión de citas
                     </h1>
-                    <h2 className="text-cyan-700 font-bold text-lg">
-                        ¿Qué necesitas hacer hoy?
+                    <Divider/>
+                    <h2 className="text-cyan-700 font-bold text-xl mt-2">
+                        ¡Hola {name}!
                     </h2>
+                    <h3 className="text-cyan-600 text-lg">
+                        ¿Qué necesitas hacer hoy?
+                    </h3>
                 </div>
 
                 <section className="my-auto">
