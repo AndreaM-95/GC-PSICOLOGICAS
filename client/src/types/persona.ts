@@ -102,3 +102,21 @@ export interface ICrearPaciente{
   celularContactoEmergencia: number,
   contrasena: string
 }
+
+//ACTUALIZACIÓN DE PERFILES
+export interface IActualizarPersona{
+  nombres?: string,
+  apellidos?: string,
+  tipoDocumento?: string,
+  numeroDocumento?: string,
+  fechaNacimiento?: Date,
+  genero?: string,
+  ciudadResidencia?: string,
+  celular?: number,
+  correo?: string,
+  eps?: string,
+  nombresContactoEmergencia?: string,
+  celularContactoEmergencia?: number,
+  contrasena?: string,
+  estado?: string
+}

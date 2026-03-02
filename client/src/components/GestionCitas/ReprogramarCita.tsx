@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { InputText } from "primereact/inputtext";
-import NavButton from "../NavButton";
+import NavButton from "@/components/NavButton";
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { Toast } from 'primereact/toast';
-import { getPatients, getProfessionals } from "../../services/user.service";
-import { patientAppointmentsRequest, updateAppointmentRequest } from "../../services/appointments.service";
+import { patientAppointmentsRequest, updateAppointmentRequest } from "@/services/appointments.service";
 import { AutoComplete } from "primereact/autocomplete";
 import { InputNumber } from "primereact/inputnumber";
 import { DataTable } from "primereact/datatable";

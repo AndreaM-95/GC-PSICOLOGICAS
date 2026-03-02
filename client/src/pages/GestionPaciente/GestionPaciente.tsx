@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TabView, TabPanel } from 'primereact/tabview';
 import NavButton from "../../components/NavButton";
 import CreatePatient from "../../components/Patients/CreatePatient";
+import ListarPacientes from "@/components/GestionPaciente/ListarPacientes";
 
 export default function GestionPaciente() {
     const navigate = useNavigate();
@@ -27,11 +28,7 @@ export default function GestionPaciente() {
                         <CreatePatient />
                     </TabPanel>
                     <TabPanel header="Listar pacientes">
-                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
-                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
-                            <h3>Póximamente</h3>
-                        </div>
-                        {/* <ListAppointments /> */}
+                        <ListarPacientes/>
                     </TabPanel>
                     <TabPanel header="Actualizar paciente">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">

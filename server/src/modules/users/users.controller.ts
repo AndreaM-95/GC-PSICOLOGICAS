@@ -58,7 +58,7 @@ export class UsersController {
         return this.usersService.updatePatient(req, id, dto)
     }
 
-    
+
     //-----------------------------------------------------------
     //------ GENERALES ------
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { getPatients, getProfessionals } from "../services/user.service";
+import { getPatients } from "@/services/patient.service";
+import { getProfessionals } from "@/services/user.service";
+
 
 export function usePatientProffesionalData(showError: (seve:string, msg: string) => void) {
     const [patients, setPatients] = useState<any[]>([]);

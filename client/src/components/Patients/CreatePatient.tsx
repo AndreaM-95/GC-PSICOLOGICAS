@@ -4,8 +4,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import NavButton from "../NavButton";
-import { InputNumber } from "primereact/inputnumber";99999999999999999999999
-import { createPatientRequest } from "../../services/user.service";
+import { createPatientRequest } from "@/services/patient.service";
 import { Calendar } from "primereact/calendar";
 import { UseInputValidation } from "@/utils/InputValidation";
 

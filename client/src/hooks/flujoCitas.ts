@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPatients } from "@/services/user.service";
+import { getPatients } from "@/services/patient.service";
 import { patientAppointmentsRequest } from "@/services/appointments.service";
 
 export function flujoCitas() {
