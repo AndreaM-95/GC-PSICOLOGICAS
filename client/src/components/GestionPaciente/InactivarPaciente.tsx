@@ -9,6 +9,7 @@ import NavButton from "@/components/NavButton";
 import { usePatientsData } from "@/hooks/usePatientsData";
 import { usePatientSearch } from "@/hooks/usePatientSearch";
 import { deactivateUserRequest } from "@/services/user.service";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 export default function InactivarPaciente() {
     const { toast, showMessage } = useAppToast();
@@ -16,27 +17,33 @@ export default function InactivarPaciente() {
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
 
-    const deactivateUser = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const confirmDeactivate = () => {
         if (!selectedPatient) {
             showMessage("warn", "Debe seleccionar un paciente.");
             return;
         }
 
-        try {
-            await deactivateUserRequest(selectedPatient.id);
-            showMessage("success", "Paciente inactivado correctamente.");
-            setSelectedPatient(null);
-            await loadPatients(); 
+        confirmDialog({
+            message: `¿Seguro que desea inactivar al paciente ${selectedPatient.name}?`,
+            header: "Confirmar inactivación",
+            icon: "pi pi-exclamation-triangle",
+            acceptLabel: "Sí, inactivar",
+            rejectLabel: "Cancelar",
+            accept: async () => {
+                try {
+                    await deactivateUserRequest(selectedPatient.id);
+                    showMessage("success", "Paciente inactivado correctamente.");
+                    setSelectedPatient(null);
+                    await loadPatients();
+                } catch (error: any) {
+                    const backendMessage =
+                        error.response?.data?.message?.message ||
+                        "Error inesperado al inactivar el paciente.";
 
-        } catch (error: any) {
-            const backendMessage =
-                error.response?.data?.message?.message ||
-                "Error inesperado al inactivar el paciente.";
-
-            showMessage("error", backendMessage);
-        }
+                    showMessage("error", backendMessage);
+                }
+            }
+        });
     };
 
     return (
@@ -55,11 +62,14 @@ export default function InactivarPaciente() {
             />
 
             <Divider />
-
+            <ConfirmDialog />
             <form
                 className="grid gap-2 items-center"
                 style={{ gridTemplateColumns: '35% 65%' }}
-                onSubmit={deactivateUser}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    confirmDeactivate();
+                }}
             >
 
                 <label className="font-bold text-cyan-700">Paciente:</label>
