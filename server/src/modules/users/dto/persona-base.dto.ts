@@ -1,6 +1,5 @@
-import { IsString, IsEmail, IsNumber, IsDateString, IsEnum, IsNotEmpty, Length, Min, Max } from "class-validator";
-import { Genero, Roles } from "src/common/enums";
-
+import { IsString, IsEmail, IsDateString, IsEnum, IsNotEmpty, Length } from "class-validator";
+import { Genero } from "src/common/enums";
 export class PersonaBaseDto {
     @IsNotEmpty({ message: 'Name is required'})
     @IsString()
