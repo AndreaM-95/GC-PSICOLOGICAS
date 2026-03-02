@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Put, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Put, UseGuards, Request, Param, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CrearAdminDto } from './dto/crear-admin.dto';
 import { CrearProfesionalDto } from './dto/crear-profesional.dto';
@@ -53,17 +53,17 @@ export class UsersController {
     }
 
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
-    @Put("update")
-    actualizarPaciente(@Request() req, @Body() dto: ActualizarPacienteDTO){
-        
+    @Put("/patient/:id")
+    actualizarPaciente(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarPacienteDTO){
+        return this.usersService.updatePatient(req, id, dto)
     }
 
-    @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
-    @Patch("deactivate")
-    inactivarPaciente(@Request() req){
-
-    }
-
+    
     //-----------------------------------------------------------
     //------ GENERALES ------
+    @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
+    @Patch("/patient/:id")
+    inactivarUsuario(@Request() req, @Param('id', ParseIntPipe) id: number){
+        return this.usersService.deactivateUser(req, id)
+    }
 }

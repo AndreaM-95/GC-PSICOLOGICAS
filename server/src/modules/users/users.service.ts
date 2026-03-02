@@ -10,6 +10,7 @@ import { EstadosUsuario, Roles } from 'src/common/enums';
 import { Profesional } from './entities/profesional.entity';
 import * as bcrypt from 'bcrypt';
 import { CustomHttpException } from 'src/common/exceptions/custom-http.exception';
+import { ActualizarPacienteDTO } from './dto/actualizar-paciente.dto';
 
 
 @Injectable()
@@ -110,7 +111,18 @@ export class UsersService {
         return this.listByRole(Roles.PACIENTE);
     }
 
-    
+    /**
+     * @description Método de actualización de datos de un paciente
+     * @param rolFromToken Toma el rol del token al iniciar sesion
+     * @param id Número único que identifica a cada paciente
+     * @param updateUserDTO Estructura de datos para actualizar un paciente
+     * @returns Mensaje de éxito
+     */
+    async updatePatient(rolFromToken, id:number, updatePatientDTO: ActualizarPacienteDTO) {
+        await this.updateUser(rolFromToken, id, updatePatientDTO);
+        return {message: "Paciente actualizado con éxito"};
+    }
+
 
     //-----------------------------------------------------------
     //------ GENERALES ------
@@ -149,7 +161,7 @@ export class UsersService {
 
         const existingDocument = await this.personRepository.findOne({where: { numeroDocumento: newUser.numeroDocumento }})
         const existingEmail = await this.personRepository.findOne({where: { correo: newUser.correo }})
-        if (existingEmail || existingDocument) throw new CustomHttpException(msg, HttpStatus.BAD_REQUEST)
+        if (existingEmail || existingDocument) throw new CustomHttpException(msg)
 
         const hashedPassword = await bcrypt.hash(newUser.contrasena, 10);
         const userCreated = this.personRepository.create({
@@ -158,5 +170,92 @@ export class UsersService {
         });
 
         return this.personRepository.save(userCreated);
+    }
+
+    /**
+     * @description Método de actualización de datos de un usuario
+     * @param rolFromToken Toma el rol del token al iniciar sesion
+     * @param id Número único que identifica a cada usuario
+     * @param updateUserDTO Estructura de datos para actualizar un usuario
+     * @returns El usuario actualizado
+     */
+    async updateUser(rolFromToken: any, id: number, updateUserDTO: any) {
+        if (rolFromToken.role == Roles.PROFESIONAL) {
+            throw new CustomHttpException(
+                "No tienes permisos para actualizar usuarios",
+                HttpStatus.FORBIDDEN
+            );
+        }
+
+        const userUpdate = await this.personRepository.findOne({
+            where: { idPersona: id }
+        });
+
+        if (!userUpdate) {
+            throw new CustomHttpException(
+                `Usuario con ID ${id} no encontrado`,
+                HttpStatus.NOT_FOUND
+            );
+        }
+
+        // Validar correo
+        if (updateUserDTO.correo && updateUserDTO.correo !== userUpdate.correo) {
+            const existEmail = await this.personRepository.findOne({
+                where: { correo: updateUserDTO.correo }
+            });
+
+            if (existEmail) {
+                throw new CustomHttpException(
+                    `El correo ${updateUserDTO.correo} ya se encuentra en uso`,
+                    HttpStatus.CONFLICT
+                );
+            }
+        }
+
+        // Hashear contraseña si viene
+        if (updateUserDTO.contrasena) {
+            updateUserDTO.contrasena = await bcrypt.hash(updateUserDTO.contrasena, 10);
+        }
+
+        // NO sobreescribimos estado automáticamente, Solo si viene explícitamente
+        if (updateUserDTO.estado) {
+            updateUserDTO.estado = updateUserDTO.estado; // o validar enum
+        }
+
+        return await this.personRepository.update(id, updateUserDTO);
+    }
+
+    /**
+     * @description Valida el estado del usuario y procede a inactivarlo
+     * @param rolFromToken  Toma el rol del token al iniciar sesion
+     * @param id Número único que identifica a cada usuario
+     * @returns Mensaje de éxito
+     */
+    async deactivateUser(rolFromToken, id:number) {
+        if (rolFromToken.role == Roles.PROFESIONAL) {
+            throw new CustomHttpException(
+                "No tienes permisos para desactivar usuarios",
+                HttpStatus.FORBIDDEN
+            );
+        }
+
+        const userUpdate = await this.personRepository.findOne({
+            where: { idPersona: id }
+        });
+
+        if (!userUpdate) {
+            throw new CustomHttpException(
+                `Usuario con ID ${id} no encontrado`,
+                HttpStatus.NOT_FOUND
+            );
+        }
+
+        if (userUpdate.estado !== EstadosUsuario.ACTIVO) {
+            throw new CustomHttpException("Este usuario ya se encuentra inactivo");
+        }
+
+        userUpdate.estado = EstadosUsuario.INACTIVO;
+        await this.personRepository.update(id, userUpdate);
+        return { message: "Inactivación exitosa"};
     }
 }
