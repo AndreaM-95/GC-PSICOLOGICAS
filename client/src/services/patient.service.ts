@@ -1,4 +1,4 @@
-import type { IActualizarPersona, ICrearPaciente, IPaciente } from '@/types';
+import type { IActualizarPersona, ICrearPaciente } from '@/types';
 import api from './api';
 
 // Crear paciente

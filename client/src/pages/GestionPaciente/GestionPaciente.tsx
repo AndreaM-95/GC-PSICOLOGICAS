@@ -1,10 +1,10 @@
-import Navbar from "../../components/Navbar";
+import Navbar from "@/components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { TabView, TabPanel } from 'primereact/tabview';
-import NavButton from "../../components/NavButton";
-import CreatePatient from "../../components/Patients/CreatePatient";
+import NavButton from "@/components/NavButton";
 import ListarPacientes from "@/components/GestionPaciente/ListarPacientes";
 import InactivarPaciente from "@/components/GestionPaciente/InactivarPaciente";
+import CrearPaciente from "@/components/GestionPaciente/CrearPaciente";
 
 export default function GestionPaciente() {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function GestionPaciente() {
             <section className="flex justify-center">
                 <TabView>
                     <TabPanel header="Crear paciente">
-                        <CreatePatient />
+                        <CrearPaciente />
                     </TabPanel>
                     <TabPanel header="Listar pacientes">
                         <ListarPacientes/>
