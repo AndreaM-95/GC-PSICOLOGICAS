@@ -11,5 +11,15 @@ export function constantes() {
         { id: 2, name: "masculino" },
         { id: 2, name: "otro" }
     ];
-    return { tiposDocumentos, generos };
+
+    const modalidades = [
+        { id: 1, name: "Presencial" },
+        { id: 2, name: "Virtual" }
+    ];
+
+    const consultorios = [
+        { id: 1, name: "Consultorio 1" },
+        { id: 2, name: "Consultorio 2" },
+    ];
+    return { tiposDocumentos, generos, modalidades,consultorios };
 }

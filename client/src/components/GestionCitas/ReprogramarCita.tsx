@@ -15,6 +15,7 @@ import { Calendar } from "primereact/calendar";
 import { UseInputValidation } from "@/utils/InputValidation";
 import { useAppToast } from "@/hooks/useAppToast";
 import { usePatientProffesionalData } from "@/hooks/usePatientProffesionalData";
+import { constantes } from "@/utils/constantes";
 
 export default function UpdateAppointment() {
     const { toast, showMessage } = useAppToast();
@@ -40,16 +41,7 @@ export default function UpdateAppointment() {
     const maxHour = new Date();
     maxHour.setHours(17, 0, 0, 0); // 5:00 PM
 
-    const modalidades = [
-        { id: 1, name: "Presencial" },
-        { id: 2, name: "Virtual" }
-    ];
-
-    const consultorios = [
-        { id: 1, name: "Consultorio 1" },
-        { id: 2, name: "Consultorio 2" },
-        { id: 3, name: "No aplica" }
-    ];
+    const { modalidades, consultorios } = constantes();
     
     // Cargar pacientes y profesionales al montar el componente
     const {patients, professionals} = usePatientProffesionalData(showMessage);
@@ -271,7 +263,10 @@ export default function UpdateAppointment() {
                             <label className="font-bold text-cyan-700">Modalidad:</label>
                             <Dropdown
                                 value={newModality}
-                                onChange={(e) => setNewModality(e.value)}
+                                onChange={(e) => {
+                                    setNewModality(e.value);
+                                    if (e.value === "Virtual") setNewConsultory(e.value="No aplica");
+                                }}
                                 options={modalidades}
                                 optionLabel="name"
                                 optionValue="name"
@@ -281,18 +276,22 @@ export default function UpdateAppointment() {
                                 aria-label="Selecciona el lugar.."
                             />
 
-                            <label className="font-bold text-cyan-700">Consultorio:</label>
-                            <Dropdown
-                                value={newConsultory}
-                                onChange={(e) => setNewConsultory(e.value)}
-                                options={consultorios}
-                                optionLabel="name"
-                                optionValue="name"
-                                placeholder="Selecciona aquí.."
-                                className="w-full"
-                                required
-                                aria-label="Selecciona el lugar.."
-                            />
+                            {newModality === "Presencial" && (
+                                <>
+                                    <label className="font-bold text-cyan-700">Consultorio:</label>
+                                    <Dropdown
+                                        value={newConsultory}
+                                        onChange={(e) => setNewConsultory(e.value)}
+                                        options={consultorios}
+                                        optionLabel="name"
+                                        optionValue="name"
+                                        placeholder="Selecciona aquí.."
+                                        className="w-full"
+                                        required={newModality === "Presencial"}
+                                        aria-label="Selecciona el consultorio"
+                                    />
+                                </>
+                            )}
 
                             <label htmlFor="reason" className="font-bold text-cyan-700">Motivo:</label>
                             <InputText

@@ -5,6 +5,7 @@ import NavButton from "@/components/NavButton";
 import ListarPacientes from "@/components/GestionPaciente/ListarPacientes";
 import InactivarPaciente from "@/components/GestionPaciente/InactivarPaciente";
 import CrearPaciente from "@/components/GestionPaciente/CrearPaciente";
+import ActualizarPaciente from "@/components/GestionPaciente/ActualizarPaciente";
 
 export default function GestionPaciente() {
     const navigate = useNavigate();
@@ -32,11 +33,7 @@ export default function GestionPaciente() {
                         <ListarPacientes/>
                     </TabPanel>
                     <TabPanel header="Actualizar paciente">
-                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
-                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
-                            <h3>Póximamente</h3>
-                        </div>
-                        {/* <UpdateAppointment /> */}
+                        <ActualizarPaciente/>
                     </TabPanel>
                     <TabPanel header="Inactivar paciente">
                         <InactivarPaciente/>

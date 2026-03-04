@@ -11,6 +11,7 @@ import { useAppToast } from "@/hooks/useAppToast";
 import { usePatientSearch } from "@/hooks/usePatientSearch";
 import { usePatientProffesionalData } from "@/hooks/usePatientProffesionalData";
 import { useCreateAppointmentForm } from "@/hooks/useCreateAppointmentForm";
+import { constantes } from "@/utils/constantes";
 
 export default function CrearCita() {
     const { toast, showMessage } = useAppToast();
@@ -18,17 +19,8 @@ export default function CrearCita() {
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [patient, setPatient] = useState("");
     const [documentPatient, setDocumentPatient] = useState("");
+    const { modalidades, consultorios } = constantes();
     
-    const modalidades = [
-        { id: 1, name: "Presencial" },
-        { id: 2, name: "Virtual" }
-    ];
-
-    const consultorios = [
-        { id: 1, name: "Consultorio 1" },
-        { id: 2, name: "Consultorio 2" },
-    ];
-
     /**
      * @description Selección del paciente y visualización de su nombre en el input
      * @param e 

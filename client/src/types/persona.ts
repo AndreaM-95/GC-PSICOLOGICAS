@@ -105,6 +105,7 @@ export interface ICrearPaciente{
 
 //ACTUALIZACIÓN DE PERFILES
 export interface IActualizarPersona{
+  idPersona:number;
   nombres?: string,
   apellidos?: string,
   tipoDocumento?: string,

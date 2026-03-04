@@ -13,7 +13,6 @@ export async function getPatients() {
 }
 
 //Actualizar paciente
-export const updatePatientRequest = async (idUser:number): Promise<IActualizarPersona> => {
-    const response = await api.put<IActualizarPersona>(`/users/patient/${idUser}`);
-    return response.data;
-}
+export const updatePatientRequest = async (idPersona: number,data: IActualizarPersona ) => {
+  return api.put(`/users/patient/${idPersona}`, data);
+};

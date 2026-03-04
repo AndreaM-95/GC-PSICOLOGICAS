@@ -6,7 +6,7 @@ export function usePatientSearch(patients: any[]) {
     const searchPatient = (event: { query: string }) => {
         const query = event.query;
         const filtered = patients.filter(p =>
-            p.document.toString().includes(query)
+            p.numeroDocumento.toString().includes(query)
         );
         setFilteredPatients(filtered);
     };

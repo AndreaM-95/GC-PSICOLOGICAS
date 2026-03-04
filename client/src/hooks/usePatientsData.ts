@@ -15,8 +15,18 @@ export function usePatientsData(showError: (seve:string, msg: string) => void) {
             setPatients(
                 pats.map((p: any) => ({
                     id: p.idPersona,
-                    document: p.numeroDocumento,
-                    name: `${p.nombres} ${p.apellidos}`,
+                    nombres: p.nombres,
+                    apellidos: p.apellidos,
+                    tipoDocumento: p.tipoDocumento,
+                    numeroDocumento: p.numeroDocumento,
+                    fechaNacimiento:p.fechaNacimiento,
+                    genero:p.genero,
+                    ciudadResidencia:p.ciudadResidencia,
+                    celular:p.celular,
+                    correo:p.correo,
+                    eps:p.eps,
+                    nombresContactoEmergencia: p.nombresContactoEmergencia,
+                    celularContactoEmergencia: p.celularContactoEmergencia 
                 }))
             );
         } catch (err: any) {
@@ -27,3 +37,6 @@ export function usePatientsData(showError: (seve:string, msg: string) => void) {
 
     return {patients, loadPatients}
 };
+
+
+    

@@ -16,7 +16,7 @@ export default function InactivarPaciente() {
     const { patients, loadPatients } = usePatientsData(showMessage);
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
-
+    
     const confirmDeactivate = () => {
         if (!selectedPatient) {
             showMessage("warn", "Debe seleccionar un paciente.");
@@ -24,7 +24,7 @@ export default function InactivarPaciente() {
         }
 
         confirmDialog({
-            message: `¿Seguro que desea inactivar al paciente ${selectedPatient.name}?`,
+            message: `¿Segur@ que desea inactivar al paciente ${selectedPatient.nombres} ${selectedPatient.apellidos}?`,
             header: "Confirmar inactivación",
             icon: "pi pi-exclamation-triangle",
             acceptLabel: "Sí, inactivar",
@@ -54,7 +54,7 @@ export default function InactivarPaciente() {
                 value={selectedPatient}
                 suggestions={filteredPatients}
                 completeMethod={(e) => searchPatient(e)}
-                field="document"
+                field="numeroDocumento"
                 onChange={(e) => setSelectedPatient(e.value)}
                 placeholder="Ingrese documento del paciente"
                 dropdown
@@ -71,21 +71,28 @@ export default function InactivarPaciente() {
                     confirmDeactivate();
                 }}
             >
+                { selectedPatient != null ?
+                    <>
+                        <label className="font-bold text-cyan-700">Paciente:</label>
+                        <InputText
+                            value={`${selectedPatient?.nombres} ${selectedPatient?.apellidos}` || ""}
+                            placeholder="Sólo lectura.."
+                            readOnly
+                        />
 
-                <label className="font-bold text-cyan-700">Paciente:</label>
-                <InputText
-                    value={selectedPatient?.name || ""}
-                    readOnly
-                />
-
-                <div className="col-span-2 flex justify-end">
-                    <NavButton
-                        type="submit"
-                        label="Inactivar"
-                        btnFunction={() => {}}
-                    />
-                </div>
-
+                        <div className="col-span-2 flex justify-end">
+                            <NavButton
+                                type="submit"
+                                label="Inactivar"
+                                btnFunction={() => {}}
+                            />
+                        </div>
+                    </>
+                    : <div className="col-span-2 flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
+                        <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
+                        <h3>Seleccione un paciente</h3>
+                    </div>
+                }
             </form>
         </Card>
     );
