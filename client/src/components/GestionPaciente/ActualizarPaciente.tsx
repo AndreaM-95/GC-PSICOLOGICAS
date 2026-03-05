@@ -14,6 +14,10 @@ export default function ActualizarPaciente() {
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
 
+    /**
+     * @description Maneja la actualización de un paciente existente. Realiza una solicitud para actualizar el paciente con los datos proporcionados y muestra un mensaje de éxito o error según corresponda.
+     * @param data - Los datos del paciente a actualizar, obtenidos del formulario.
+     */
     const handleUpdate = async (data: IActualizarPersona) => {
         try {
             await updatePatientRequest(selectedPatient.id, data);
@@ -30,8 +34,8 @@ export default function ActualizarPaciente() {
         }
     };
     /**
-     * @description Selección del paciente y visualización de su nombre en el input
-     * @param e 
+     * @description Maneja la selección de un paciente de la lista de sugerencias. Actualiza el estado del paciente seleccionado y el número de documento en el campo de búsqueda.
+     * @param e - El evento de selección del paciente, que contiene el valor del paciente seleccionado.
      */
     const onPatientSelect = (e: { value: any }) => {
         const selected = e.value;

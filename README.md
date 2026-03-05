@@ -316,8 +316,25 @@ npm install --save @nestjs/swagger swagger-ui-express
 | POST | `/auth/login` | Inicia sesión y devuelve token JWT | ❌ |
 | GET | `/auth/profile` | Devuelve la informacion del usuario | ✅ |
 
+### 👩‍⚕️ Módulo de personal — `/users`
 
-### 👤 Usuarios — `/appointments`
+| Método | Ruta | Descripción | Rol permitido | Token |
+|--------|-------|--------|-------|-------|
+| POST | `/users/admin` | Crear un administrativo | admin | ✅ |
+| GET | `/users/administrators` | Lista todos los administradores | admin | ✅ |
+| POST | `/users/professional` | Crear un profesional Psicologo/Psiquiatra | admin y paciente | ✅ |
+| GET | `/users/professionals` | Lista todos los profesionales activos | admin | ✅ |
+| PATCH | `/users/user/:id` | Desactiva a un usuario | admin y paciente | ✅ |
+
+### 👤 Módulo de pacientes — `/users`
+
+| Método | Ruta | Descripción | Rol permitido | Token |
+|--------|-------|--------|-------|-------|
+| POST | `/users/patient` | Crear un paciente | admin y paciente | ✅ |
+| GET | `/users/patients` | Lista todos los pacientes activos | admin | ✅ |
+| PUT | `/users/patient/:id` | Actualiza un paciente | admin y paciente | ✅ |
+
+### 🧠 Módulo de citas — `/appointments`
 
 | Método | Ruta | Descripción | Rol permitido | Token |
 |--------|-------|--------|-------|-------|

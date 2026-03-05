@@ -44,7 +44,9 @@ export default function PacienteForm({
     const [contrasena, setContrasena] = useState("");
 
     // ------------------ CARGAR DATOS EN EDIT ------------------
-    console.log(fechaNacimiento);
+    /**
+     * @description Carga los datos del paciente en el formulario cuando el modo es "edit" y se proporciona initialData. Convierte la fecha de nacimiento a un formato compatible con el componente Calendar.
+     */
     useEffect(() => {
         if (mode === "edit" && initialData) {
             setIdUsuario(initialData.id || 0)
@@ -75,6 +77,9 @@ export default function PacienteForm({
         }
     }, [mode, initialData]);
 
+    /**
+     * @description Limpia los campos del formulario, restableciendo su estado a los valores iniciales. Se utiliza después de crear o actualizar un paciente para limpiar el formulario y prepararlo para una nueva entrada.
+     */
     const cleanForm = () => {
         setNombres("");
         setApellidos("");
@@ -91,6 +96,10 @@ export default function PacienteForm({
         setContrasena("");
     };
 
+    /**
+     * @description Maneja el envío del formulario para crear o actualizar un paciente. Valida que los campos requeridos estén completos, construye el objeto de datos del paciente y llama a la función onSubmit proporcionada. Después de la operación, muestra un mensaje de éxito y limpia el formulario.
+     * @param e - El evento de envío del formulario, que se utiliza para prevenir el comportamiento predeterminado y manejar la lógica personalizada de envío.
+     */
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 

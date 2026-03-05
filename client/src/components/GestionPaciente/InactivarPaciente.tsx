@@ -17,6 +17,9 @@ export default function InactivarPaciente() {
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
     
+    /**
+     * @description Muestra un diálogo de confirmación antes de inactivar al paciente seleccionado. Si se confirma, se realiza la solicitud para inactivar al paciente y se muestra un mensaje de éxito o error según corresponda.
+     */
     const confirmDeactivate = () => {
         if (!selectedPatient) {
             showMessage("warn", "Debe seleccionar un paciente.");

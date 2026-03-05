@@ -31,5 +31,5 @@ export const createProfessionalRequest = async (data: ICrearProfesional) => {
 
 //Desactivar a un usuario
 export const deactivateUserRequest = async (idUser: number) => {
-    return api.patch(`/users/patient/${idUser}`);
+    return api.patch(`/users/user/${idUser}`);
 };

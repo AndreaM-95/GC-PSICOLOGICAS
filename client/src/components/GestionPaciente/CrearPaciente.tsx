@@ -3,9 +3,12 @@ import { createPatientRequest } from "@/services/patient.service";
 import PacienteForm from "./PacienteForm";
 
 export default function CrearPaciente() {
-
     const { showMessage } = useAppToast();
 
+    /**
+     * @description Maneja la creación de un nuevo paciente. Realiza una solicitud para crear el paciente con los datos proporcionados y muestra un mensaje de éxito o error según corresponda.
+     * @param data - Los datos del paciente a crear, obtenidos del formulario.
+     */
     const handleCreate = async (data: any) => {
         try {
             await createPatientRequest(data);

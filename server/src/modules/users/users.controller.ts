@@ -17,26 +17,31 @@ export class UsersController {
     //-----------------------------------------------------------
     //------ PERSONAL ------
     //------ CRUD ADMINISTRATIVO ------
-    @Get('administrators')
-    listAdmins() {
-        return this.usersService.listAdministrators();
-    }
-
+    @Roles(Rol.ADMINISTRATIVO)
     @Post('/admin')
     createAdmin(@Body() body: CrearAdminDto) {
         return this.usersService.createAdmin(body);
     }
 
+    @Roles(Rol.ADMINISTRATIVO)
+    @Get('administrators')
+    listAdmins() {
+        return this.usersService.listAdministrators();
+    }
+
     //------ CRUD PROFESIONAL ------
+    @Roles(Rol.ADMINISTRATIVO)
     @Post('/professional')
     crearProfesional(@Body() body: CrearProfesionalDto) {
         return this.usersService.createProfessional(body);
     }
 
+    @Roles(Rol.ADMINISTRATIVO)
     @Get('professionals')
     listarProfecionales() {
         return this.usersService.listProfessionals();
     }
+    
 
     //-----------------------------------------------------------
     //------ PACIENTE ------
@@ -62,7 +67,7 @@ export class UsersController {
     //-----------------------------------------------------------
     //------ GENERALES ------
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
-    @Patch("/patient/:id")
+    @Patch("/user/:id")
     inactivarUsuario(@Request() req, @Param('id', ParseIntPipe) id: number){
         return this.usersService.deactivateUser(req, id)
     }

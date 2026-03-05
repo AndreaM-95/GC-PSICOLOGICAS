@@ -15,6 +15,9 @@ export default function ListarPacientes() {
         loadPatientActives();
     }, []);
     
+    /**
+     * @description Carga la lista de pacientes activos desde el backend. Realiza una solicitud para obtener los pacientes y actualiza el estado con los datos recibidos. Si ocurre un error durante la carga, muestra un mensaje de error.
+     */
     const loadPatientActives = async () => {
         try {
             const pats = await getPatients();
