@@ -57,7 +57,7 @@ export class UsersController {
     }
 
     //-----------------------------------------------------------
-    //------ PACIENTE ------
+    //------ CRUD PACIENTE ------
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Post('/patient')
     createPatient(@Request() req, @Body() body: PersonaBaseDto) {
@@ -75,7 +75,6 @@ export class UsersController {
     actualizarPaciente(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarPacienteDTO){
         return this.usersService.updatePatient(req, id, dto)
     }
-
 
     //-----------------------------------------------------------
     //------ GENERALES ------

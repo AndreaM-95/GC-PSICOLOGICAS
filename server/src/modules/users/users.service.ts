@@ -31,6 +31,11 @@ export class UsersService {
     //-----------------------------------------------------------
     //------ PERSONAL ------
     //------ CRUD ADMINISTRATIVO ------
+    /**
+     * @description Método de creación de administrativo con validaciones de edad mínima, correo corporativo y unicidad de datos
+     * @param newAdmin 
+     * @returns Mensaje de éxito una vez creado el administrativo en la base de datos
+     */
     async createAdmin(newAdmin: CrearAdminDto) {
         const hashedPassword = await bcrypt.hash(newAdmin.contrasena, 10);
         const { cargo, ...personaData } = newAdmin;
@@ -52,10 +57,21 @@ export class UsersService {
         return await this.adminRepository.save(admin);
     }
     
+    /**
+     * @description Método que trae la lista de los administrativos activos en el sistema
+     * @returns La lista de los administrativos activos
+     */
     async listAdministrators() {
         return this.listByRole(Roles.ADMINISTRATIVO);
     }
 
+    /**
+     * @description Método de actualización de datos de un administrativo, actualiza tanto la tabla persona como administrativo dependiendo de los datos que vengan en el DTO
+     * @param rolFromToken 
+     * @param id 
+     * @param updateAdminDTO 
+     * @returns El mensaje de actualización exitosa del administrativo
+     */
     async updateAdmin(rolFromToken: any, id: number, updateAdminDTO: ActualizarAdminDTO) {
         const admin = await this.adminRepository.findOne({
             where: { idAdministrativo: id },
@@ -84,6 +100,11 @@ export class UsersService {
     }
 
     //------ CRUD PROFESIONAL ------
+    /**
+     * @description Método de creación de profesional con validaciones de edad mínima, correo corporativo, unicidad de datos y licencia profesional única
+     * @param newProfessional 
+     * @returns Datos del profesional creado en la base de datos
+     */
     async createProfessional(newProfessional: CrearProfesionalDto) {
         const hashedPassword = await bcrypt.hash(newProfessional.contrasena, 10);
         const { licencia, especialidad, ...personaData } = newProfessional;
@@ -112,10 +133,21 @@ export class UsersService {
         return await this.professionalRepository.save(admin);
     }
     
+    /**
+     * @description Método que trae la lista de los profesionales activos en el sistema
+     * @returns Lista de los profesionales activos
+     */
     async listProfessionals() {
         return this.listByRole(Roles.PROFESIONAL);
     }
 
+    /**
+     * @description Método de actualización de datos de un profesional, actualiza tanto la tabla persona como profesional dependiendo de los datos que vengan en el DTO
+     * @param rolFromToken 
+     * @param id 
+     * @param updateProfDTO 
+     * @returns La actualización exitosa del profesional
+     */
     async updateProf(rolFromToken: any, id: number, updateProfDTO: ActualizarProfesionalDTO) {
         const professional = await this.professionalRepository.findOne({
             where: { idProfesional: id },
@@ -146,7 +178,7 @@ export class UsersService {
     //-----------------------------------------------------------
     //------ PACIENTE ------
     /**
-     * @description Método que crea un usuario con el rol de paciente
+     * @description Método de creación de paciente con validaciones de edad mínima, correo corporativo y unicidad de datos
      * @param rolFromToken Recibe el token del login y extrae el rol
      * @param newPatient Tiene la estructura de datos para crear un paciente
      * @returns Un mensaje de éxito una vez creado
@@ -186,6 +218,11 @@ export class UsersService {
     //------ GENERALES ------
 
     //------ Helpers ------
+    /**
+     * @description Valida que el número de documento y correo sean únicos en la base de datos
+     * @param numeroDocumento 
+     * @param correo 
+     */
     private async validateUniquePersonaData(numeroDocumento: string, correo: string) {
         const [existingDocument, existingEmail] = await Promise.all([
             this.personRepository.findOne({ where: { numeroDocumento } }),
@@ -200,6 +237,10 @@ export class UsersService {
         }
     }
 
+    /**
+     * @description Valida que el correo tenga el dominio corporativo específico
+     * @param correo 
+     */
     private validateCorporateEmail(correo: string) {
         if (!correo.endsWith("@psicogest.com.co")) {
             throw new CustomHttpException(
@@ -209,6 +250,11 @@ export class UsersService {
         }
     }
 
+    /**
+     * @description Valida que el usuario cumpla con la edad mínima requerida para su rol
+     * @param fechaNacimiento 
+     * @param minAge 
+     */
     private validateMinimumAge(fechaNacimiento: Date, minAge: number) {
         const today = new Date();
         const birthDate = new Date(fechaNacimiento);
@@ -220,6 +266,10 @@ export class UsersService {
         if (age < minAge) throw new CustomHttpException( `El usuario debe tener al menos ${minAge} años`);
     }
 
+    /**
+     * @description Valida que la licencia profesional sea única en la base de datos
+     * @param licencia 
+     */
     private async validateUniqueLicense(licencia: string) {
         const existingLicense = await this.professionalRepository.findOne({
             where: { licencia }
