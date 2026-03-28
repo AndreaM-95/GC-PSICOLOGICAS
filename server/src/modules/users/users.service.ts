@@ -11,6 +11,8 @@ import { Profesional } from './entities/profesional.entity';
 import * as bcrypt from 'bcrypt';
 import { CustomHttpException } from 'src/common/exceptions/custom-http.exception';
 import { ActualizarPacienteDTO } from './dto/actualizar-paciente.dto';
+import { ActualizarAdminDTO } from './dto/actualizar-admin.dto';
+import { ActualizarProfesionalDTO } from './dto/actualizar-profesional.dto';
 
 
 @Injectable()
@@ -54,6 +56,33 @@ export class UsersService {
         return this.listByRole(Roles.ADMINISTRATIVO);
     }
 
+    async updateAdmin(rolFromToken: any, id: number, updateAdminDTO: ActualizarAdminDTO) {
+        const admin = await this.adminRepository.findOne({
+            where: { idAdministrativo: id },
+            relations: ["persona"]
+        });
+
+        if (!admin) {
+            throw new CustomHttpException(
+                "Administrador no encontrado",
+                HttpStatus.NOT_FOUND
+            );
+        }
+
+        const { cargo, ...personaData } = updateAdminDTO;
+        
+        // Actualiza PERSONA
+        await this.updateUser(
+            rolFromToken,
+            admin.persona.idPersona,
+            personaData
+        );
+        
+        // Actualiza ADMIN (solo si viene cargo)
+        if (cargo) await this.adminRepository.update(id, { cargo });    
+        return { message: "Administrador actualizado correctamente" };
+    }
+
     //------ CRUD PROFESIONAL ------
     async createProfessional(newProfessional: CrearProfesionalDto) {
         const hashedPassword = await bcrypt.hash(newProfessional.contrasena, 10);
@@ -85,6 +114,33 @@ export class UsersService {
     
     async listProfessionals() {
         return this.listByRole(Roles.PROFESIONAL);
+    }
+
+    async updateProf(rolFromToken: any, id: number, updateProfDTO: ActualizarProfesionalDTO) {
+        const professional = await this.professionalRepository.findOne({
+            where: { idProfesional: id },
+            relations: ["persona"]
+        });
+
+        if (!professional) {
+            throw new CustomHttpException(
+                "Profesional no encontrado",
+                HttpStatus.NOT_FOUND
+            );
+        }
+
+        const { licencia, especialidad, ...personaData } = updateProfDTO;
+        
+        // Actualiza PERSONA
+        await this.updateUser(
+            rolFromToken,
+            professional.persona.idPersona,
+            personaData
+        );
+        
+        // Actualiza Profesional (solo si viene licencia o especialidad)
+        if (licencia || especialidad) await this.professionalRepository.update(id, { licencia, especialidad });    
+        return { message: "Profesional actualizado correctamente" };
     }
 
     //-----------------------------------------------------------
@@ -256,11 +312,11 @@ export class UsersService {
             );
         }
 
-        const userUpdate = await this.personRepository.findOne({
+        const user = await this.personRepository.findOne({
             where: { idPersona: id }
         });
 
-        if (!userUpdate) {
+        if (!user) {
             throw new CustomHttpException(
                 `Usuario con ID ${id} no encontrado`,
                 HttpStatus.NOT_FOUND
@@ -268,7 +324,7 @@ export class UsersService {
         }
 
         // Validar correo
-        if (updateUserDTO.correo && updateUserDTO.correo !== userUpdate.correo) {
+        if (updateUserDTO.correo && updateUserDTO.correo !== user.correo) {
             const existEmail = await this.personRepository.findOne({
                 where: { correo: updateUserDTO.correo }
             });

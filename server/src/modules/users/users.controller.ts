@@ -8,6 +8,8 @@ import { Roles as Rol } from 'src/common/enums/Roles';
 import { JwtAuthGuard } from '../../common/guards/jwt.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { ActualizarPacienteDTO } from './dto/actualizar-paciente.dto';
+import { ActualizarAdminDTO } from './dto/actualizar-admin.dto';
+import { ActualizarProfesionalDTO } from './dto/actualizar-profesional.dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -29,6 +31,12 @@ export class UsersController {
         return this.usersService.listAdministrators();
     }
 
+    @Roles(Rol.ADMINISTRATIVO)
+    @Put("/admin/:id")
+    actualizarAdmin(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarAdminDTO){
+        return this.usersService.updateAdmin( req, id, dto)
+    }
+
     //------ CRUD PROFESIONAL ------
     @Roles(Rol.ADMINISTRATIVO)
     @Post('/professional')
@@ -42,6 +50,11 @@ export class UsersController {
         return this.usersService.listProfessionals();
     }
     
+    @Roles(Rol.ADMINISTRATIVO)
+    @Put("/professional/:id")
+    actualizarProfesional(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarProfesionalDTO){
+        return this.usersService.updateProf( req, id, dto)
+    }
 
     //-----------------------------------------------------------
     //------ PACIENTE ------
