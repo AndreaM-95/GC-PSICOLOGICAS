@@ -183,17 +183,37 @@ export class UsersService {
      * @param rol Enum que trae un listado de roles disponibles
      * @returns La relación y búsqueda de BDD
      */
-    private listByRole(rol: Roles) {
+    private async listByRole(rol: Roles) {
         const relationsMap = {
             [Roles.ADMINISTRATIVO]: ["administrativo"],
             [Roles.PROFESIONAL]: ["profesional"],
             [Roles.PACIENTE]: []
         };
 
-        return this.personRepository.find({
-            where: { rol, estado: EstadosUsuario.ACTIVO },
+        // 1. Buscar TODOS (activos + inactivos)
+        const allUsers = await this.personRepository.find({
+            where: { rol },
             relations: relationsMap[rol]
         });
+
+        // No existe ningún usuario
+        if (allUsers.length === 0) {
+            console.log("No existen usuarios en la base de datos");
+            return [];
+        }
+
+        // 2. Filtrar activos
+        const activeUsers = allUsers.filter(
+            user => user.estado === EstadosUsuario.ACTIVO
+        );
+
+        // Existen pero están inactivos
+        if (activeUsers.length === 0) {
+            console.log("Los usuarios existen pero se encuentran inactivos");
+            return [];
+        }
+
+        return activeUsers;
     }
 
     /**
