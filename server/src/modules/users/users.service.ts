@@ -33,24 +33,23 @@ export class UsersService {
         const hashedPassword = await bcrypt.hash(newAdmin.contrasena, 10);
         const { cargo, ...personaData } = newAdmin;
 
+        this.validateCorporateEmail(newAdmin.correo);
+        this.isAdult(new Date(newAdmin.fechaNacimiento));
+        await this.validateUniquePersonaData(newAdmin.numeroDocumento, newAdmin.correo);
+
         const persona = this.personRepository.create({
             ...personaData,
             contrasena: hashedPassword,
             rol: Roles.ADMINISTRATIVO,
         });
-
         const savedPersona = await this.personRepository.save(persona);
-
         const admin = this.adminRepository.create({
             cargo,
             persona: savedPersona,
         });
-
         return await this.adminRepository.save(admin);
     }
     
-
-
     async listAdministrators() {
         return this.listByRole(Roles.ADMINISTRATIVO);
     }
@@ -60,6 +59,14 @@ export class UsersService {
         const hashedPassword = await bcrypt.hash(newProfessional.contrasena, 10);
         const { licencia, especialidad, ...personaData } = newProfessional;
 
+        this.validateCorporateEmail(newProfessional.correo);
+        this.isAdult(new Date(newProfessional.fechaNacimiento));
+        await this.validateUniquePersonaData(
+            newProfessional.numeroDocumento,
+            newProfessional.correo
+        );
+        await this.validateUniqueLicense(licencia);
+
         const persona = this.personRepository.create({
             ...personaData,
             contrasena: hashedPassword,
@@ -67,18 +74,14 @@ export class UsersService {
         });
 
         const savedPersona = await this.personRepository.save(persona);
-
         const admin = this.professionalRepository.create({
             licencia,
             especialidad,
             persona: savedPersona,
         });
 
-        //SU VALIDACIÓN SERÁ CON LA CÉDULA
-
         return await this.professionalRepository.save(admin);
     }
-    //TODO:Buscar usuario por nombre o documento
     
     async listProfessionals() {
         return this.listByRole(Roles.PROFESIONAL);
@@ -123,8 +126,57 @@ export class UsersService {
 
     //-----------------------------------------------------------
     //------ GENERALES ------
-    //TODO:Actualizar información
-    //TODO:Buscar usuario por nombre o documento
+
+    //------ Helpers ------
+    private async validateUniquePersonaData(numeroDocumento: string, correo: string) {
+        const [existingDocument, existingEmail] = await Promise.all([
+            this.personRepository.findOne({ where: { numeroDocumento } }),
+            this.personRepository.findOne({ where: { correo } })
+        ]);
+
+        if (existingDocument || existingEmail) {
+            throw new CustomHttpException(
+                "El usuario ya se encuentra registrado",
+                HttpStatus.CONFLICT
+            );
+        }
+    }
+
+    private validateCorporateEmail(correo: string) {
+        if (!correo.endsWith("@psicogest.com.co")) {
+            throw new CustomHttpException(
+                "El correo debe ser corporativo (@psicogest.com.co)",
+                HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    private isAdult(fechaNacimiento: Date): boolean {
+        const today = new Date();
+        const birthDate = new Date(fechaNacimiento);
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age >= 18;
+    }
+
+    private async validateUniqueLicense(licencia: string) {
+        const existingLicense = await this.professionalRepository.findOne({
+            where: { licencia }
+        });
+
+        if (existingLicense) {
+            throw new CustomHttpException(
+                "La licencia ya se encuentra registrada",
+                HttpStatus.CONFLICT
+            );
+        }
+    }
 
     /**
      * @description Consulta las relaciones por rol y estados de los usuarios en BDD
