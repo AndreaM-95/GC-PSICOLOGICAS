@@ -3,6 +3,7 @@ import api from './api';
 
 // Crear paciente
 export const createPatientRequest = async (data: ICrearPaciente) => {
+  console.log(data);
   return api.post('/users/patient', data);
 }
 

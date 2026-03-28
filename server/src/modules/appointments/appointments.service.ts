@@ -33,32 +33,32 @@ export class AppointmentsService {
      * @description Cada día luego de las 12, cuando la cita esté en estado confirmada pero la fecha o la hora venció, cambiará a No asistida
      * @returns Mensaje de cambio de estado de las citas
      */
-    @Cron('*/30 * * * *') // cada 5 minutos (puedes cambiarlo)
-    async updateMissedAppointments() {
-        const now = new Date();
-        const citas = await this.appointmentRepository.find({
-            where: {
-                estado: EstadosCita.CONFIRMADA
-            }
-        });
+    // @Cron('*/30 * * * *') // cada 5 minutos (puedes cambiarlo)
+    // async updateMissedAppointments() {
+    //     const now = new Date();
+    //     const citas = await this.appointmentRepository.find({
+    //         where: {
+    //             estado: EstadosCita.CONFIRMADA
+    //         }
+    //     });
 
-        let actualizadas = 0;
-        for (const cita of citas) {
-            const [hours, minutes] = cita.horaCita.split(":").map(Number);
-            const fechaCompleta = new Date(cita.fechaCita);
-            fechaCompleta.setHours(hours, minutes, 0, 0);
+    //     let actualizadas = 0;
+    //     for (const cita of citas) {
+    //         const [hours, minutes] = cita.horaCita.split(":").map(Number);
+    //         const fechaCompleta = new Date(cita.fechaCita);
+    //         fechaCompleta.setHours(hours, minutes, 0, 0);
 
-            if (fechaCompleta < now) {
-                cita.estado = EstadosCita.NOASISTIDA;
-                actualizadas++;
-            }
-        }
+    //         if (fechaCompleta < now) {
+    //             cita.estado = EstadosCita.NOASISTIDA;
+    //             actualizadas++;
+    //         }
+    //     }
 
-        if (actualizadas > 0) {
-            await this.appointmentRepository.save(citas);
-        }
-        console.log(`Citas actualizadas a NO_ASISTIDA: ${actualizadas}`);
-    }
+    //     if (actualizadas > 0) {
+    //         await this.appointmentRepository.save(citas);
+    //     }
+    //     console.log(`Citas actualizadas a NO_ASISTIDA: ${actualizadas}`);
+    // }
 
     // Crear cita - ADMIN
     async adminCreateAppointment(adminFromToken, newAppointment: CreateAppointmentDTO) {

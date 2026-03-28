@@ -55,9 +55,6 @@ export class UsersService {
         return this.listByRole(Roles.ADMINISTRATIVO);
     }
 
-    //TODO:Actualizar rol
-    //TODO:Actualizar estado
-
     //------ CRUD PROFESIONAL ------
     async createProfessional(newProfessional: CrearProfesionalDto) {
         const hashedPassword = await bcrypt.hash(newProfessional.contrasena, 10);

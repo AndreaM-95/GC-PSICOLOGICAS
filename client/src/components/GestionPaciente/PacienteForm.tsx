@@ -6,8 +6,6 @@ import { Calendar } from "primereact/calendar";
 import NavButton from "@/components/NavButton";
 import { UseInputValidation } from "@/utils/InputValidation";
 import { constantes } from "@/utils/constantes";
-import { Toast } from 'primereact/toast';
-import { useAppToast } from "@/hooks/useAppToast";
 import { SelectButton } from "primereact/selectbutton";
 
 interface PacienteFormProps {
@@ -21,7 +19,6 @@ export default function PacienteForm({
     initialData,
     onSubmit
 }: PacienteFormProps) {
-    const { toast, showMessage } = useAppToast();
     const { tiposDocumentos, generos } = constantes();
 
     const options = ['No', 'Si'];
@@ -133,19 +130,11 @@ export default function PacienteForm({
         };
 
         await onSubmit(patientData);
-
-        if (mode === "create") {
-            cleanForm();
-            showMessage("success", "Usuario creado correctamente.");
-        }
-
         cleanForm();
-        showMessage("success", "Usuario actualizado correctamente.");
     };
 
     return (
         <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width: '90%' }} >
-            <Toast ref={toast} />
             <form
                 className="grid gap-2 align-middle items-center"
                 style={{ gridTemplateColumns: '35% 65%' }}

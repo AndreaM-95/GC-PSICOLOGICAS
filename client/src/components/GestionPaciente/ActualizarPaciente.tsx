@@ -6,9 +6,10 @@ import { AutoComplete } from "primereact/autocomplete";
 import { usePatientsData } from "@/hooks/usePatientsData";
 import { usePatientSearch } from "@/hooks/usePatientSearch";
 import type { IActualizarPersona } from "@/types";
+import { Toast } from "primereact/toast";
 
 export default function ActualizarPaciente() {
-    const { showMessage } = useAppToast();
+    const { toast, showMessage } = useAppToast();
     const [documentPatient, setDocumentPatient] = useState("");
     const {patients, loadPatients} = usePatientsData(showMessage);
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
@@ -21,10 +22,8 @@ export default function ActualizarPaciente() {
     const handleUpdate = async (data: IActualizarPersona) => {
         try {
             await updatePatientRequest(selectedPatient.id, data);
-
             showMessage("success", "Paciente actualizado correctamente.");
             await loadPatients();
-
         } catch (error: any) {
             const backendMessage =
                 error.response?.data?.message?.message ||
@@ -45,6 +44,7 @@ export default function ActualizarPaciente() {
 
     return (
         <div className="w-full flex flex-col justify-center gap-4">
+            <Toast ref={toast} />
             <AutoComplete
                 id="documentPatient"
                 value={documentPatient}

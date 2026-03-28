@@ -30,7 +30,7 @@ export default function ListarPacientes() {
     return(
         <Card style={{ background: '#f1faee', padding: '0px', margin: 'auto', width:'100%' }} >
             <Toast ref={toast} />
-            <ScrollPanel style={{ height: '200px' }}>
+            <ScrollPanel style={{ height: '450px' }}>
                 <DataTable value={patients} tableStyle={{ minWidth: '50rem', color: 'var(--color-cyan-700)' }}>
                     <Column field="nombres" header="Nombres" />
                     <Column field="apellidos" header="Apellidos" />
