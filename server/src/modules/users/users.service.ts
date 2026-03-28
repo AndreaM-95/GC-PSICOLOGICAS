@@ -36,7 +36,7 @@ export class UsersService {
         const { cargo, ...personaData } = newAdmin;
 
         this.validateCorporateEmail(newAdmin.correo);
-        this.isAdult(new Date(newAdmin.fechaNacimiento));
+        this.validateMinimumAge(new Date(newAdmin.fechaNacimiento), 18);
         await this.validateUniquePersonaData(newAdmin.numeroDocumento, newAdmin.correo);
 
         const persona = this.personRepository.create({
@@ -89,7 +89,7 @@ export class UsersService {
         const { licencia, especialidad, ...personaData } = newProfessional;
 
         this.validateCorporateEmail(newProfessional.correo);
-        this.isAdult(new Date(newProfessional.fechaNacimiento));
+        this.validateMinimumAge(new Date(newProfessional.fechaNacimiento), 20);
         await this.validateUniquePersonaData(
             newProfessional.numeroDocumento,
             newProfessional.correo
@@ -152,6 +152,8 @@ export class UsersService {
      * @returns Un mensaje de éxito una vez creado
      */
     async createPatient(rolFromToken, newPatient: PersonaBaseDto) {
+        this.validateMinimumAge(new Date(newPatient.fechaNacimiento), 6);
+
         await this.createUser(rolFromToken, newPatient, "El paciente ya se encuentra registrado")
         return{
             message: "Paciente creado exitosamente",
@@ -207,18 +209,15 @@ export class UsersService {
         }
     }
 
-    private isAdult(fechaNacimiento: Date): boolean {
+    private validateMinimumAge(fechaNacimiento: Date, minAge: number) {
         const today = new Date();
         const birthDate = new Date(fechaNacimiento);
 
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
 
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        return age >= 18;
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) age--;
+        if (age < minAge) throw new CustomHttpException( `El usuario debe tener al menos ${minAge} años`);
     }
 
     private async validateUniqueLicense(licencia: string) {
