@@ -21,6 +21,11 @@ export function useProfessionalData(showError: (seve:string, msg: string) => voi
                     apellidos: p.apellidos,
                     tipoDocumento: p.tipoDocumento,
                     numeroDocumento: p.numeroDocumento,
+                    ciudadResidencia: p.ciudadResidencia,
+                    celular: p.celular,
+                    correo: p.correo,
+                    especialidad: p.profesional.especialidad,
+                    licencia: p.profesional.licencia,
                 }))
             );
         } catch (err: any){

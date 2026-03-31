@@ -53,7 +53,7 @@ export default function InactivarUsuario() {
     const currentConfig = roleConfig[rol as keyof typeof roleConfig];
     
     /**
-     * @description Muestra un diálogo de confirmación antes de inactivar al paciente seleccionado. Si se confirma, se realiza la solicitud para inactivar al paciente y se muestra un mensaje de éxito o error según corresponda.
+     * @description Muestra un diálogo de confirmación antes de inactivar al usuario seleccionado. Si se confirma, se realiza la solicitud para inactivar al usuario y se muestra un mensaje de éxito o error según corresponda.
      */
     const handleDeactivate = () => {
         if (!selectedUser) {
@@ -104,7 +104,7 @@ export default function InactivarUsuario() {
             </div>
 
             <Divider/>
-            
+
             {rol && currentConfig && (
                 <DesactivateCard
                     entityName={currentConfig.entityName}

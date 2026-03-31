@@ -4,6 +4,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import NavButton from "../../components/NavButton";
 import CreatePersonnel from "../../components/Personnel/CreatePersonnel";
 import InactivarUsuario from "@/components/GestionPersonal/InactivarUsuario";
+import ListarUsuarios from "@/components/GestionPersonal/ListarUsuarios";
 
 export default function GestionPersonal() {
     const navigate = useNavigate();
@@ -28,11 +29,7 @@ export default function GestionPersonal() {
                         <CreatePersonnel />
                     </TabPanel>
                     <TabPanel header="Listar personal activo">
-                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
-                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
-                            <h3>Póximamente</h3>
-                        </div>
-                        {/* <ListAppointments /> */}
+                        <ListarUsuarios/>
                     </TabPanel>
                     <TabPanel header="Actualizar personal">
                         <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">

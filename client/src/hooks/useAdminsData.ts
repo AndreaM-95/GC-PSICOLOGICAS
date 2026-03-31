@@ -21,6 +21,11 @@ export function useAdminsData(showError: (seve:string, msg: string) => void) {
                     apellidos: p.apellidos,
                     tipoDocumento: p.tipoDocumento,
                     numeroDocumento: p.numeroDocumento,
+                    ciudadResidencia: p.ciudadResidencia,
+                    celular: p.celular,
+                    correo: p.correo,
+                    rol: p.rol,
+                    cargo: p.administrativo.cargo
                 }))
             );
         } catch (err: any){
