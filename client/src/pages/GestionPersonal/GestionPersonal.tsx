@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TabView, TabPanel } from 'primereact/tabview';
 import NavButton from "../../components/NavButton";
 import CreatePersonnel from "../../components/Personnel/CreatePersonnel";
+import InactivarUsuario from "@/components/GestionPersonal/InactivarUsuario";
 
 export default function GestionPersonal() {
     const navigate = useNavigate();
@@ -41,11 +42,7 @@ export default function GestionPersonal() {
                         {/* <UpdateAppointment /> */}
                     </TabPanel>
                     <TabPanel header="Inactivar personal">
-                        <div className="flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round">
-                            <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
-                            <h3>Póximamente</h3>
-                        </div>
-                        {/* <CancelAppointment /> */}
+                        <InactivarUsuario/>
                     </TabPanel>
                 </TabView>
             </section>

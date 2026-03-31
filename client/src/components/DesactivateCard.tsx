@@ -73,7 +73,7 @@ export function DesactivateCard<T>({
         ) : (
             <div className="col-span-2 flex text-center align-items-center justify-content-center bg-[#f1faee] p-5 border-round"> 
                 <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i> 
-                <h3>Seleccione un {entityName}</h3>
+                <h3>Seleccione un usuario</h3>
             </div>
         )}
       </form>

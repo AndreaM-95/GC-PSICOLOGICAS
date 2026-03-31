@@ -7,22 +7,27 @@ export function useProfessionalData(showError: (seve:string, msg: string) => voi
 
     // Cargar profesionales al montar el componente
     useEffect(() => {
-        async function loadProfessionals() {
-            try{
-                const profs = await getProfessionals();
-                setProfessionals(
-                    profs.map((p: any) => ({
-                        id: p.profesional.idProfesional,
-                        name: `${p.nombres} ${p.apellidos}`
-                    }))
-                );
-            } catch (err: any){
-                console.error("Error cargando profesionales:", err);
-                showError("error","Error al cargar los profesionales");
-            }
-        }
         loadProfessionals();
     }, []);
 
-    return {professionals}
+    async function loadProfessionals() {
+        try{
+            const profs = await getProfessionals();
+            setProfessionals(
+                profs.map((p: any) => ({
+                    idPersona: p.idPersona,
+                    id: p.profesional.idProfesional,
+                    nombres: p.nombres,
+                    apellidos: p.apellidos,
+                    tipoDocumento: p.tipoDocumento,
+                    numeroDocumento: p.numeroDocumento,
+                }))
+            );
+        } catch (err: any){
+            console.error("Error cargando profesionales:", err);
+            showError("error","Error al cargar los profesionales");
+        }
+    }
+
+    return { professionals, loadProfessionals }
 };

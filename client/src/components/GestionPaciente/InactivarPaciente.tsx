@@ -1,15 +1,10 @@
 import { useState } from "react";
-import { Card } from "primereact/card";
 import { Toast } from 'primereact/toast';
 import { useAppToast } from "@/hooks/useAppToast";
-import { AutoComplete } from "primereact/autocomplete";
-import { Divider } from "primereact/divider";
-import { InputText } from "primereact/inputtext";
-import NavButton from "@/components/NavButton";
 import { usePatientsData } from "@/hooks/usePatientsData";
 import { usePatientSearch } from "@/hooks/usePatientSearch";
 import { deactivateUserRequest } from "@/services/user.service";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { useConfirmDeactivate } from "@/hooks/useConfirmDeactivate";
 import { DesactivateCard } from "../DesactivateCard";
 
@@ -18,7 +13,6 @@ export default function InactivarPaciente() {
     const { patients, loadPatients } = usePatientsData(showMessage);
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
-
     const { confirmDeactivate } = useConfirmDeactivate();
     
     /**
