@@ -5,6 +5,7 @@ import NavButton from "../../components/NavButton";
 import CreatePersonnel from "../../components/Personnel/CreatePersonnel";
 import InactivarUsuario from "@/components/GestionPersonal/InactivarUsuario";
 import ListarUsuarios from "@/components/GestionPersonal/ListarUsuarios";
+import CrearUsuario from "@/components/GestionPersonal/CrearUsuario";
 
 export default function GestionPersonal() {
     const navigate = useNavigate();
@@ -26,7 +27,8 @@ export default function GestionPersonal() {
             <section className="flex justify-center mb-[100px]">
                 <TabView>
                     <TabPanel header="Crear administrativo o médico">
-                        <CreatePersonnel />
+                        {/* <CreatePersonnel /> */}
+                        <CrearUsuario/>
                     </TabPanel>
                     <TabPanel header="Listar personal activo">
                         <ListarUsuarios/>
