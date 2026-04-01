@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAdmins } from "@/services/user.service";
 
-
 export function useAdminsData(showError: (seve:string, msg: string) => void) {
     const [admins, setAdmins] = useState<any[]>([]);
 
@@ -12,20 +11,25 @@ export function useAdminsData(showError: (seve:string, msg: string) => void) {
 
     async function loadAdmins() {
         try{
-            const profs = await getAdmins();
+            const admins = await getAdmins();
             setAdmins(
-                profs.map((p: any) => ({
+                admins.map((p: any) => ({
                     idPersona: p.idPersona,
-                    idAdmin: p.administrativo.idAdministrativo,
+                    id: p.administrativo.idAdministrativo,
                     nombres: p.nombres,
                     apellidos: p.apellidos,
                     tipoDocumento: p.tipoDocumento,
                     numeroDocumento: p.numeroDocumento,
+                    fechaNacimiento: p.fechaNacimiento,
+                    genero: p.genero,
                     ciudadResidencia: p.ciudadResidencia,
                     celular: p.celular,
+                    eps: p.eps,
+                    nombresContactoEmergencia: p.nombresContactoEmergencia,
+                    celularContactoEmergencia: p.celularContactoEmergencia,
                     correo: p.correo,
-                    rol: p.rol,
-                    cargo: p.administrativo.cargo
+                    contrasena: p.contrasena,
+                    cargo: p.administrativo.cargo,
                 }))
             );
         } catch (err: any){

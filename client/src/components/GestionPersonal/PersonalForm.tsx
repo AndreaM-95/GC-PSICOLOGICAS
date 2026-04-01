@@ -3,6 +3,8 @@ import NavButton from "@/components/NavButton";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { UseInputValidation } from "@/utils/InputValidation";
+import { SelectButton } from "primereact/selectbutton";
+import { useState } from "react";
 
 interface Props {
   formData: any;
@@ -10,6 +12,7 @@ interface Props {
   rol: string;
   onSubmit: (e: React.FormEvent) => void;
   buttonLabel: string;
+  mode: "create" | "edit";
 }
 
 export default function PersonalForm({
@@ -17,9 +20,12 @@ export default function PersonalForm({
   setFormData,
   rol,
   onSubmit,
-  buttonLabel
+  buttonLabel,
+  mode
 }: Props) {
-    
+    const options = ['No', 'Si'];
+    const [valueSwitch, setValueSwitch] = useState(options[0]);
+
     const tipoDoc = [
         { id: 1, name: "CC" },
         { id: 2, name: "CE" }
@@ -74,7 +80,7 @@ export default function PersonalForm({
             <InputText
                 placeholder="Escribe aquí.." 
                 type="number"
-                value={formData.documento}
+                value={formData.numeroDocumento}
                 onChange={UseInputValidation(
                     (value) => handleChange("numeroDocumento", value),
                     "numbers"
@@ -175,17 +181,52 @@ export default function PersonalForm({
                 value={formData.correo}
                 onChange={(e) => handleChange("correo", e.target.value)}
                 type="email"
-                placeholder="Ej. test@gmail.com" 
+                placeholder="Ej. test@psicogest.com.co" 
                 required
             />
 
-            <label className="font-bold text-cyan-700">Contraseña:</label>
-            <InputText 
-                placeholder="Escribe aquí.." 
-                value={formData.contrasena} onChange={(e) => handleChange("contrasena", e.target.value)} 
-                type="password"
-                required
-            />
+            {/* CAMPO DE LA CONTRASEÑA */}
+            {mode === "create" && (
+                <>
+                    <label className="font-bold text-cyan-700">Contraseña:</label>
+                    <InputText 
+                        placeholder="Escribe aquí.." 
+                        value={formData.contrasena} onChange={(e) => handleChange("contrasena", e.target.value)} 
+                        type="password"
+                        required
+                    />
+                </>
+            )}
+
+            {mode === "edit" && (
+                <>
+                    <>
+                        <p className="font-bold text-cyan-700">
+                            ¿Deseas cambiar la contraseña?
+                        </p>
+
+                        <SelectButton
+                            value={valueSwitch}
+                            onChange={(e) => setValueSwitch(e.value)}
+                            options={options}
+                        />
+                    </>
+
+                    {valueSwitch === "Si" && (
+                        <>
+                            <label className="font-bold text-cyan-700">
+                                Nueva contraseña:
+                            </label>
+                            <InputText 
+                                placeholder="Escribe aquí.." 
+                                value={formData.contrasena} onChange={(e) => handleChange("contrasena", e.target.value)} 
+                                type="password"
+                                required
+                            />
+                        </>
+                    )}
+                </>
+            )}
 
             {/* CAMPOS POR ROL */}
             {rol === "Administrativo" && (

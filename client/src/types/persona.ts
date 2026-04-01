@@ -121,3 +121,57 @@ export interface IActualizarPersona{
   contrasena?: string,
   estado?: string
 }
+
+export interface IActualizarAdmin{
+  nombres?: string,
+  apellidos?: string,
+  tipoDocumento?: string,
+  numeroDocumento?: string,
+  fechaNacimiento?: string,
+  genero?: string,
+  ciudadResidencia?: string,
+  celular?: string,
+  correo?: string,
+  eps?: string,
+  nombresContactoEmergencia?: string,
+  celularContactoEmergencia?: string,
+  contrasena?: string,
+  cargo?: string
+}
+
+export interface IActualizarProfesional{
+  nombres?: string,
+  apellidos?: string,
+  tipoDocumento?: string,
+  numeroDocumento?: string,
+  fechaNacimiento?: string,
+  genero?: string,
+  ciudadResidencia?: string,
+  celular?: string,
+  correo?: string,
+  eps?: string,
+  nombresContactoEmergencia?: string,
+  celularContactoEmergencia?: string,
+  contrasena?: string,
+  licencia?: string,
+  especialidad?: string
+}
+
+export interface IActualizarUsuario{
+  nombres: string,
+  apellidos: string,
+  tipoDocumento: string,
+  numeroDocumento: string,
+  fechaNacimiento: string,
+  genero: string,
+  ciudadResidencia: string,
+  celular: string,
+  eps: string,
+  nombresContactoEmergencia: string,
+  celularContactoEmergencia: string,
+  correo: string,
+  contrasena?: string,
+  cargo?: string,
+  licencia?: string,
+  especialidad?: string
+}
