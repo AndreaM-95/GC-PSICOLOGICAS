@@ -12,40 +12,40 @@ import { useState } from "react";
 
 export default function ListarUsuarios() {
     const { toast, showMessage } = useAppToast();
-     //ADMIN
-        const { admins, loadAdmins } = useAdminsData(showMessage);
-        const { filteredAdmins, searchAdmins } = useAdminsSearch(admins);
+    //ADMIN
+    const { admins, loadAdmins } = useAdminsData(showMessage);
+    const { filteredAdmins, searchAdmins } = useAdminsSearch(admins);
+
+    //PROFESIONAL
+    const { professionals, loadProfessionals } = useProfessionalData(showMessage);
+    const { filteredProfessionals, searchProfessionals } = useProfessionalSearch(professionals);
+
+    //GENERAL
+    const [selectedUser, setSelectedUser] = useState<any>(null);
+    const [rol, setRol] = useState<string>("");
+    const roles = [
+        { id: 1, name: "Administrativo" },
+        { id: 2, name: "Profesional" }
+    ];
+
     
-        //PROFESIONAL
-        const { professionals, loadProfessionals } = useProfessionalData(showMessage);
-        const { filteredProfessionals, searchProfessionals } = useProfessionalSearch(professionals);
-    
-        //GENERAL
-        const [selectedUser, setSelectedUser] = useState<any>(null);
-        const [rol, setRol] = useState<string>("");
-        const roles = [
-            { id: 1, name: "Administrativo" },
-            { id: 2, name: "Profesional" }
-        ];
-    
-        
-        const roleConfig = {
-            Administrativo: {
-                entityName: "administrativo",
-                data: admins,
-                suggestions: filteredAdmins,
-                search: searchAdmins,
-                load: loadAdmins,
-            },
-            Profesional: {
-                entityName: "profesional",
-                data: professionals,
-                suggestions: filteredProfessionals,
-                search: searchProfessionals,
-                load: loadProfessionals,
-            }
-        };
-        const currentConfig = roleConfig[rol as keyof typeof roleConfig];
+    const roleConfig = {
+        Administrativo: {
+            entityName: "administrativo",
+            data: admins,
+            suggestions: filteredAdmins,
+            search: searchAdmins,
+            load: loadAdmins,
+        },
+        Profesional: {
+            entityName: "profesional",
+            data: professionals,
+            suggestions: filteredProfessionals,
+            search: searchProfessionals,
+            load: loadProfessionals,
+        }
+    };
+    const currentConfig = roleConfig[rol as keyof typeof roleConfig];
 
     const mapData = (data: any[], rol: string) => {
         return data.map((item) => ({

@@ -6,6 +6,7 @@ import { Toast } from "primereact/toast";
 import { Dropdown } from "primereact/dropdown";
 import { Card } from "primereact/card";
 import type { ICrearAdmin, ICrearProfesional } from "@/types";
+import { Divider } from "primereact/divider";
 
 export default function CrearUsuario() {
     const { toast, showMessage } = useAppToast();
@@ -99,60 +100,63 @@ export default function CrearUsuario() {
 
     return (
         <Card style={{ background: '#f1faee', width: '90%', margin: 'auto' }}>
-        <Toast ref={toast} />
+            <Toast ref={toast} />
 
-        <div className="w-[80%] m-auto mb-4">
-            <label className="font-bold text-cyan-700"> Selecciona el rol del empleado: </label>
-            <Dropdown
-                value={rol}
-                onChange={(e) => {
-                    setRol(e.value);
-                    // limpiar formulario al cambiar rol
-                    setFormData({
-                        nombres: "",
-                        apellidos: "",
-                        tipoDocumento: "",
-                        numeroDocumento: "",
-                        fechaNacimiento: null,
-                        genero: "",
-                        ciudadResidencia: "",
-                        celular: "",
-                        eps: "",
-                        nombresContactoEmergencia: "",
-                        celularContactoEmergencia: "",
-                        correo: "",
-                        contrasena: "",
-                        cargo: "",
-                        licencia: "",
-                        especialidad: ""
-                    });
-                }}
-                options={roles}
-                optionLabel="name"
-                optionValue="name"
-                placeholder="Selecciona aquí.."
-                className="w-full mt-2"
-            />
-        </div>
-
-        {/* Mensaje si no hay rol */}
-        {!rol && (
-            <div className="text-center p-4">
-                <i className="pi pi-info-circle mr-2"></i>
-                <span>Primero debes seleccionar un rol</span>
+            <div className="w-[80%] m-auto mb-4">
+                <label className="font-bold text-cyan-700"> Selecciona el rol del empleado: </label>
+                <Dropdown
+                    value={rol}
+                    onChange={(e) => {
+                        setRol(e.value);
+                        // limpiar formulario al cambiar rol
+                        setFormData({
+                            nombres: "",
+                            apellidos: "",
+                            tipoDocumento: "",
+                            numeroDocumento: "",
+                            fechaNacimiento: null,
+                            genero: "",
+                            ciudadResidencia: "",
+                            celular: "",
+                            eps: "",
+                            nombresContactoEmergencia: "",
+                            celularContactoEmergencia: "",
+                            correo: "",
+                            contrasena: "",
+                            cargo: "",
+                            licencia: "",
+                            especialidad: ""
+                        });
+                    }}
+                    options={roles}
+                    optionLabel="name"
+                    optionValue="name"
+                    placeholder="Selecciona aquí.."
+                    className="w-full mt-2"
+                />
             </div>
-        )}
+            <Divider/>
+            {/* Mensaje si no hay rol */}
+            {!rol && (
+                <Card className="text-center w-[80%] m-auto">
+                    <div className="flex text-center align-items-center justify-content-center">
+                        <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
+                        <h3>Primero debes seleccionar un rol</h3>
+                    </div>
+                </Card>
+            )}
 
-        {/* Formulario reutilizable */}
-        {rol && (
-            <PersonalForm
-                formData={formData}
-                setFormData={setFormData}
-                rol={rol}
-                onSubmit={handleCreate}
-                buttonLabel="Crear perfil"
-            />
-        )}
+            {/* Formulario reutilizable */}
+            {rol && (
+                <PersonalForm
+                    mode="create"
+                    formData={formData}
+                    setFormData={setFormData}
+                    rol={rol}
+                    onSubmit={handleCreate}
+                    buttonLabel="Crear perfil"
+                />
+            )}
         </Card>
     );
 }
