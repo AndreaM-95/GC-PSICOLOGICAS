@@ -1,4 +1,4 @@
-<h1 align="center">PSICOGESTGESTIÓN DE CITAS PSICOLÓGICAS</h1>
+<h1 align="center"> ⚕︎ PSICOGEST ⚕︎</h1>
 <h2 align="center">GESTIÓN DE CITAS PSICOLÓGICAS</h2>
 <p align="center"> <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green"></p>
 
@@ -71,35 +71,149 @@
 
 ---
 
+<h3>FLUJO DE NAVEGACIÓN</h3>
+<h4>📁MÓDULO DEL PERSONAL</h4>
+
+Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión del personal`, aquí podrá realizar:
+
+#### `✔️Crear un administrativo o profesional médico`
+```
+Inicio
+├── En el dropdown debe seleccionar el rol del empleado a buscar
+|   ├── Si es administrativo
+|   |   ├── Diligencia todos los campos de registro
+|   |   ├── Diligencia el campo adicional que es el cargo
+|   |   └── Da click en el botón de "Crear perfil"
+|   └── Si es un profesional médico
+|       ├── Diligencia todos los campos de registro
+|       ├── Diligencia los campos adicionales que son la licencia y la especialidad [psiquiatria / psicologia]
+|       └── Da click en el botón de "Crear perfil"
+└── Fin
+```
+
+#### `🔍Listar el personal activo`
+```
+Inicio
+├── En el dropdown debe seleccionar el rol de los empleados a buscar
+├── Se listará los datos de los usuarios activos en el sistema
+└── Fin
+```
+
+#### `📝Actualizar un usuario`
+```
+Inicio
+├── En el dropdown debe seleccionar el rol del empleado a buscar
+|   ├── Si es administrativo
+|   |   └── Se habilitá una barra de búsqueda para encontrar al usuario del área administrativa
+|   |       ├── Diligencia todos los campos que desea actualizar
+|   |       ├── Puede elegir si cambiar la contraseña o no
+|   |       └── Da click en el botón de "Actualizar perfil"
+|   └── Si es un profesional médico
+|       └── Se habilitá una barra de búsqueda para encontrar al usuario del área médica
+|           ├── Diligencia todos los campos que desea actualizar
+|           ├── Puede elegir si cambiar la contraseña o no
+|           └── Da click en el botón de "Actualizar perfil"
+└── Fin
+```
+
+#### `❌Inactivar un usuario`
+```
+Inicio
+├── En el dropdown debe seleccionar el rol del empleado a buscar
+|   ├── Si es administrativo
+|   |   └── Se habilitá una barra de búsqueda para encontrar al usuario del área administrativa
+|   |       ├── Se confirma el nombre de la persona a inactivar
+|   |       └── Da click en el botón de "Inactivar"
+|   └── Si es un profesional médico
+|       └── Se habilitá una barra de búsqueda para encontrar al usuario del área médica
+|           ├── Se confirma el nombre de la persona a inactivar
+|           └── Da click en el botón de "Inactivar perfil"
+└── Fin
+```
+
+---
+
+<h4>📁MÓDULO DE LOS PACIENTES</h4>
+
+Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión del paciente`, aquí podrá realizar:
+
+#### `✔️Crear un paciente`
+```
+Inicio
+├── Diligencia todos los campos de registro
+├── Da click en el botón de "Crear perfil"
+└── Fin
+```
+
+#### `🔍Listar pacientes activos`
+```
+Inicio
+├── Seleccionar el menú de listar
+├── Se listará los datos de los pacientes activos en el sistema
+└── Fin
+```
+
+#### `📝Actualizar un paciente`
+```
+Inicio
+├── Debe dilignciar en la barra de búsqueda el documento del paciente
+|   ├── Diligencia todos los campos que desea actualizar
+|   ├── Puede elegir si cambiar la contraseña o no
+|   └── Da click en el botón de "Actualizar perfil"
+└── Fin
+```
+
+#### `❌Inactivar un paciente`
+```
+Inicio
+├── Debe dilignciar en la barra de búsqueda el documento del paciente
+|   ├── Se confirma el nombre de la persona a inactivar
+|   └── Da click en el botón de "Inactivar perfil"
+└── Fin
+```
+
+---
+
 <h4>📁MÓDULO DE CITAS</h4>
 
 Una vez inicie sesión como administrador, seleccione la tarjeta `Gestión de citas`, aquí podrá realizar:
 
 #### `✔️Crear cita`
-1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
-2. Diligencia todos los campos, éstos son obligatorios
-3. Una vez creado, el formulario se limpiará
-4. Verifique en su base de datos la creación de la cita
+```
+Inicio
+├── En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
+|   ├── Diligencia todos los campos, éstos son obligatorios
+|   └── Da click en el botón de "Asignar cita"
+└── Fin
+```
 
 #### `🔍Listar citas`
-1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
-2. Verá una tabla con las citas del paciente cumpliendo el orden de confirmada, asistida, cancelada y no asistida
+```
+Inicio
+├── En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
+|   └── Verá una tabla con las citas del paciente cumpliendo el orden de confirmada, asistida, cancelada y no asistida
+└── Fin
+```
 
 #### `📝Reprogramar cita`
-1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
-2. Selecciona la cita que desea reprogramar, esta tendrá un estado de `confirmada`
-3. Diligencia todos los campos, éstos son obligatorios
-4. De click en el botón de `Reprogramar cita`
-5. Una vez diligenciado, el formulario se limpiará
-6. Verifique en su base de datos la actualización de la cita
+```
+Inicio
+├── En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
+|   └── Selecciona la cita que desea reprogramar, esta tendrá un estado de "confirmada"
+|       ├── Diligencia todos los campos, éstos son obligatorios
+|       └── De click en el botón de "Reprogramar cita"
+└── Fin
+```
 
 #### `❌Cancelar cita`
-1. En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
-2. Selecciona la cita que desea cancelar, esta tendrá un estado de `confirmada`
-3. Diligencia todos los campos, éstos son obligatorios
-4. De click en el botón de `Cancelar cita`
-5. Una vez diligenciado, el formulario se limpiará
-6. Verifique en su base de datos la cancelación de la cita
+```
+Inicio
+├── En la barra de búsqueda, digita el número de documento del usuario a buscar -Debe haber creado un paciente primero -
+|   └── Selecciona la cita que desea reprogramar, esta tendrá un estado de "confirmada"
+|       ├── Diligencia todos los campos, éstos son obligatorios
+|       └── De click en el botón de "Cancelar cita"
+└── Fin
+```
 
 ---
 
@@ -115,27 +229,35 @@ src/
  │   |   ├── CrearCita.tsx
  │   |   ├── ListarCitas.tsx
  │   |   └── ReprogramarCita.tsx
- |   ├── GestionHistoria/
- |   ├── GestionMedicamento/
  |   ├── GestionPaciente/
- |   └── GestionPersonal/
+ │   |   ├── ActualizarPaciente.tsx
+ │   |   ├── CrearPaciente.tsx
+ │   |   ├── InactivarPaciente.tsx
+ │   |   ├── ListarPacientes.tsx
+ │   |   └── PacienteForm.tsx
+ |   └──  GestionPersonal/
+ │       ├── CrearUsuario.tsx
+ │       ├── EditarUsuario.tsx
+ │       ├── InactivarUsuario.tsx
+ │       ├── ListarUsuarios.tsx
+ │       └── PersonalForm.tsx
  ├── context/
  ├── hooks/
  |   ├── flujoCitas.ts
+ |   ├── useAdminData.ts
+ |   ├── useAdminSearch.ts
  |   ├── useAppToast.ts
  |   ├── useAuth.ts
+ |   ├── useConfirmDeactivate.ts
  |   ├── useCreateAppointmentForm.ts
  |   ├── usePatientProffesionalData.ts
  |   ├── usePatientsData.ts
  |   ├── usePatientSearch.ts
- |   └── useProfessionalData.ts
+ |   ├── useProfessionalData.ts
+ |   └── useProfessionalSearch.ts
  ├── pages/
  |   ├── GestionCitas/
  │   |   └── GestionCitas.tsx
- |   ├── GestionHistoria/
- │   |   └── GestionHistoria.tsx
- |   ├── GestionMedicamento/
- │   |   └── GestionMedicamento.tsx
  |   ├── GestionPaciente/
  │   |   └── GestionPaciente.tsx
  |   ├── GestionPersonal/
@@ -149,6 +271,7 @@ src/
  |   ├── api.ts 
  |   ├── appointments.service.ts
  |   ├── auth.service.ts
+ |   ├── patient.service.ts
  |   └── user.service.ts
  ├── types/
  |   ├── auth.ts 
@@ -159,12 +282,13 @@ src/
  |   ├── index.ts
  |   └── persona.ts
  ├── utils/
+ |   ├── constantes.ts
  |   ├── formatoFecha.ts 
  |   └── inputValidation.ts
  ├── App.css
  ├── App.tsx
  ├── index.css
- └──  main.tsx
+ └── main.tsx
 ```
 
 ## Servidor
@@ -277,8 +401,8 @@ src/
 | Nest JS | React JS | DBeaver |
 | Typeorm | Tailwind CSS | GIT/GITHUB |
 | JWT | Primereact | |
-| Bcrypt | |
-| MySQL | |
+| Bcrypt | | | |
+| MySQL | | | |
 
 ---
 
@@ -316,14 +440,22 @@ npm install --save @nestjs/swagger swagger-ui-express
 | POST | `/auth/login` | Inicia sesión y devuelve token JWT | ❌ |
 | GET | `/auth/profile` | Devuelve la informacion del usuario | ✅ |
 
-### 👩‍⚕️ Módulo de personal — `/users`
+### 👩‍⚕️ Módulo del personal — `/users`
 
+<p><em>Área administrativa<em></p>
 | Método | Ruta | Descripción | Rol permitido | Token |
 |--------|-------|--------|-------|-------|
 | POST | `/users/admin` | Crear un administrativo | admin | ✅ |
 | GET | `/users/administrators` | Lista todos los administradores | admin | ✅ |
-| POST | `/users/professional` | Crear un profesional Psicologo/Psiquiatra | admin y paciente | ✅ |
+| PUT | `/users/admin/:id` | Actualizar un administrativo | admin | ✅ |
+| PATCH | `/users/user/:id` | Desactiva a un usuario | admin y paciente | ✅ |
+
+<p><em>Profesionales médicos<em></p>
+| Método | Ruta | Descripción | Rol permitido | Token |
+|--------|-------|--------|-------|-------|
+| POST | `/users/professional` | Crear un profesional Psicologo/Psiquiatra | admin | ✅ |
 | GET | `/users/professionals` | Lista todos los profesionales activos | admin | ✅ |
+| PUT | `/users/administrators` | Actualizar un profesional médico | admin | ✅ |
 | PATCH | `/users/user/:id` | Desactiva a un usuario | admin y paciente | ✅ |
 
 ### 👤 Módulo de pacientes — `/users`
@@ -407,4 +539,4 @@ Estos serían los prefijos que pueden empezar a encontrar en el historial de git
 ## 📄 LICENCIA
 
 💜 **GESTIÓN DE CITAS** — Una plataforma para citas psicológicas.  
-© 2025 **OL-STUDIOS** — Todos los derechos reservados.
+© 2026 — Todos los derechos reservados.
