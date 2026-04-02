@@ -16,11 +16,11 @@
 
 <h3>FLUJO DEL ADMINISTRADOR</h3> 
 
-`⚠️IMPORTANTE⚠️:` Debe crear el usuario del administrativo para los pasos siguientes, esto lo hará en postman. Acontinuación las instrucciones:
+`⚠️IMPORTANTE⚠️:` Deberá crear el usuario del administrativo, después de haber generado las migraciones, procederemos a ejecutar los pasos siguientes, esto lo hará en postman. A continuación las instrucciones:
 - Una vez esté en postman, usar el endpoint `POST` para crear el primer admin. Su ruta es: `http://localhost:4000/users/admin`
 - Ejemplo de estructura del objeto para la creación del usuario:
 ```  
-   {
+{
     "nombres": "Andrea",
     "apellidos": "Ramirez",
     "tipoDocumento": "CC",
@@ -131,6 +131,28 @@ Inicio
 └── Fin
 ```
 
+#### `Tabla de imágenes`
+<table>
+  <tr>
+    <td align="center">
+      <img width="200" alt="Crear_Usuario" src="https://github.com/user-attachments/assets/57307f27-165e-4592-beb5-78183727dc7c" /><br/>
+      Crear usuario
+    </td>
+    <td align="center">
+      <img width="200" alt="Listar_Usuarios" src="https://github.com/user-attachments/assets/aa87cdc4-caf4-4dd2-a218-cb2dafa43347" /><br/>
+      Listar usuarios
+    </td>
+    <td align="center">
+      <img width="200" alt="Actualizar_Usuario" src="https://github.com/user-attachments/assets/64c9b96f-33a1-430e-a12b-61dffb1cb1bf" /><br/>
+      Actualizar usuario
+    </td>
+    <td align="center">
+      <img width="200" alt="Inactivar_Usuario" src="https://github.com/user-attachments/assets/46204727-b994-44a9-a7a7-21ae46014cf8" /><br/>
+      Inactivar usuario
+    </td>
+  </tr>
+</table>
+
 ---
 
 <h4>📁MÓDULO DE LOS PACIENTES</h4>
@@ -171,6 +193,28 @@ Inicio
 |   └── Da click en el botón de "Inactivar perfil"
 └── Fin
 ```
+
+#### `Tabla de imágenes`
+<table>
+  <tr>
+    <td align="center">
+      <img width="200" alt="Crear_Paciente" src="https://github.com/user-attachments/assets/b514f597-2bea-4196-9e18-02eb0dbc806f" /><br/>
+      Crear paciente
+    </td>
+    <td align="center">
+      <img width="200" alt="Listar_Pacientes" src="https://github.com/user-attachments/assets/764edd66-f17f-45f9-8709-22ef02224365" /><br/>
+      Listar pacientes
+    </td>
+    <td align="center">
+      <img width="200" alt="Actualizar_Paciente" src="https://github.com/user-attachments/assets/0d1d58ef-93fc-4e2d-b6fe-afab3e755d52" /><br/>
+      Actualizar paciente
+    </td>
+    <td align="center">
+      <img width="200" alt="Inactivar_Paciente" src="https://github.com/user-attachments/assets/1fe39a34-8cc1-4d93-b905-ea87fba4a529" /><br/>
+      Inactivar paciente
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -214,6 +258,32 @@ Inicio
 |       └── De click en el botón de "Cancelar cita"
 └── Fin
 ```
+
+#### `Tabla de imágenes`
+<table>
+  <tr>
+    <td align="center">
+      <img width="200" alt="Crear_Cita" src="https://github.com/user-attachments/assets/352dbb52-4002-4176-818b-9dd6839e28aa" /><br/>
+      Crear cita
+    </td>
+    <td align="center">
+      <img width="200" alt="Listar_Citas" src="https://github.com/user-attachments/assets/7ccc5e87-1819-4bc6-9abb-e47298c852eb" /><br/>
+      Listar citas activas
+    </td>
+    <td align="center">
+      <img width="200" alt="Actualizar_Cita" src="https://github.com/user-attachments/assets/3283e0ff-32f6-47a5-8a60-e53491cc41d1" /><br/>
+      Actualizar cita 1
+    </td>
+     <td align="center">
+      <img width="200" alt="Actualizar_Cita_Form" src="https://github.com/user-attachments/assets/0c18fafe-e762-4d5b-8429-63bd8ef131bb" /><br/>
+      Actualizar cita 2
+    </td>
+    <td align="center">
+      <img width="200" alt="Cancelar_Cita" src="https://github.com/user-attachments/assets/fc6031cc-29ea-4b26-955e-f0d0565206af" /><br/>
+      Cancelar cita
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -442,7 +512,8 @@ npm install --save @nestjs/swagger swagger-ui-express
 
 ### 👩‍⚕️ Módulo del personal — `/users`
 
-<p><em>Área administrativa<em></p>
+<p><em>Área administrativa</em></p>
+
 | Método | Ruta | Descripción | Rol permitido | Token |
 |--------|-------|--------|-------|-------|
 | POST | `/users/admin` | Crear un administrativo | admin | ✅ |
@@ -450,7 +521,8 @@ npm install --save @nestjs/swagger swagger-ui-express
 | PUT | `/users/admin/:id` | Actualizar un administrativo | admin | ✅ |
 | PATCH | `/users/user/:id` | Desactiva a un usuario | admin y paciente | ✅ |
 
-<p><em>Profesionales médicos<em></p>
+<p><em>Profesionales médicos</em></p>
+
 | Método | Ruta | Descripción | Rol permitido | Token |
 |--------|-------|--------|-------|-------|
 | POST | `/users/professional` | Crear un profesional Psicologo/Psiquiatra | admin | ✅ |
@@ -538,5 +610,5 @@ Estos serían los prefijos que pueden empezar a encontrar en el historial de git
 
 ## 📄 LICENCIA
 
-💜 **GESTIÓN DE CITAS** — Una plataforma para citas psicológicas.  
+💜 **PSICOGEST** — Una plataforma para citas psicológicas.  
 © 2026 — Todos los derechos reservados.
