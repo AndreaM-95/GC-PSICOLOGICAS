@@ -33,24 +33,22 @@ export default function ListarCitas() {
     const loadPatientAppointments = async (document: string) => {
         try {
             const response = await allPatientAppointmentsRequest(parseInt(document));
-            // Orden personalizado
             const statusOrder: Record<string, number> = {
                 "Confirmada": 1,
                 "Asistida": 2,
                 "Cancelada": 3,
                 "No asistida": 4
             };
-
             const sortedAppointments = response.citas.sort(
                 (a: any, b: any) => statusOrder[a.estado] - statusOrder[b.estado]
             );
-
             setAppointmentsPatient(sortedAppointments);
-
         } catch (err: any) {
-            console.error("Error cargando citas:", err);
+            const backendMessage =
+                err.response?.data?.message?.message ||
+                "Error inesperado al cancelar la cita.";
+            showMessage("error", backendMessage);
             setAppointmentsPatient([]);
-            showMessage("error", "Error al cargar las citas del paciente.")
         }
     };
      

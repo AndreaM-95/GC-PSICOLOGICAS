@@ -9,6 +9,9 @@ export function useAdminsData(showError: (seve:string, msg: string) => void) {
         loadAdmins();
     }, []);
 
+    /**
+     * @description Función que carga los administrativos desde el backend. Realiza una solicitud para obtener los datos de los administrativos y luego los formatea para incluir un campo `fullName` que concatena los nombres y apellidos. Si ocurre un error durante la carga, se captura el error y se muestra un mensaje de error al usuario utilizando la función `showError`.
+     */
     async function loadAdmins() {
         try{
             const admins = await getAdmins();

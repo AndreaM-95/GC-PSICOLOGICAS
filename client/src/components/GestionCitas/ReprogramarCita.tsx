@@ -49,7 +49,7 @@ export default function UpdateAppointment() {
     
     /**
      * @description Selección del paciente y visualización de su nombre en el input
-     * @param e 
+     * @param e Evento de selección del paciente en el AutoComplete, se obtiene el paciente seleccionado y se actualizan los estados correspondientes para mostrar su nombre y documento, además de cargar sus citas activas.
      */
     const onPatientSelect = (e: { value: any }) => {
         cleanForm();

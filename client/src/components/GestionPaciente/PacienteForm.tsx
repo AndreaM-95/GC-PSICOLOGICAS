@@ -254,7 +254,6 @@ export default function PacienteForm({
                     placeholder="Ej. test@gmail.com" 
                 />
 
-
                 {mode === "create" && (
                     <>
                         <label className="font-bold text-cyan-700">Contraseña:</label>

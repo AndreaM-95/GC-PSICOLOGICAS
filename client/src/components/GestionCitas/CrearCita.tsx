@@ -25,7 +25,7 @@ export default function CrearCita() {
     
     /**
      * @description Selección del paciente y visualización de su nombre en el input
-     * @param e 
+     * @param e evento de selección del paciente en el AutoComplete, se obtiene el paciente seleccionado y se actualizan los estados correspondientes para mostrar su nombre y documento, además de cargar sus citas activas.
      */
     const onPatientSelect = (e: { value: any }) => {
         const selected = e.value;
@@ -39,6 +39,9 @@ export default function CrearCita() {
         fullName: `${p.nombres} ${p.apellidos} -  ${p.especialidad}`
     }));
     
+    /**
+     * @description Manejo del formulario de creación de cita, utilizando el hook useCreateAppointmentForm para gestionar los estados y la lógica de creación de la cita, incluyendo la validación de campos y la comunicación con el backend para guardar la nueva cita. Al enviar el formulario, se muestra un mensaje de éxito o error dependiendo del resultado de la operación.
+     */
     const {
         selectedPatient,
         setSelectedPatient,

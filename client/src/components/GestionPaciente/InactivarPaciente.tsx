@@ -47,8 +47,13 @@ export default function InactivarPaciente() {
     return (
         <>
             <Toast ref={toast} />
+
+            {/* Componente de diálogo de confirmación para inactivar pacientes */}
             <ConfirmDialog />
 
+            {/**
+             * @description Componente reutilizable para inactivar pacientes. Permite buscar y seleccionar un paciente, y luego confirmar la acción de inactivación. Utiliza las funciones de búsqueda y carga de pacientes, así como el sistema de mensajes para mostrar resultados al usuario.
+             */}
             <DesactivateCard
                 entityName="paciente"
                 selectedItem={selectedPatient}

@@ -9,6 +9,9 @@ export function usePatientsData(showError: (seve:string, msg: string) => void) {
         loadPatients();
     }, []);
 
+    /**
+     * @description Función que carga los pacientes desde el backend. Realiza una solicitud para obtener los datos de los pacientes y luego los formatea para incluir un campo `fullName` que concatena los nombres y apellidos. Si ocurre un error durante la carga, se captura el error y se muestra un mensaje de error al usuario utilizando la función `showError`.
+     */
     async function loadPatients() {
         try {
             const pats = await getPatients();

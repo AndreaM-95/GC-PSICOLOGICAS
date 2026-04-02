@@ -15,15 +15,12 @@ import { Divider } from "primereact/divider";
 
 export default function InactivarUsuario() {
     const { toast, showMessage } = useAppToast();
-
     //ADMIN
     const { admins, loadAdmins } = useAdminsData(showMessage);
     const { filteredAdmins, searchAdmins } = useAdminsSearch(admins);
-
     //PROFESIONAL
     const { professionals, loadProfessionals } = useProfessionalData(showMessage);
     const { filteredProfessionals, searchProfessionals } = useProfessionalSearch(professionals);
-
     //GENERAL
     const [selectedUser, setSelectedUser] = useState<any>(null);
     const { confirmDeactivate } = useConfirmDeactivate();
@@ -33,7 +30,9 @@ export default function InactivarUsuario() {
         { id: 2, name: "Profesional" }
     ];
 
-    
+    /**
+     * @description Configuración dinámica basada en el rol seleccionado. Dependiendo del rol, se asignan el nombre de la entidad, los datos, las sugerencias, la función de búsqueda y la función de carga correspondientes para el componente de selección de usuario. Esto permite reutilizar la lógica de selección y desactivación sin duplicar código para cada tipo de usuario.
+     */
     const roleConfig = {
         Administrativo: {
             entityName: "administrativo",
@@ -50,6 +49,10 @@ export default function InactivarUsuario() {
             load: loadProfessionals,
         }
     };
+    
+    /**
+     * @description Configuración dinámica basada en el rol seleccionado. Dependiendo del rol, se asignan las sugerencias y la función de búsqueda correspondientes para el componente de selección de usuario. Esto permite reutilizar la lógica de selección sin duplicar código para cada tipo de usuario.
+     */
     const currentConfig = roleConfig[rol as keyof typeof roleConfig];
     
     /**

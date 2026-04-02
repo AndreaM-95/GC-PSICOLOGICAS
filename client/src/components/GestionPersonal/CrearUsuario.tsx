@@ -11,6 +11,10 @@ import { Divider } from "primereact/divider";
 export default function CrearUsuario() {
     const { toast, showMessage } = useAppToast();
     const [rol, setRol] = useState<string>("");
+
+    /**
+     * @description Estado para manejar el formulario de creación de usuario. Se inicializa con campos vacíos y se actualiza a medida que el usuario completa el formulario. Al cambiar el rol, se limpia el formulario para evitar datos inconsistentes.
+     */
     const [formData, setFormData] = useState<any>({
         nombres: "",
         apellidos: "",
@@ -35,10 +39,12 @@ export default function CrearUsuario() {
         { id: 2, name: "Profesional" }
     ];
 
-    // Crear usuario
+    /**
+     * @description Función que maneja la creación de un nuevo usuario. Dependiendo del rol seleccionado, se construye el objeto de datos correspondiente y se envía la solicitud al backend. Si la creación es exitosa, se muestra un mensaje de éxito y se limpia el formulario. En caso de error, se captura el mensaje del backend y se muestra al usuario.
+     * @param e El evento de envío del formulario. Se previene el comportamiento por defecto para manejar la lógica personalizada de creación de usuario.
+     */
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
-
 
         try {
             const dataToSend = {

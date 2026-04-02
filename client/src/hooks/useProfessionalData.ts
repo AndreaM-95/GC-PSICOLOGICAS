@@ -9,6 +9,9 @@ export function useProfessionalData(showError: (seve:string, msg: string) => voi
         loadProfessionals();
     }, []);
 
+    /**
+     * @description Función que carga los profesionales desde el backend. Realiza una solicitud para obtener los datos de los profesionales y luego los formatea para incluir un campo `fullName` que concatena los nombres y apellidos. Si ocurre un error durante la carga, se captura el error y se muestra un mensaje de error al usuario utilizando la función `showError`.
+     */
     async function loadProfessionals() {
         try{
             const profs = await getProfessionals();

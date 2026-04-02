@@ -33,7 +33,7 @@ export default function CancelarCita() {
 
     /**
      * @description Selección del paciente y visualización de su nombre en el input
-     * @param e 
+     * @param e evento de selección del paciente en el AutoComplete, se obtiene el paciente seleccionado y se actualizan los estados correspondientes para mostrar su nombre y documento, además de cargar sus citas activas.
      */
     const onPatientSelect = (e: { value: any }) => {
         const selected = e.value;
@@ -45,7 +45,7 @@ export default function CancelarCita() {
     /**
      * @description Canelación de la cita tomando datos como el id y el motivo
      * @param e Evento del envío del formulario
-     * @returns 
+     * @returns Al cancelar la cita, se muestra un mensaje de éxito o error dependiendo del resultado de la operación, y se refrescan las citas del paciente seleccionado.
      */
     const cancelAppointment = async (e: React.FormEvent) => {
         e.preventDefault();
