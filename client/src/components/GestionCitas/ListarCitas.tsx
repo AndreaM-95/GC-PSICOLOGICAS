@@ -8,33 +8,22 @@ import { Column } from "primereact/column";
 import { allPatientAppointmentsRequest } from "@/services/appointments.service";
 import { usePatientsData } from "@/hooks/usePatientsData";
 import { useAppToast } from "@/hooks/useAppToast";
+import { usePatientSearch } from "@/hooks/usePatientSearch";
 
 export default function ListarCitas() {
     const { toast, showMessage } = useAppToast();
     const [documentPatient, setDocumentPatient] = useState<string>("");
     const [appointmentsPatient, setAppointmentsPatient] = useState<any[]>([]);
-    const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
     const { patients } = usePatientsData(showMessage); // Cargar pacientes al montar el componente
-
-    /**
-     * @description Buscar pacientes por documento mientras se escribe
-     * @param event Entrada del usuario
-     */
-    const searchPatient = (event: { query: string }) => {
-        const query = event.query;
-        const filtered = patients.filter(patient => 
-            patient.document.toString().includes(query)
-        );
-        setFilteredPatients(filtered);
-    };
-
+    const { filteredPatients, searchPatient } = usePatientSearch(patients);
+    
     /**
      * @description Selección del paciente y visualización de sus citas
      * @param e 
      */
     const onPatientSelect = (e: { value: any }) => {
         const selected = e.value;
-        loadPatientAppointments(selected.document);
+        loadPatientAppointments(selected.numeroDocumento);
     };
     
     /**
@@ -75,13 +64,13 @@ export default function ListarCitas() {
                     value={documentPatient}
                     suggestions={filteredPatients}
                     completeMethod={searchPatient}
-                    field="document"
+                    field="numeroDocumento"
                     onChange={(e) => setDocumentPatient(e.value)}
                     onSelect={onPatientSelect}
                     placeholder="Ingrese documento del paciente"
                     aria-label="Buscar paciente por documento"
                     dropdown
-                    className="w-3/4"
+                    className="col-span-2"
                 />
             </div>
 

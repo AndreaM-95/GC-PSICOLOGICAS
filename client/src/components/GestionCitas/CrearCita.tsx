@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card } from "primereact/card";
 import { Toast } from 'primereact/toast';
 import { Calendar } from "primereact/calendar";
@@ -9,13 +9,15 @@ import { AutoComplete } from "primereact/autocomplete";
 import { Divider } from "primereact/divider";
 import { useAppToast } from "@/hooks/useAppToast";
 import { usePatientSearch } from "@/hooks/usePatientSearch";
-import { usePatientProffesionalData } from "@/hooks/usePatientProffesionalData";
 import { useCreateAppointmentForm } from "@/hooks/useCreateAppointmentForm";
 import { constantes } from "@/utils/constantes";
+import { usePatientsData } from "@/hooks/usePatientsData";
+import { useProfessionalData } from "@/hooks/useProfessionalData";
 
 export default function CrearCita() {
     const { toast, showMessage } = useAppToast();
-    const { patients, professionals } = usePatientProffesionalData(showMessage);
+    const { patients } = usePatientsData(showMessage);
+    const { professionals } = useProfessionalData(showMessage);
     const { filteredPatients, searchPatient } = usePatientSearch(patients);
     const [patient, setPatient] = useState("");
     const [documentPatient, setDocumentPatient] = useState("");
@@ -28,9 +30,14 @@ export default function CrearCita() {
     const onPatientSelect = (e: { value: any }) => {
         const selected = e.value;
         setSelectedPatient(selected);
-        setPatient(selected.name ?? "");
-        setDocumentPatient(selected.document);
+        setPatient(`${selected.nombres} ${selected.apellidos}`);
+        setDocumentPatient(selected.numeroDocumento);
     };
+
+    const professionalsFormatted = professionals.map((p) => ({
+        ...p,
+        fullName: `${p.nombres} ${p.apellidos} -  ${p.especialidad}`
+    }));
     
     const {
         selectedPatient,
@@ -63,7 +70,7 @@ export default function CrearCita() {
                     value={documentPatient}
                     suggestions={filteredPatients}
                     completeMethod={searchPatient}
-                    field="document"
+                    field="numeroDocumento"
                     onChange={(e) => setDocumentPatient(e.value)}
                     onSelect={onPatientSelect}
                     placeholder="Ingrese documento del paciente"
@@ -71,6 +78,8 @@ export default function CrearCita() {
                     dropdown
                     className="col-span-2"
                 />
+
+                
                 <Divider className="col-span-2"/>
 
                 <label htmlFor="patientName" className="font-bold text-cyan-700">Paciente seleccionado:</label>
@@ -117,13 +126,12 @@ export default function CrearCita() {
                 <Dropdown
                     value={selectedProfessional}
                     onChange={(e) => setSelectedProfessional(e.value)}
-                    options={professionals}
-                    optionLabel="name"
+                    options={professionalsFormatted}
+                    optionLabel="fullName"
                     optionValue="id"
                     placeholder="Selecciona aquí.."
                     className="w-full"
                     required
-                    aria-label={'Selecciona al profesional..'}
                 />
 
                 <label className="font-bold text-cyan-700">Modalidad:</label>

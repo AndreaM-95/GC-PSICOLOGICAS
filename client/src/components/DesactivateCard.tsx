@@ -65,7 +65,7 @@ export function DesactivateCard<T>({
             <div className="col-span-2 flex justify-end">
               <NavButton
                 type="submit"
-                label="Inactivar"
+                label="Inactivar perfil"
                 btnFunction={() => {}}
               />
             </div>

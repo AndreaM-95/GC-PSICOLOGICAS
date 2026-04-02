@@ -14,15 +14,16 @@ import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { UseInputValidation } from "@/utils/InputValidation";
 import { useAppToast } from "@/hooks/useAppToast";
-import { usePatientProffesionalData } from "@/hooks/usePatientProffesionalData";
 import { constantes } from "@/utils/constantes";
+import { usePatientSearch } from "@/hooks/usePatientSearch";
+import { usePatientsData } from "@/hooks/usePatientsData";
+import { useProfessionalData } from "@/hooks/useProfessionalData";
 
 export default function UpdateAppointment() {
     const { toast, showMessage } = useAppToast();
     const [documentPatient, setDocumentPatient] = useState("");
     const [appointmentsPatient, setAppointmentsPatient] = useState<any[]>([]);
     const [codAppointment, setCodAppointment] = useState(0);
-    const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     
@@ -34,29 +35,17 @@ export default function UpdateAppointment() {
     const [newModality, setNewModality] = useState("");
     const [newConsultory, setNewConsultory] = useState("");
     const [reason, setReason] = useState("");
-
+    const { patients } = usePatientsData(showMessage); // Cargar pacientes al montar el componente
+    const { filteredPatients, searchPatient } = usePatientSearch(patients);
+    const { professionals } = useProfessionalData(showMessage);
+    const { modalidades, consultorios } = constantes();
+    
     // Crear horas mínimas y máximas
     const minHour = new Date();
     minHour.setHours(8, 0, 0, 0); // 8:00 AM
     const maxHour = new Date();
     maxHour.setHours(17, 0, 0, 0); // 5:00 PM
 
-    const { modalidades, consultorios } = constantes();
-    
-    // Cargar pacientes y profesionales al montar el componente
-    const {patients, professionals} = usePatientProffesionalData(showMessage);
-
-    /**
-     * @description Buscar pacientes por documento mientras se escribe
-     * @param event Entrada del usuario
-     */
-    const searchPatient = (event: { query: string }) => {
-        const query = event.query;
-        const filtered = patients.filter(patient => 
-            patient.document.toString().includes(query)
-        );
-        setFilteredPatients(filtered);
-    };
     
     /**
      * @description Selección del paciente y visualización de su nombre en el input
@@ -65,16 +54,15 @@ export default function UpdateAppointment() {
     const onPatientSelect = (e: { value: any }) => {
         cleanForm();
         const selected = e.value;
-
         setSelectedPatient(selected);
-        setPatient(selected.name);
-        setDocumentPatient(selected.document);
-        loadPatientAppointments(selected.document);
+        setPatient(`${selected.nombres} ${selected.apellidos}`);
+        setDocumentPatient(selected.numeroDocumento);
+        loadPatientAppointments(selected.numeroDocumento);
     };
 
     /**
      * @description Encargado de listar las citas del paciente seleccionado
-     * @param document número del documento del paciente
+     * @param numeroDocumento número del documento del paciente
      */
     const loadPatientAppointments = async (document: string) => {
         try {
@@ -82,12 +70,21 @@ export default function UpdateAppointment() {
             const activeAppointments = response.citas.filter((app: any) => app.estado === "Confirmada");
             setAppointmentsPatient(activeAppointments);
 
-        } catch (err: any) {
-            console.error("Error cargando citas:", err);
-            showMessage("error", "Error al cargar las citas del paciente.");
+        } catch (error: any) {
+            console.error("Error cargando citas:", error);
             setAppointmentsPatient([]);
+            const backendMessage =
+                error.response?.data?.message?.message ||
+                "Error inesperado al crear la cita.";
+
+            showMessage("error", backendMessage);
         }
     };
+
+    const professionalsFormatted = professionals.map((p) => ({
+        ...p,
+        fullName: `${p.nombres} ${p.apellidos} -  ${p.especialidad}`
+    }));
 
     /**
      * @description Selecciona la cita que se modificará tomando sus campos actuales
@@ -181,7 +178,7 @@ export default function UpdateAppointment() {
 
             <form 
                 className="grid gap-2 align-middle items-center"
-                style={{ gridTemplateColumns: '35% 65%' }}
+                style={{ gridTemplateColumns: '25% 75%' }}
                 onSubmit={updateAppointment}
                 >
                 <AutoComplete
@@ -189,7 +186,7 @@ export default function UpdateAppointment() {
                     value={documentPatient}
                     suggestions={filteredPatients}
                     completeMethod={searchPatient}
-                    field="document"
+                    field="numeroDocumento"
                     onChange={(e) => setDocumentPatient(e.value)}
                     onSelect={onPatientSelect}
                     placeholder="Ingrese documento del paciente"
@@ -199,17 +196,20 @@ export default function UpdateAppointment() {
                 />
                 <Divider className="col-span-2"/>
 
-                <label htmlFor="patient" className="font-bold text-cyan-700">Paciente:</label>
-                <InputText
-                    id="patient"
-                    value={patient}
-                    placeholder="Nombre del paciente.."
-                    readOnly
-                />
+                <div className="col-span-2 gap-2 w-full flex align-middle">
+                    <label htmlFor="patient" className="font-bold text-cyan-700 w-[35%]">Paciente seleccionado:</label>
+                    <InputText
+                        id="patient"
+                        value={patient}
+                        placeholder="Nombre del paciente (Sólo lectura)"
+                        className="w-[65%]"
+                        readOnly
+                    />
+                </div>
 
                 {codAppointment > 0 ? (
-                    <div className="col-span-2 pr-2">
-                        <div className="grid gap-2 align-middle items-center" style={{ gridTemplateColumns: '35% 65%' }}>
+                    <div className="col-span-2 pr-2 w-full">
+                        <div className="grid gap-2 align-middle items-center w-full" style={{ gridTemplateColumns: '35% 65%' }}>
                             <label htmlFor="codAppointment" className="font-bold text-cyan-700">Código de la cita:</label>
                             <InputNumber
                                 id="codAppointment"
@@ -221,14 +221,13 @@ export default function UpdateAppointment() {
                             <Dropdown
                                 value={selectedProfessional}
                                 onChange={(e) => setSelectedProfessional(e.value)}
-                                options={professionals}
-                                optionLabel="name"
+                                options={professionalsFormatted}
+                                optionLabel="fullName"
                                 optionValue="id"
                                 placeholder="Selecciona aquí.."
                                 className="w-full"
                                 required
                             />
-
 
                             <label className="font-bold text-cyan-700">Fecha de la cita:</label>
                             <Calendar
@@ -304,9 +303,9 @@ export default function UpdateAppointment() {
                         </div>
                     </div>
                 ) : (
-                    <div className="col-span-2 flex gap-2 align-middle items-center">
+                    <div className="col-span-2 flex align-middle items-center">
                         <label className="w-[35%] font-bold text-cyan-700">Citas activas:</label>
-                        <div className="card w-[65%]">
+                        <div className="card w-full">
                             {appointmentsPatient.length > 0 ? (
                                 <DataTable 
                                     value={appointmentsPatient} 
@@ -329,7 +328,7 @@ export default function UpdateAppointment() {
                                     <Column field="profesional" header="Profesional" style={{color: '#49A7CC'}}></Column>
                                 </DataTable>
                             ): (
-                                <Card className="text-center">
+                                <Card className="text-center w-full">
                                     <div className="flex text-center align-items-center justify-content-center">
                                         <i className="pi pi-info-circle mr-2" style={{fontSize: '1.5rem', color: 'var(--primary-color)'}}></i>
                                         <h3>No hay citas activas</h3>

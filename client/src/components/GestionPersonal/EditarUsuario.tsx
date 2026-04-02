@@ -150,7 +150,7 @@ export default function EditarUsuario() {
                     setFormData={setFormData} 
                     rol={rol} 
                     onSubmit={handleUpdate} 
-                    buttonLabel="Actualizar" 
+                    buttonLabel="Actualizar perfil" 
                 />
             )}
         </Card>

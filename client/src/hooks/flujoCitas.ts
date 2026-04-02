@@ -1,52 +1,51 @@
-import { useState, useEffect } from "react";
-import { getPatients } from "@/services/patient.service";
+import { useState } from "react";
 import { patientAppointmentsRequest } from "@/services/appointments.service";
+import { usePatientSearch } from "./usePatientSearch";
+import { usePatientsData } from "./usePatientsData";
+import { useAppToast } from "./useAppToast";
 
 export function flujoCitas() {
-    const [patients, setPatients] = useState<any[]>([]);
-    const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
+    const { showMessage } = useAppToast();
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
     const [appointments, setAppointments] = useState<any[]>([]);
     const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
-
-    useEffect(() => {
-        loadPatients();
-    }, []);
-
-    const loadPatients = async () => {
-        const pats = await getPatients();
-        setPatients(
-            pats.map((p: any) => ({
-                id: p.idPersona,
-                document: p.numeroDocumento,
-                name: `${p.nombres} ${p.apellidos}`,
-            }))
-        );
-    };
-
-    const searchPatient = (query: string) => {
-        const filtered = patients.filter(p =>
-            p.document.toString().includes(query)
-        );
-        setFilteredPatients(filtered);
-    };
+    const { patients } = usePatientsData(showMessage);
+    const { filteredPatients, searchPatient } = usePatientSearch(patients);
 
     const loadAppointments = async (document: string) => {
-        const response = await patientAppointmentsRequest(parseInt(document));
-        const active = response.citas.filter(
-            (app: any) => app.estado === "Confirmada"
-        );
-        setAppointments(active);
+        try {
+            const response = await patientAppointmentsRequest(parseInt(document));
+            const active = response.citas.filter(
+                (app: any) => app.estado === "Confirmada"
+            );
+            setAppointments(active);
+        } catch (error: any) {
+            console.error("Error al cargar citas:", error);
+            const backendMessage =
+                error.response?.data?.message?.message ||
+                "Error al cargar las citas del paciente.";
+            showMessage("error", backendMessage);
+        }
     };
 
     const selectPatient = async (patient: any) => {
         setSelectedPatient(patient);
-        
         setSelectedAppointment(null);
-        if(appointments.length == 0){
-            console.info("No hay citas activas");
+
+        if (!patient?.numeroDocumento) {
+            showMessage("warn", "Paciente inválido");
+            return;
         }
-        await loadAppointments(patient.document);
+
+        try {
+            await loadAppointments(patient.numeroDocumento);
+        } catch (error: any) {
+            const backendMessage =
+                error.response?.data?.message?.message ||
+                "Error al cargar las citas del paciente.";
+
+            showMessage("error", backendMessage);
+        }
     };
 
     const selectAppointment = (appointment: any) => {

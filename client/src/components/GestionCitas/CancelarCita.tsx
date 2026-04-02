@@ -17,7 +17,9 @@ import { useAppToast } from "@/hooks/useAppToast";
 
 export default function CancelarCita() {
     const { toast, showMessage } = useAppToast();
+    const [patient, setPatient] = useState("");
     const [reason, setReason] = useState("");
+    const [documentPatient, setDocumentPatient] = useState<string>("");
     const {
         filteredPatients,
         selectedPatient,
@@ -28,6 +30,17 @@ export default function CancelarCita() {
         selectAppointment,
         reset
     } = flujoCitas();
+
+    /**
+     * @description Selección del paciente y visualización de su nombre en el input
+     * @param e 
+     */
+    const onPatientSelect = (e: { value: any }) => {
+        const selected = e.value;
+        setPatient(`${selected.nombres} ${selected.apellidos}`);
+        setDocumentPatient(selected.numeroDocumento);
+        selectPatient(selected);
+    };
 
     /**
      * @description Canelación de la cita tomando datos como el id y el motivo
@@ -56,7 +69,10 @@ export default function CancelarCita() {
 
         } catch (error: any) {
             console.error(error.response?.data?.message);
-            showMessage("error", "Error al cancelar la cita.");
+            const backendMessage =
+                error.response?.data?.message?.message ||
+                "Error inesperado al cancelar la cita.";
+            showMessage("error", backendMessage);
         }
     };
 
@@ -78,11 +94,15 @@ export default function CancelarCita() {
                 onSubmit={cancelAppointment}
             >
                 <AutoComplete
+                    id="documentPatient"
+                    value={documentPatient}
                     suggestions={filteredPatients}
-                    completeMethod={(e) => searchPatient(e.query)}
-                    field="document"
-                    onSelect={(e) => selectPatient(e.value)}
+                    completeMethod={searchPatient}
+                    field="numeroDocumento"
+                    onChange={(e) => setDocumentPatient(e.value)}
+                    onSelect={onPatientSelect}
                     placeholder="Ingrese documento del paciente"
+                    aria-label="Buscar paciente por documento"
                     dropdown
                     className="col-span-2"
                 />
@@ -91,7 +111,7 @@ export default function CancelarCita() {
 
                 <label htmlFor="patient" className="font-bold text-cyan-700">Paciente:</label>
                 <InputText
-                    value={selectedPatient?.name || ""}
+                    value={patient}
                     readOnly
                 />
 
