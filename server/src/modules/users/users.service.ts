@@ -288,7 +288,7 @@ export class UsersService {
      * @param rol Enum que trae un listado de roles disponibles
      * @returns La relación y búsqueda de BDD
      */
-    private async listByRole(rol: Roles) {
+    async listByRole(rol: Roles) {
         const relationsMap = {
             [Roles.ADMINISTRATIVO]: ["administrativo"],
             [Roles.PROFESIONAL]: ["profesional"],
