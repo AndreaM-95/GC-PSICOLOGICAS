@@ -115,7 +115,7 @@ export class AppointmentsService {
             relations: ["paciente"]
         });
 
-        if (citaActiva) throw new CustomHttpException( "El paciente ya tiene una cita activa.", HttpStatus.BAD_REQUEST);
+        if (citaActiva) throw new CustomHttpException( "El paciente ya tiene una cita activa.");
         
         // ---------- CREAR Y GUARDAR ----------
         const cita = this.appointmentRepository.create({
@@ -332,7 +332,7 @@ export class AppointmentsService {
     // Cancelar cita - ADMIN
     async cancelAppointment(adminFromToken, dto: CancelAppointmentDTO) {
         if (adminFromToken.role !== 'administrativo') {
-            throw new CustomHttpException("Solo los administrativos pueden crear citas", HttpStatus.FORBIDDEN);
+            throw new CustomHttpException("Solo los administrativos pueden cancelar citas", HttpStatus.FORBIDDEN);
         }
 
         const idAdministrativo = adminFromToken.idPersona; 

@@ -2,11 +2,13 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
+  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
+import { CustomHttpException } from '../exceptions/custom-http.exception';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -24,11 +26,8 @@ export class RolesGuard implements CanActivate {
 
     if (!user) throw new ForbiddenException('Usuario no autenticado'); // Si no hay usuario, no puede acceder
 
-    //TODO: Reemplazar la excepción personalizada
     if (!requiredRoles.includes(user.role)) {
-      throw new NotFoundException(
-        'Su rol no tiene permisos para acceder a esta ruta',
-      );
+      throw new CustomHttpException('Su rol no tiene permisos para acceder a esta ruta', HttpStatus.UNAUTHORIZED);
     }
 
     return true;

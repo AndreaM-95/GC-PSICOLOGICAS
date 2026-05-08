@@ -40,16 +40,28 @@ export class AuthService {
      * @returns objeto con accessToken (JWT)
      * @throws UnauthorizedException en caso de credenciales inválidas
      */
-     async login(data: LoginDTO) {
-        const user = await this.userRepo.findOne({ where: { correo: data.email } })
-        const isPasswordValid = await bcrypt.compare(data.password, user?.contrasena)
+    async login(data: LoginDTO) {
+        const user = await this.userRepo.findOne({
+            where: { correo: data.email }
+        });
 
-        if (!user || !isPasswordValid)
-            throw new UnauthorizedException("Credenciales invalidas");
+        if (!user) throw new UnauthorizedException("Credenciales invalidas");
     
-        const payloadToken = { sub: user.idPersona, name: user.nombres, email: user.correo, role: user.rol };
-        const token = await this.jwtService.signAsync(payloadToken);
+        const isPasswordValid = await bcrypt.compare(
+            data.password,
+            user.contrasena
+        );
 
-        return { accessToken: token }
+        if (!isPasswordValid) throw new UnauthorizedException("Credenciales invalidas");
+
+        const payloadToken = {
+            sub: user.idPersona,
+            name: user.nombres,
+            email: user.correo,
+            role: user.rol
+        };
+
+        const token = await this.jwtService.signAsync(payloadToken);
+        return { accessToken: token };
     }
 }

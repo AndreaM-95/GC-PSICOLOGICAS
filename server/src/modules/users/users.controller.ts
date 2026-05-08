@@ -10,7 +10,10 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { ActualizarPacienteDTO } from './dto/actualizar-paciente.dto';
 import { ActualizarAdminDTO } from './dto/actualizar-admin.dto';
 import { ActualizarProfesionalDTO } from './dto/actualizar-profesional.dto';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Módulo de usuarios')
+@ApiBearerAuth()
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
@@ -21,18 +24,21 @@ export class UsersController {
     //------ CRUD ADMINISTRATIVO ------
     @Roles(Rol.ADMINISTRATIVO)
     @Post('/admin')
+    @ApiOperation({ summary: 'Crear a un administrativo.' })
     createAdmin(@Body() body: CrearAdminDto) {
         return this.usersService.createAdmin(body);
     }
 
     @Roles(Rol.ADMINISTRATIVO)
     @Get('administrators')
+    @ApiOperation({ summary: 'Listar administrativos activos.' })
     listAdmins() {
         return this.usersService.listAdministrators();
     }
 
     @Roles(Rol.ADMINISTRATIVO)
     @Put("/admin/:id")
+    @ApiOperation({ summary: 'Actualizar a un administrativo.' })
     actualizarAdmin(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarAdminDTO){
         return this.usersService.updateAdmin( req, id, dto)
     }
@@ -40,18 +46,21 @@ export class UsersController {
     //------ CRUD PROFESIONAL ------
     @Roles(Rol.ADMINISTRATIVO)
     @Post('/professional')
+    @ApiOperation({ summary: 'Crear a un profesional.' })
     crearProfesional(@Body() body: CrearProfesionalDto) {
         return this.usersService.createProfessional(body);
     }
 
     @Roles(Rol.ADMINISTRATIVO)
     @Get('professionals')
+    @ApiOperation({ summary: 'Listar profesionales activos.' })
     listarProfecionales() {
         return this.usersService.listProfessionals();
     }
     
     @Roles(Rol.ADMINISTRATIVO)
     @Put("/professional/:id")
+    @ApiOperation({ summary: 'Actualizar a un profesional.' })
     actualizarProfesional(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarProfesionalDTO){
         return this.usersService.updateProf( req, id, dto)
     }
@@ -60,18 +69,21 @@ export class UsersController {
     //------ CRUD PACIENTE ------
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Post('/patient')
+    @ApiOperation({ summary: 'Crear a un paciente.' })
     createPatient(@Request() req, @Body() body: PersonaBaseDto) {
         return this.usersService.createPatient(req, body);
     }
 
     @Roles(Rol.ADMINISTRATIVO)
     @Get('patients')
+    @ApiOperation({ summary: 'Listado de pacientes activos.' })
     listarPacientes() {
         return this.usersService.listPatients();
     }
 
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Put("/patient/:id")
+    @ApiOperation({ summary: 'Actualizar a un paciente.' })
     actualizarPaciente(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() dto: ActualizarPacienteDTO){
         return this.usersService.updatePatient(req, id, dto)
     }
@@ -80,6 +92,7 @@ export class UsersController {
     //------ GENERALES ------
     @Roles(Rol.ADMINISTRATIVO, Rol.PACIENTE)
     @Patch("/user/:id")
+    @ApiOperation({ summary: 'Inactivar a un usuario.' })
     inactivarUsuario(@Request() req, @Param('id', ParseIntPipe) id: number){
         return this.usersService.deactivateUser(req, id)
     }

@@ -11,10 +11,8 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configDoc = new DocumentBuilder()
-    .setTitle('API Tu salud')
-    .setDescription(
-      'Sistema de gestión de citas.',
-    )
+    .setTitle('API PSICOGEST')
+    .setDescription( 'Sistema de gestión de citas.')
     .setVersion('2.0')
     .addBearerAuth()
     .build();
@@ -31,6 +29,11 @@ async function bootstrap() {
     ],
   };
 
+  // app.enableCors({
+  //   origin: 'http://localhost:5173',
+  //   //credentials: true,
+  // });
+
   SwaggerModule.setup('api/docs', app, document, customOptions);
 
   app.useGlobalFilters(new AllExceptionsFilter());
@@ -42,11 +45,6 @@ async function bootstrap() {
       transformOptions: { enableImplicitConversion: true },
     }),
   );
-
-  app.enableCors({
-    origin: 'http://localhost:5173',
-    //credentials: true,
-  });
 
   await app.listen(process.env.PORT ?? 3000);
 }
